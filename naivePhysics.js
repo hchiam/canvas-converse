@@ -165,8 +165,6 @@ export class NaivePhysics {
                 options1,
                 options2
               );
-              if (key === "4") console.log(dx, dy, hitObject2);
-
               options1.dx = options1.dx ?? dx;
               options1.dy = options1.dy ?? dy;
               options1.x += options1.dx * this.bounceCoefficient;
@@ -194,11 +192,15 @@ export class NaivePhysics {
   }
 
   #getCircleSeparationDeltas(options1, options2) {
-    const dx = options1.x - options2.x + Math.random();
-    const dy = options1.y - options2.y + Math.random();
+    const dx = options1.x - options2.x + this.#randomNegativeToPositiveOne();
+    const dy = options1.y - options2.y + this.#randomNegativeToPositiveOne();
     const magnitude = Math.sqrt(dx * dx + dy * dy);
     const ux = magnitude !== 0 ? dx / magnitude : 0;
     const uy = magnitude !== 0 ? dy / magnitude : 0;
     return { dx: ux * options1.r, dy: uy * options1.r };
+  }
+
+  #randomNegativeToPositiveOne() {
+    return Math.random() * 2 - 1;
   }
 }
