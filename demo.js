@@ -22,11 +22,11 @@ cc.triangle({
   fill: "#c2e99b",
   physics: true,
 });
-cc.ellipse({
+const parent = cc.ellipse({
   x: 100,
   y: 100,
   r: 25,
-  fill: "black",
+  fill: "green",
   physics: true,
 });
 cc.ellipse({
@@ -38,9 +38,19 @@ cc.ellipse({
 });
 cc.ellipse({
   x: 100,
-  y: 3000,
+  y: 300,
   r: 25,
   fill: "blue",
   physics: true,
 });
 cc.draw({ fill: "lime" }, (ctx) => ctx.arc(400, 420, 50, 0, 1.5 * Math.PI));
+
+const childSize = 20;
+const child = cc.rectangle({
+  x: parent.options.x - childSize / 2,
+  y: parent.options.y - childSize / 2,
+  w: childSize,
+  h: childSize,
+  fill: "black",
+});
+cc.group(parent, [child]);

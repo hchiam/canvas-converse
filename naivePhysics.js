@@ -28,14 +28,16 @@ export class NaivePhysics {
 
   #drawNextFrame() {
     if (!this.objects) return;
-    Object.entries(this.objects).forEach((entry) => {
-      const [key, object] = entry;
-      if (object.options.physics) {
-        this.#handleGravity(key);
-        this.#handleCollisions(key);
-      }
-      this.#redrawObject(object);
-    });
+    Object.entries(this.objects)
+      .filter((object) => !object.isChild)
+      .forEach((entry) => {
+        const [key, object] = entry;
+        if (object.options.physics) {
+          this.#handleGravity(key);
+          this.#handleCollisions(key);
+        }
+        this.#redrawObject(object);
+      });
   }
 
   #redrawObject(object) {
@@ -71,6 +73,9 @@ export class NaivePhysics {
     let bottom = 0;
     let hitFloor = false;
 
+    let yBefore = 0;
+    let yAfter = 0;
+
     switch (object.type) {
       case "rectangle":
         bottom = options.y + options.h;
@@ -85,8 +90,10 @@ export class NaivePhysics {
           options.gravityDeltaY =
             this.gravityCoefficient + (options.gravityDeltaY ?? 1);
         }
+        yBefore = options.y;
         options.y += options.gravityDeltaY;
         options.y = Math.min(options.y, this.canvasConverse.h - options.h);
+        yAfter = options.y;
         break;
       case "triangle":
         bottom = Math.max(options.y1, options.y2, options.y3);
@@ -101,6 +108,7 @@ export class NaivePhysics {
           options.gravityDeltaY =
             this.gravityCoefficient + (options.gravityDeltaY ?? 1);
         }
+        yBefore = options.y1;
         options.y1 += options.gravityDeltaY;
         options.y2 += options.gravityDeltaY;
         options.y3 += options.gravityDeltaY;
@@ -116,6 +124,7 @@ export class NaivePhysics {
           options.y3,
           this.canvasConverse.h - (bottom - options.y3)
         );
+        yAfter = options.y1;
         break;
       case "ellipse":
         bottom = options.y + options.ry;
@@ -130,9 +139,11 @@ export class NaivePhysics {
           options.gravityDeltaY =
             this.gravityCoefficient + (options.gravityDeltaY ?? 1);
         }
+        yBefore = options.y;
         options.y += options.gravityDeltaY;
         const circleHeight = options.r; // TODO: ellipse, not circle
         options.y = Math.min(options.y, this.canvasConverse.h - circleHeight);
+        yAfter = options.y;
         break;
       case "draw":
         break;
@@ -140,13 +151,23 @@ export class NaivePhysics {
         throw new Error("Unrecognized object.");
         break;
     }
+    this.#handleChildren(key, 0, 0, yBefore, yAfter);
   }
 
   #handleCollisions(key) {
     const object = this.objects[key];
     const options1 = object.options;
+
+    let xBefore = 0;
+    let xAfter = 0;
+    let yBefore = 0;
+    let yAfter = 0;
+
     switch (object.type) {
       case "ellipse":
+        xBefore = options1.x;
+        yBefore = options1.y;
+
         Object.entries(this.objects)
           .filter((entry) => {
             const [key2, object2] = entry;
@@ -177,6 +198,10 @@ export class NaivePhysics {
             }
           });
 
+        xAfter = options1.x;
+        yAfter = options1.y;
+        this.#handleChildren(key, xBefore, xAfter, yBefore, yAfter);
+
         break;
 
       default:
@@ -203,5 +228,16 @@ export class NaivePhysics {
 
   #randomNegativeToPositiveOne() {
     return Math.random() * 2 - 1;
+  }
+
+  #handleChildren(key, xBefore, xAfter, yBefore, yAfter) {
+    const xDelta = xAfter - xBefore;
+    const yDelta = yAfter - yBefore;
+    const children = this.objects[key].children;
+    children.forEach((child) => {
+      child.options.x += xDelta;
+      child.options.y += yDelta;
+      this.#redrawObject(child);
+    });
   }
 }
