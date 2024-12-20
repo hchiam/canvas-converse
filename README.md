@@ -21,7 +21,7 @@ CDN usage:
 ```html
 <script
   src="https://cdn.jsdelivr.net/gh/hchiam/canvasConverse@1.0.0/script.js"
-  integrity="sha384-OLBgp1GsljhM2TJ+sbHjaiH9txEUvgdDTAzHv2P24donTt6/529l+9Ua0vFImLlb"
+  integrity="sha384-Wax/Lt3zjjBRrsXGVXY3Rx2CfME5Ee78k6Ry6+0s3n27dU5Jz+NkLg5JX2WKg1QF"
   crossorigin="anonymous"
 ></script>
 ```
