@@ -30,31 +30,34 @@ export class NaivePhysics {
       if (object.options.physics) {
         this.#handleGravity(key);
       }
-
-      // don't duplicate objects!
-      object.options.addObject = false;
-
-      switch (object.type) {
-        case "rectangle":
-          this.canvasConverse.rectangle(object.options);
-          break;
-        case "triangle":
-          this.canvasConverse.triangle(object.options);
-          break;
-        case "ellipse":
-          this.canvasConverse.ellipse(object.options);
-          break;
-        case "draw":
-          this.canvasConverse.draw(
-            object.options,
-            object.options.callbackWithContext
-          );
-          break;
-        default:
-          throw new Error("Unrecognized object.");
-          break;
-      }
+      this.#redrawObject(object);
     });
+  }
+
+  #redrawObject(object) {
+    // don't duplicate objects!
+    object.options.addObject = false;
+
+    switch (object.type) {
+      case "rectangle":
+        this.canvasConverse.rectangle(object.options);
+        break;
+      case "triangle":
+        this.canvasConverse.triangle(object.options);
+        break;
+      case "ellipse":
+        this.canvasConverse.ellipse(object.options);
+        break;
+      case "draw":
+        this.canvasConverse.draw(
+          object.options,
+          object.options.callbackWithContext
+        );
+        break;
+      default:
+        throw new Error("Unrecognized object.");
+        break;
+    }
   }
 
   #handleGravity(key) {
