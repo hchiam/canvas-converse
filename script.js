@@ -1,4 +1,4 @@
-import { NaivePhysics } from "./naivePhysics";
+import { NaivePhysics } from "./naivePhysics.js";
 
 export class CanvasConverse {
   constructor(/** still need to call init */) {
