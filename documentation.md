@@ -68,3 +68,9 @@ constructor(canvasConverse)
 `canvas`: undefined
 
 `context`: undefined
+
+`bounceCoefficient`: number
+
+`collisionCoefficient`: number
+
+`gravityCoefficient`: number
