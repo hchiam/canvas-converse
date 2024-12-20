@@ -28,6 +28,10 @@ CDN usage:
 ></script>
 ```
 
+## documentation (automatically generated)
+
+<https://github.com/hchiam/canvas-converse/blob/main/documentation.md>
+
 ## to learn more about the canvas API
 
 <https://github.com/hchiam/learning-canvas>
