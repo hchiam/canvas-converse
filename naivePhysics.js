@@ -4,6 +4,9 @@ export class NaivePhysics {
     this.objects = canvasConverse.objects;
     this.canvas = canvasConverse.canvas;
     this.context = canvasConverse.context;
+    this.bounceCoefficient = 5;
+    this.collisionCoefficient = 0.5;
+    this.gravityCoefficient = 0.1;
 
     this.#run();
   }
@@ -29,32 +32,36 @@ export class NaivePhysics {
       const [key, object] = entry;
       if (object.options.physics) {
         this.#handleGravity(key);
+        this.#handleCollisions(key);
       }
-
-      // don't duplicate objects!
-      object.options.addObject = false;
-
-      switch (object.type) {
-        case "rectangle":
-          this.canvasConverse.rectangle(object.options);
-          break;
-        case "triangle":
-          this.canvasConverse.triangle(object.options);
-          break;
-        case "ellipse":
-          this.canvasConverse.ellipse(object.options);
-          break;
-        case "draw":
-          this.canvasConverse.draw(
-            object.options,
-            object.options.callbackWithContext
-          );
-          break;
-        default:
-          throw new Error("Unrecognized object.");
-          break;
-      }
+      this.#redrawObject(object);
     });
+  }
+
+  #redrawObject(object) {
+    // don't duplicate objects!
+    object.options.addObject = false;
+
+    switch (object.type) {
+      case "rectangle":
+        this.canvasConverse.rectangle(object.options);
+        break;
+      case "triangle":
+        this.canvasConverse.triangle(object.options);
+        break;
+      case "ellipse":
+        this.canvasConverse.ellipse(object.options);
+        break;
+      case "draw":
+        this.canvasConverse.draw(
+          object.options,
+          object.options.callbackWithContext
+        );
+        break;
+      default:
+        throw new Error("Unrecognized object.");
+        break;
+    }
   }
 
   #handleGravity(key) {
@@ -70,38 +77,62 @@ export class NaivePhysics {
         hitFloor = bottom >= this.canvasConverse.h;
 
         if (hitFloor) {
-          options.bounceLeft = Math.round((options.bounceLeft ?? -5) * 0.5);
-          options.gravityDelta = options.bounceLeft;
+          options.bounceRemaining = Math.round(
+            (options.bounceRemaining ?? -this.bounceCoefficient) * 0.5
+          );
+          options.gravityDeltaY = options.bounceRemaining;
         } else {
-          options.gravityDelta = 0.1 + (options.gravityDelta ?? 1);
+          options.gravityDeltaY =
+            this.gravityCoefficient + (options.gravityDeltaY ?? 1);
         }
-        options.y += options.gravityDelta;
+        options.y += options.gravityDeltaY;
+        options.y = Math.min(options.y, this.canvasConverse.h - options.h);
         break;
       case "triangle":
         bottom = Math.max(options.y1, options.y2, options.y3);
         hitFloor = bottom >= this.canvasConverse.h;
 
         if (hitFloor) {
-          options.bounceLeft = Math.round((options.bounceLeft ?? -5) * 0.5);
-          options.gravityDelta = options.bounceLeft;
+          options.bounceRemaining = Math.round(
+            (options.bounceRemaining ?? -this.bounceCoefficient) * 0.5
+          );
+          options.gravityDeltaY = options.bounceRemaining;
         } else {
-          options.gravityDelta = 0.1 + (options.gravityDelta ?? 1);
+          options.gravityDeltaY =
+            this.gravityCoefficient + (options.gravityDeltaY ?? 1);
         }
-        options.y1 += options.gravityDelta;
-        options.y2 += options.gravityDelta;
-        options.y3 += options.gravityDelta;
+        options.y1 += options.gravityDeltaY;
+        options.y2 += options.gravityDeltaY;
+        options.y3 += options.gravityDeltaY;
+        options.y1 = Math.min(
+          options.y1,
+          this.canvasConverse.h - (bottom - options.y1)
+        );
+        options.y2 = Math.min(
+          options.y2,
+          this.canvasConverse.h - (bottom - options.y2)
+        );
+        options.y3 = Math.min(
+          options.y3,
+          this.canvasConverse.h - (bottom - options.y3)
+        );
         break;
       case "ellipse":
         bottom = options.y + options.ry;
         hitFloor = bottom >= this.canvasConverse.h;
 
         if (hitFloor) {
-          options.bounceLeft = Math.round((options.bounceLeft ?? -5) * 0.5);
-          options.gravityDelta = options.bounceLeft;
+          options.bounceRemaining = Math.round(
+            (options.bounceRemaining ?? -this.bounceCoefficient) * 0.5
+          );
+          options.gravityDeltaY = options.bounceRemaining;
         } else {
-          options.gravityDelta = 0.1 + (options.gravityDelta ?? 1);
+          options.gravityDeltaY =
+            this.gravityCoefficient + (options.gravityDeltaY ?? 1);
         }
-        options.y += options.gravityDelta;
+        options.y += options.gravityDeltaY;
+        const circleHeight = options.r; // TODO: ellipse, not circle
+        options.y = Math.min(options.y, this.canvasConverse.h - circleHeight);
         break;
       case "draw":
         break;
@@ -109,5 +140,68 @@ export class NaivePhysics {
         throw new Error("Unrecognized object.");
         break;
     }
+  }
+
+  #handleCollisions(key) {
+    const object = this.objects[key];
+    const options1 = object.options;
+    switch (object.type) {
+      case "ellipse":
+        Object.entries(this.objects)
+          .filter((entry) => {
+            const [key2, object2] = entry;
+            return (
+              key !== key2 &&
+              object2.options.physics &&
+              object2.type === "ellipse"
+            );
+          })
+          .forEach((entry) => {
+            const [key, object2] = entry;
+            const options2 = object2.options;
+            const hitObject2 = this.#areCirclesColliding(options1, options2);
+            if (hitObject2) {
+              const { dx, dy } = this.#getCircleSeparationDeltas(
+                options1,
+                options2
+              );
+              options1.dx = options1.dx ?? dx;
+              options1.dy = options1.dy ?? dy;
+              options1.x += options1.dx * this.collisionCoefficient;
+              options1.y += options1.dy * this.collisionCoefficient;
+              const circleHeight = options1.r; // TODO: ellipse, not circle
+              options1.y = Math.min(
+                options1.y,
+                this.canvasConverse.h - circleHeight
+              );
+            }
+          });
+
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  #areCirclesColliding(options1, options2) {
+    const distance = Math.sqrt(
+      (options2.x - options1.x) ** 2 + (options2.y - options1.y) ** 2
+    );
+    return distance < options1.r + options2.r;
+  }
+
+  #getCircleSeparationDeltas(options1, options2) {
+    // (a little randomness helps avoid phasing through each other)
+    const dx = options1.x - options2.x + this.#randomNegativeToPositiveOne();
+    const dy = options1.y - options2.y + this.#randomNegativeToPositiveOne();
+    const magnitude = Math.sqrt(dx * dx + dy * dy);
+    const ux = magnitude !== 0 ? dx / magnitude : 0;
+    const uy = magnitude !== 0 ? dy / magnitude : 0;
+    return { dx: ux * options1.r, dy: uy * options1.r };
+  }
+
+  #randomNegativeToPositiveOne() {
+    return Math.random() * 2 - 1;
   }
 }

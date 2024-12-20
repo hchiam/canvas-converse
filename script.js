@@ -75,9 +75,9 @@ export class CanvasConverse {
   }) {
     this.context.fillStyle = fill ?? "transparent";
     this.context.beginPath();
-    if (typeof r === "undefined" && rx === ry) r = rx;
     rx = rx ?? r;
     ry = ry ?? r;
+    if (typeof r === "undefined" && rx === ry) r = rx;
     this.context.ellipse(
       x,
       y,
