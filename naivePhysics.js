@@ -4,8 +4,8 @@ export class NaivePhysics {
     this.objects = canvasConverse.objects;
     this.canvas = canvasConverse.canvas;
     this.context = canvasConverse.context;
-    this.bounceCoefficient = 0.5;
-    // this.bounceCoefficient = 5; // TODO: put back to 5
+    this.bounceCoefficient = 5;
+    this.collisionCoefficient = 0.5;
     this.gravityCoefficient = 0.1;
 
     this.#run();
@@ -167,8 +167,8 @@ export class NaivePhysics {
               );
               options1.dx = options1.dx ?? dx;
               options1.dy = options1.dy ?? dy;
-              options1.x += options1.dx * this.bounceCoefficient;
-              options1.y += options1.dy * this.bounceCoefficient;
+              options1.x += options1.dx * this.collisionCoefficient;
+              options1.y += options1.dy * this.collisionCoefficient;
               const circleHeight = options1.r; // TODO: ellipse, not circle
               options1.y = Math.min(
                 options1.y,
@@ -192,6 +192,7 @@ export class NaivePhysics {
   }
 
   #getCircleSeparationDeltas(options1, options2) {
+    // (a little randomness helps avoid phasing through each other)
     const dx = options1.x - options2.x + this.#randomNegativeToPositiveOne();
     const dy = options1.y - options2.y + this.#randomNegativeToPositiveOne();
     const magnitude = Math.sqrt(dx * dx + dy * dy);

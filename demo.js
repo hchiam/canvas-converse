@@ -36,4 +36,11 @@ cc.ellipse({
   fill: "grey",
   physics: true,
 });
+cc.ellipse({
+  x: 100,
+  y: 3000,
+  r: 25,
+  fill: "blue",
+  physics: true,
+});
 cc.draw({ fill: "lime" }, (ctx) => ctx.arc(400, 420, 50, 0, 1.5 * Math.PI));
