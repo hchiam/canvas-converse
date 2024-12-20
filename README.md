@@ -14,13 +14,13 @@ https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@main/script.js
 ```
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@2.0.0/script.js
+https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@2.1.0/script.js
 ```
 
 Example usage:
 
 ```js
-import { CanvasConverse } from "https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@2.0.0/script.js";
+import { CanvasConverse } from "https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@2.1.0/script.js";
 
 const $ = (x) => document.querySelector(x);
 
@@ -58,8 +58,8 @@ CDN usage:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@2.0.0/script.js"
-  integrity="sha384-GIOXNQ6wQXvvxVHdE4amr0TZE4IvFUmrjGo/OnaICO4isC3+Hio55rXCbBFFKbf8"
+  src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@2.1.0/script.js"
+  integrity="sha384-4rnNEEbZc2YXNhY0XtPzTOzncQzeEONfXS2Rp4uBAhbK0QhwVmpr4kKTv9kwLA2q"
   crossorigin="anonymous"
 ></script>
 ```
