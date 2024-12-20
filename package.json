@@ -12,7 +12,8 @@
     "dev": "cd demo; vite # http://localhost:5173/",
     "start": "cd demo; vite # http://localhost:5173/",
     "pkg": "bash get-integrity.sh; git status -sb; echo; echo Make sure to update the version in package.json;",
-    "pub": "yarn pkg; yarn publish; open https://www.npmjs.com/package/canvas-converse;"
+    "pub": "yarn pkg; yarn publish; open https://www.npmjs.com/package/canvas-converse;",
+    "surge": "vite build; mv dist/demo.html dist/index.html; surge dist https://canvas-converse.surge.sh/; open https://canvas-converse.surge.sh/;"
   },
   "devDependencies": {
     "vite": "6.0.4"

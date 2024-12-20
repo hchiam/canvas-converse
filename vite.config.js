@@ -4,4 +4,11 @@ export default defineConfig({
   server: {
     open: "demo.html",
   },
+  build: {
+    rollupOptions: {
+      input: {
+        app: "demo.html",
+      },
+    },
+  },
 });
