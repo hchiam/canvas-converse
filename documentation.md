@@ -1,6 +1,6 @@
 # canvasConverse Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2024/12/19th 20:36.)
+(Generated from generateDocumentation.js to clipboard - 2024/12/19th 21:06.)
 
 ## Methods
 
@@ -33,4 +33,8 @@ ellipse({
     endAngle = 2 * Math.PI,
     counterclockwise = false,
   })
+```
+
+```js
+draw(fill, callbackWithContext)
 ```

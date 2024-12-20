@@ -19,3 +19,4 @@ cc.ellipse({
   r: 25,
   fill: "black",
 });
+cc.draw("lime", (ctx) => ctx.arc(400, 420, 50, 0, 1.5 * Math.PI));

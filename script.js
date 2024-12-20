@@ -64,6 +64,14 @@ export class canvasConverse {
       endAngle,
       counterclockwise
     );
+    this.context.closePath();
+    this.context.fill();
+  }
+  draw(fill, callbackWithContext) {
+    this.context.fillStyle = fill ?? "transparent";
+    this.context.beginPath();
+    callbackWithContext(this.context);
+    this.context.closePath();
     this.context.fill();
   }
 }
