@@ -46,7 +46,7 @@ CDN usage:
 ```html
 <script
   src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@2.0.0/script.js"
-  integrity="sha384-hYpkASVeNIY53oXgiloOSeQqq4aqI5Xgm/e6KRo9Jxs6KapDSAFZDsxMXKEoselv"
+  integrity="sha384-GIOXNQ6wQXvvxVHdE4amr0TZE4IvFUmrjGo/OnaICO4isC3+Hio55rXCbBFFKbf8"
   crossorigin="anonymous"
 ></script>
 ```
