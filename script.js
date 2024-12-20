@@ -41,7 +41,15 @@ export class CanvasConverse {
     }
 
     if (addObject) {
-      this.#addObject("rectangle", { x, y, w, h, fill, stroke, physics });
+      return this.#addObject("rectangle", {
+        x,
+        y,
+        w,
+        h,
+        fill,
+        stroke,
+        physics,
+      });
     }
   }
 
@@ -55,7 +63,16 @@ export class CanvasConverse {
     this.context.fill();
 
     if (addObject) {
-      this.#addObject("triangle", { x1, y1, x2, y2, x3, y3, fill, physics });
+      return this.#addObject("triangle", {
+        x1,
+        y1,
+        x2,
+        y2,
+        x3,
+        y3,
+        fill,
+        physics,
+      });
     }
   }
 
@@ -92,7 +109,7 @@ export class CanvasConverse {
     this.context.fill();
 
     if (addObject) {
-      this.#addObject("ellipse", {
+      return this.#addObject("ellipse", {
         x,
         y,
         r,
@@ -116,8 +133,19 @@ export class CanvasConverse {
     this.context.fill();
 
     if (addObject) {
-      this.#addObject("draw", { fill, physics, callbackWithContext });
+      return this.#addObject("draw", { fill, physics, callbackWithContext });
     }
+  }
+
+  group(objectToAttachTo, arrayOfObjectsToAttach = []) {
+    objectToAttachTo.children = arrayOfObjectsToAttach.filter(
+      (obj) => !obj?.options.physics
+      // to keep things simple for now,
+      // don't attach objects that have their own physics.
+    );
+    objectToAttachTo.children.forEach((child) => {
+      if (child) child.isChild = true;
+    });
   }
 
   clear() {
@@ -125,9 +153,12 @@ export class CanvasConverse {
   }
 
   #addObject(type, options) {
-    this.objects[Object.keys(this.objects).length] = {
+    const newKey = Object.keys(this.objects).length;
+    this.objects[newKey] = {
       type: type,
       options: options,
+      children: [],
     };
+    return this.objects[newKey];
   }
 }

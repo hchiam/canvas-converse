@@ -42,6 +42,10 @@ draw({ fill, physics, addObject = true }, callbackWithContext)
 ```
 
 ```js
+group(objectToAttachTo, arrayOfObjectsToAttach = [])
+```
+
+```js
 clear()
 ```
 
