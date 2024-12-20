@@ -3,9 +3,7 @@ function sha() {
   echo sha384-$tempShaOutput
 }
 
-# uncomment the following lines:
-
-# echo
-# echo someFileName.js
-# sha someFileName.js
-# echo
+echo
+echo script.js
+sha script.js
+echo
