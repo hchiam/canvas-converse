@@ -1,5 +1,6 @@
 export class canvasConverse {
-  constructor() {}
+  constructor(/** does nothing but create the object */) {}
+
   init(canvas, options = {}) {
     this.canvas = canvas;
     this.context = canvas.getContext("2d");
@@ -21,6 +22,7 @@ export class canvasConverse {
       }
     }
   }
+
   rectangle({ x, y, w, h, fill, stroke }) {
     if (fill) {
       this.context.fillStyle = fill ?? "transparent";
@@ -31,6 +33,7 @@ export class canvasConverse {
       this.context.strokeRect(x, y, w, h);
     }
   }
+
   triangle(x1, y1, x2, y2, x3, y3, fill) {
     this.context.fillStyle = fill ?? "transparent";
     this.context.beginPath();
@@ -40,6 +43,7 @@ export class canvasConverse {
     this.context.closePath();
     this.context.fill();
   }
+
   ellipse({
     x,
     y,
@@ -67,6 +71,7 @@ export class canvasConverse {
     this.context.closePath();
     this.context.fill();
   }
+
   draw(fill, callbackWithContext) {
     this.context.fillStyle = fill ?? "transparent";
     this.context.beginPath();

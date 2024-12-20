@@ -1,11 +1,11 @@
 # canvasConverse Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2024/12/19th 21:06.)
+(Generated from generateDocumentation.js to clipboard - 2024/12/20th.)
 
 ## Methods
 
 ```js
-constructor()
+constructor(/** does nothing but create the object */)
 ```
 
 ```js

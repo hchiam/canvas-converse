@@ -50,12 +50,10 @@ class DocumentationGenerator {
     const yyyy = date.getFullYear();
     const MM = String(date.getMonth() + 1).padStart(2, "0");
     const dd = String(date.getDate()).padStart(2, "0");
-    const hh = String(date.getHours()).padStart(2, "0");
-    const mm = String(date.getMinutes()).padStart(2, "0");
 
     let content = `# ${yourClassHere.name} Documentation
 
-(Generated from generateDocumentation.js to clipboard - ${yyyy}/${MM}/${dd}th ${hh}:${mm}.)
+(Generated from generateDocumentation.js to clipboard - ${yyyy}/${MM}/${dd}th.)
 
 `;
     if (methods) {
