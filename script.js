@@ -42,4 +42,30 @@ export class canvasConverse {
     this.context.closePath();
     this.context.fill();
   }
+  ellipse({
+    x,
+    y,
+    r,
+    rx,
+    ry,
+    fill,
+    rotation = 0,
+    startAngle = 0,
+    endAngle = 2 * Math.PI,
+    counterclockwise = false,
+  }) {
+    this.context.fillStyle = fill ?? "transparent";
+    this.context.beginPath();
+    this.context.ellipse(
+      x,
+      y,
+      r ?? rx,
+      r ?? ry,
+      rotation,
+      startAngle,
+      endAngle,
+      counterclockwise
+    );
+    this.context.fill();
+  }
 }
