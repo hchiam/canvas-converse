@@ -11,7 +11,7 @@ https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@main/script.js
 ```
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@1.0.0/script.js
+https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@1.1.0/script.js
 ```
 
 Example usage:
@@ -45,8 +45,8 @@ CDN usage:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@1.0.0/script.js"
-  integrity="sha384-Wax/Lt3zjjBRrsXGVXY3Rx2CfME5Ee78k6Ry6+0s3n27dU5Jz+NkLg5JX2WKg1QF"
+  src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@1.1.0/script.js"
+  integrity="sha384-2RDbWS4U7vvDgZHOh3UrL7owH8O+tNDqxfYmYPQs3kiiUHPT9BBX3Z/TUdqUFyI3"
   crossorigin="anonymous"
 ></script>
 ```
