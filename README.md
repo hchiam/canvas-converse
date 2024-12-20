@@ -2,7 +2,7 @@
 
 [![version](https://img.shields.io/npm/v/canvas-converse.svg?style=flat-square&color=423a73)](https://www.npmjs.com/package/canvas-converse) [![License: MIT](https://img.shields.io/badge/License-MIT-f5d20d.svg?style=flat-square)](https://github.com/hchiam/canvas-converse/blob/main/LICENSE)
 
-To more easily converse with the canvas API.
+To more easily "converse" with the canvas API.
 
 Live demo: <https://codepen.io/hchiam/pen/jENmOeZ>
 
