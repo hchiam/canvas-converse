@@ -23,8 +23,23 @@ export class canvasConverse {
       }
     }
   }
-  rectangle({ x, y, w, h, fillStyle }) {
-    this.context.fillStyle = fillStyle;
-    this.context.fillRect(x, y, w, h);
+  rectangle({ x, y, w, h, fill, stroke }) {
+    if (fill) {
+      this.context.fillStyle = fill ?? "transparent";
+      this.context.fillRect(x, y, w, h);
+    }
+    if (stroke) {
+      this.context.strokeStyle = stroke ?? "transparent";
+      this.context.strokeRect(x, y, w, h);
+    }
+  }
+  triangle(x1, y1, x2, y2, x3, y3, fill) {
+    this.context.fillStyle = fill ?? "transparent";
+    this.context.beginPath();
+    this.context.moveTo(x1, y1);
+    this.context.lineTo(x2, y2);
+    this.context.lineTo(x3, y3);
+    this.context.closePath();
+    this.context.fill();
   }
 }
