@@ -4,7 +4,10 @@
 
 To more easily "converse" with the canvas API.
 
-Live demo: <https://codepen.io/hchiam/pen/jENmOeZ>
+Live demos:
+
+- <https://codepen.io/hchiam/pen/jENmOeZ>
+- <https://canvas-converse.surge.sh>
 
 ```js
 https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@main/script.js
