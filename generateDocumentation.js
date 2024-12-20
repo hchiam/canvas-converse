@@ -1,4 +1,5 @@
-import { canvasConverse } from "./script.js";
+import { CanvasConverse } from "./script.js";
+import { NaivePhysics } from "./naivePhysics.js";
 const $ = (s) => document.querySelector(s);
 
 class DocumentationGenerator {
@@ -79,15 +80,17 @@ ${properties}
   }
 }
 
-const docGenerator = new DocumentationGenerator({ classRef: canvasConverse });
-const documentation = docGenerator.generateDocumentation();
+const docGenerator1 = new DocumentationGenerator({ classRef: CanvasConverse });
+const docGenerator2 = new DocumentationGenerator({ classRef: NaivePhysics });
 // console.log(documentation);
 
 // window.copyDoc = function () {
 //   copy(documentation);
 // };
 $("#copyDoc").addEventListener("click", () => {
-  copy(documentation);
+  const documentation1 = docGenerator1.generateDocumentation();
+  const documentation2 = docGenerator2.generateDocumentation();
+  copy(documentation1 + "\n" + documentation2);
 });
 
 function copy(text) {
