@@ -4,7 +4,8 @@ export class NaivePhysics {
     this.objects = canvasConverse.objects;
     this.canvas = canvasConverse.canvas;
     this.context = canvasConverse.context;
-    this.bounceCoefficient = 1; // 5; // TODO: put back to 5
+    this.bounceCoefficient = 0.5;
+    // this.bounceCoefficient = 5; // TODO: put back to 5
     this.gravityCoefficient = 0.1;
 
     this.#run();
@@ -30,8 +31,8 @@ export class NaivePhysics {
     Object.entries(this.objects).forEach((entry) => {
       const [key, object] = entry;
       if (object.options.physics) {
-        this.#handleCollisions(key);
         this.#handleGravity(key);
+        this.#handleCollisions(key);
       }
       this.#redrawObject(object);
     });
@@ -130,8 +131,8 @@ export class NaivePhysics {
             this.gravityCoefficient + (options.gravityDeltaY ?? 1);
         }
         options.y += options.gravityDeltaY;
-        const ellipseHeight = options.ry; // TODO: ellipse, not circle
-        options.y = Math.min(options.y, this.canvasConverse.h - ellipseHeight);
+        const circleHeight = options.r; // TODO: ellipse, not circle
+        options.y = Math.min(options.y, this.canvasConverse.h - circleHeight);
         break;
       case "draw":
         break;
@@ -170,6 +171,11 @@ export class NaivePhysics {
               options1.dy = options1.dy ?? dy;
               options1.x += options1.dx * this.bounceCoefficient;
               options1.y += options1.dy * this.bounceCoefficient;
+              const circleHeight = options1.r; // TODO: ellipse, not circle
+              options1.y = Math.min(
+                options1.y,
+                this.canvasConverse.h - circleHeight
+              );
             }
           });
 
