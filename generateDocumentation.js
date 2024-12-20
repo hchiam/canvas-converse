@@ -81,15 +81,15 @@ ${properties}
 }
 
 const docGenerator1 = new DocumentationGenerator({ classRef: CanvasConverse });
-const documentation1 = docGenerator1.generateDocumentation();
 const docGenerator2 = new DocumentationGenerator({ classRef: NaivePhysics });
-const documentation2 = docGenerator2.generateDocumentation();
 // console.log(documentation);
 
 // window.copyDoc = function () {
 //   copy(documentation);
 // };
 $("#copyDoc").addEventListener("click", () => {
+  const documentation1 = docGenerator1.generateDocumentation();
+  const documentation2 = docGenerator2.generateDocumentation();
   copy(documentation1 + "\n" + documentation2);
 });
 

@@ -1,3 +1,5 @@
+import { NaivePhysics } from "./naivePhysics";
+
 export class CanvasConverse {
   constructor(/** still need to call init */) {
     this.objects = {};
@@ -23,9 +25,12 @@ export class CanvasConverse {
         this.canvas.width = this.w;
       }
     }
+    this.w ??= this.canvas.width || this.canvas.style.width;
+    this.h ??= this.canvas.height || this.canvas.style.height;
+    this.physicsEngine = new NaivePhysics(this);
   }
 
-  rectangle({ x, y, w, h, fill, stroke, physics }) {
+  rectangle({ x, y, w, h, fill, stroke, physics, addObject = true }) {
     if (fill) {
       this.context.fillStyle = fill ?? "transparent";
       this.context.fillRect(x, y, w, h);
@@ -35,10 +40,12 @@ export class CanvasConverse {
       this.context.strokeRect(x, y, w, h);
     }
 
-    this.#addObject("rectangle", { x, y, w, h, fill, stroke, physics });
+    if (addObject) {
+      this.#addObject("rectangle", { x, y, w, h, fill, stroke, physics });
+    }
   }
 
-  triangle(x1, y1, x2, y2, x3, y3, fill, physics) {
+  triangle({ x1, y1, x2, y2, x3, y3, fill, physics, addObject = true }) {
     this.context.fillStyle = fill ?? "transparent";
     this.context.beginPath();
     this.context.moveTo(x1, y1);
@@ -47,7 +54,9 @@ export class CanvasConverse {
     this.context.closePath();
     this.context.fill();
 
-    this.#addObject("triangle", { x1, y1, x2, y2, x3, y3, fill, physics });
+    if (addObject) {
+      this.#addObject("triangle", { x1, y1, x2, y2, x3, y3, fill, physics });
+    }
   }
 
   ellipse({
@@ -62,14 +71,18 @@ export class CanvasConverse {
     endAngle = 2 * Math.PI,
     counterclockwise = false,
     physics,
+    addObject = true,
   }) {
     this.context.fillStyle = fill ?? "transparent";
     this.context.beginPath();
+    if (typeof r === "undefined" && rx === ry) r = rx;
+    rx = rx ?? r;
+    ry = ry ?? r;
     this.context.ellipse(
       x,
       y,
-      r ?? rx,
-      r ?? ry,
+      rx,
+      ry,
       rotation,
       startAngle,
       endAngle,
@@ -78,32 +91,43 @@ export class CanvasConverse {
     this.context.closePath();
     this.context.fill();
 
-    this.#addObject("ellipse", {
-      x,
-      y,
-      r,
-      rx,
-      ry,
-      fill,
-      rotation,
-      startAngle,
-      endAngle,
-      counterclockwise,
-      physics,
-    });
+    if (addObject) {
+      this.#addObject("ellipse", {
+        x,
+        y,
+        r,
+        rx,
+        ry,
+        fill,
+        rotation,
+        startAngle,
+        endAngle,
+        counterclockwise,
+        physics,
+      });
+    }
   }
 
-  draw({ fill, physics }, callbackWithContext) {
+  draw({ fill, physics, addObject = true }, callbackWithContext) {
     this.context.fillStyle = fill ?? "transparent";
     this.context.beginPath();
     callbackWithContext(this.context);
     this.context.closePath();
     this.context.fill();
 
-    this.#addObject("draw", { fill, physics });
+    if (addObject) {
+      this.#addObject("draw", { fill, physics, callbackWithContext });
+    }
   }
 
-  #addObject(type, object) {
-    this.objects[Object.keys(this.objects).length] = { type: type, ...object };
+  clear() {
+    this.context.clearRect(0, 0, this.w, this.h);
+  }
+
+  #addObject(type, options) {
+    this.objects[Object.keys(this.objects).length] = {
+      type: type,
+      options: options,
+    };
   }
 }

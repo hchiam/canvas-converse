@@ -13,11 +13,11 @@ init(canvas, options = {})
 ```
 
 ```js
-rectangle({ x, y, w, h, fill, stroke, physics })
+rectangle({ x, y, w, h, fill, stroke, physics, addObject = true })
 ```
 
 ```js
-triangle(x1, y1, x2, y2, x3, y3, fill, physics)
+triangle({ x1, y1, x2, y2, x3, y3, fill, physics, addObject = true })
 ```
 
 ```js
@@ -33,11 +33,16 @@ ellipse({
     endAngle = 2 * Math.PI,
     counterclockwise = false,
     physics,
+    addObject = true,
   })
 ```
 
 ```js
-draw({ fill, physics }, callbackWithContext)
+draw({ fill, physics, addObject = true }, callbackWithContext)
+```
+
+```js
+clear()
 ```
 
 ## Properties
@@ -57,3 +62,9 @@ constructor(canvasConverse)
 ## Properties
 
 `canvasConverse`: object
+
+`objects`: undefined
+
+`canvas`: undefined
+
+`context`: undefined
