@@ -17,7 +17,7 @@ https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@1.1.0/script.js
 Example usage:
 
 ```js
-import { canvasConverse } from "./script.js";
+import { canvasConverse } from "https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@1.1.0/script.js";
 
 const $ = (x) => document.querySelector(x);
 
