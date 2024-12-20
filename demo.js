@@ -3,8 +3,9 @@ import { canvasConverse } from "./script.js";
 const $ = (x) => document.querySelector(x);
 
 // init
-const cc = new canvasConverse($("canvas"), { w: 500, h: 500 });
+const cc = new canvasConverse();
 window.cc = cc;
+cc.init($("canvas"), { w: 500, h: 500 });
 cc.canvas.style.outline = "1px solid white";
 
 // fun part
