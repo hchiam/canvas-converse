@@ -1,9 +1,9 @@
-import { canvasConverse } from "./script.js";
+import { CanvasConverse } from "./script.js";
 
 const $ = (x) => document.querySelector(x);
 
 // init
-const cc = new canvasConverse();
+const cc = new CanvasConverse();
 window.cc = cc;
 cc.init($("canvas"), { w: 500, h: 500 });
 cc.canvas.style.outline = "1px solid white";
@@ -19,4 +19,4 @@ cc.ellipse({
   r: 25,
   fill: "black",
 });
-cc.draw("lime", (ctx) => ctx.arc(400, 420, 50, 0, 1.5 * Math.PI));
+cc.draw({ fill: "lime" }, (ctx) => ctx.arc(400, 420, 50, 0, 1.5 * Math.PI));

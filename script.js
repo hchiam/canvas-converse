@@ -1,5 +1,7 @@
-export class canvasConverse {
-  constructor(/** does nothing but create the object */) {}
+export class CanvasConverse {
+  constructor(/** still need to call init */) {
+    this.objects = {};
+  }
 
   init(canvas, options = {}) {
     this.canvas = canvas;
@@ -23,7 +25,7 @@ export class canvasConverse {
     }
   }
 
-  rectangle({ x, y, w, h, fill, stroke }) {
+  rectangle({ x, y, w, h, fill, stroke, physics }) {
     if (fill) {
       this.context.fillStyle = fill ?? "transparent";
       this.context.fillRect(x, y, w, h);
@@ -32,9 +34,11 @@ export class canvasConverse {
       this.context.strokeStyle = stroke ?? "transparent";
       this.context.strokeRect(x, y, w, h);
     }
+
+    this.#addObject("rectangle", { x, y, w, h, fill, stroke, physics });
   }
 
-  triangle(x1, y1, x2, y2, x3, y3, fill) {
+  triangle(x1, y1, x2, y2, x3, y3, fill, physics) {
     this.context.fillStyle = fill ?? "transparent";
     this.context.beginPath();
     this.context.moveTo(x1, y1);
@@ -42,6 +46,8 @@ export class canvasConverse {
     this.context.lineTo(x3, y3);
     this.context.closePath();
     this.context.fill();
+
+    this.#addObject("triangle", { x1, y1, x2, y2, x3, y3, fill, physics });
   }
 
   ellipse({
@@ -55,6 +61,7 @@ export class canvasConverse {
     startAngle = 0,
     endAngle = 2 * Math.PI,
     counterclockwise = false,
+    physics,
   }) {
     this.context.fillStyle = fill ?? "transparent";
     this.context.beginPath();
@@ -70,13 +77,33 @@ export class canvasConverse {
     );
     this.context.closePath();
     this.context.fill();
+
+    this.#addObject("ellipse", {
+      x,
+      y,
+      r,
+      rx,
+      ry,
+      fill,
+      rotation,
+      startAngle,
+      endAngle,
+      counterclockwise,
+      physics,
+    });
   }
 
-  draw(fill, callbackWithContext) {
+  draw({ fill, physics }, callbackWithContext) {
     this.context.fillStyle = fill ?? "transparent";
     this.context.beginPath();
     callbackWithContext(this.context);
     this.context.closePath();
     this.context.fill();
+
+    this.#addObject("draw", { fill, physics });
+  }
+
+  #addObject(type, object) {
+    this.objects[Object.keys(this.objects).length] = { type: type, ...object };
   }
 }
