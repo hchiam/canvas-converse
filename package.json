@@ -13,5 +13,8 @@
     "start": "cd demo; vite # http://localhost:5173/",
     "pkg": "bash get-integrity.sh; git status -sb; echo; echo Make sure to update the version in package.json;",
     "pub": "yarn pkg; yarn publish"
+  },
+  "devDependencies": {
+    "vite": "6.0.4"
   }
 }
