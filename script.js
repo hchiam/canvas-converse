@@ -31,14 +31,16 @@ export class CanvasConverse {
   }
 
   rectangle({ x, y, w, h, fill, stroke, physics, addObject = true }) {
-    if (fill) {
-      this.context.fillStyle = fill ?? "transparent";
-      this.context.fillRect(x, y, w, h);
-    }
-    if (stroke) {
-      this.context.strokeStyle = stroke ?? "transparent";
-      this.context.strokeRect(x, y, w, h);
-    }
+    this.#isolateStyles(() => {
+      if (fill) {
+        this.context.fillStyle = fill ?? "transparent";
+        this.context.fillRect(x, y, w, h);
+      }
+      if (stroke) {
+        this.context.strokeStyle = stroke ?? "transparent";
+        this.context.strokeRect(x, y, w, h);
+      }
+    });
 
     if (addObject) {
       return this.#addObject("rectangle", {
@@ -54,13 +56,15 @@ export class CanvasConverse {
   }
 
   triangle({ x1, y1, x2, y2, x3, y3, fill, physics, addObject = true }) {
-    this.context.fillStyle = fill ?? "transparent";
-    this.context.beginPath();
-    this.context.moveTo(x1, y1);
-    this.context.lineTo(x2, y2);
-    this.context.lineTo(x3, y3);
-    this.context.closePath();
-    this.context.fill();
+    this.#isolateStyles(() => {
+      this.context.fillStyle = fill ?? "transparent";
+      this.context.beginPath();
+      this.context.moveTo(x1, y1);
+      this.context.lineTo(x2, y2);
+      this.context.lineTo(x3, y3);
+      this.context.closePath();
+      this.context.fill();
+    });
 
     if (addObject) {
       return this.#addObject("triangle", {
@@ -90,23 +94,25 @@ export class CanvasConverse {
     physics,
     addObject = true,
   }) {
-    this.context.fillStyle = fill ?? "transparent";
-    this.context.beginPath();
-    rx = rx ?? r;
-    ry = ry ?? r;
-    if (typeof r === "undefined" && rx === ry) r = rx;
-    this.context.ellipse(
-      x,
-      y,
-      rx,
-      ry,
-      rotation,
-      startAngle,
-      endAngle,
-      counterclockwise
-    );
-    this.context.closePath();
-    this.context.fill();
+    this.#isolateStyles(() => {
+      this.context.fillStyle = fill ?? "transparent";
+      this.context.beginPath();
+      rx = rx ?? r;
+      ry = ry ?? r;
+      if (typeof r === "undefined" && rx === ry) r = rx;
+      this.context.ellipse(
+        x,
+        y,
+        rx,
+        ry,
+        rotation,
+        startAngle,
+        endAngle,
+        counterclockwise
+      );
+      this.context.closePath();
+      this.context.fill();
+    });
 
     if (addObject) {
       return this.#addObject("ellipse", {
@@ -126,11 +132,13 @@ export class CanvasConverse {
   }
 
   draw({ fill, physics, addObject = true }, callbackWithContext) {
-    this.context.fillStyle = fill ?? "transparent";
-    this.context.beginPath();
-    callbackWithContext(this.context);
-    this.context.closePath();
-    this.context.fill();
+    this.#isolateStyles(() => {
+      this.context.fillStyle = fill ?? "transparent";
+      this.context.beginPath();
+      callbackWithContext(this.context);
+      this.context.closePath();
+      this.context.fill();
+    });
 
     if (addObject) {
       return this.#addObject("draw", { fill, physics, callbackWithContext });
@@ -160,5 +168,12 @@ export class CanvasConverse {
       children: [],
     };
     return this.objects[newKey];
+  }
+
+  #isolateStyles(drawingCallback) {
+    // prevent style leak e.g. fill
+    this.context.save();
+    drawingCallback();
+    this.context.restore();
   }
 }

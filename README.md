@@ -72,7 +72,12 @@ CDN usage:
 
 <https://github.com/hchiam/learning-canvas>
 
-## reminders to self for deployment
+## reminder to self for development and deployment
+
+```bash
+vite # http://localhost:5173/demo.html
+# and NOT: http://localhost:5173
+```
 
 ```bash
 # get the thing to put into integrity="...":
