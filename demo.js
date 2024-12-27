@@ -81,8 +81,8 @@ const rotatingTriangle = cc.triangle({
 const rotatingEllipse = cc.ellipse({
   x: 400,
   y: 300,
-  rx: 30,
-  ry: 50,
+  rx: 50,
+  ry: 30,
   rotationX: 410, // rotate slightly off of its center
   rotationY: 310,
   fill: "lightblue",
@@ -92,5 +92,6 @@ setInterval(() => {
   rotatingRectangle.options.rotation += 10;
   rotatingTriangle.options.rotation -= 10;
   rotatingEllipse.options.rotation -= 5;
+  rotatingEllipse.options.centerRotation += 7;
   rotatingDraw.options.rotation += 1;
 }, 100);
