@@ -124,14 +124,20 @@ export class CanvasConverse {
     rx,
     ry,
     fill,
+    centerRotation = 0 /* degrees */,
+    centerStartAngle = 0 /* degrees */,
+    centerEndAngle = 360 /* degrees */,
     rotation = 0 /* degrees */,
-    startAngle = 0 /* degrees */,
-    endAngle = 360 /* degrees */,
+    rotationX,
+    rotationY,
     counterclockwise = false,
     physics,
     addObject = true,
   }) {
     this.#isolateStyles(() => {
+      if (typeof rotation !== 0) {
+        this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
+      }
       this.context.fillStyle = fill ?? "transparent";
       this.context.beginPath();
       rx = rx ?? r;
@@ -142,9 +148,12 @@ export class CanvasConverse {
         y,
         rx,
         ry,
-        (rotation * Math.PI) / 180,
-        (startAngle * Math.PI) / 180,
-        (endAngle * Math.PI) / 180,
+        (centerRotation * Math.PI) / 180,
+        (centerStartAngle * Math.PI) / 180,
+        (centerEndAngle * Math.PI) / 180,
+        rotation,
+        rotationX,
+        rotationY,
         counterclockwise
       );
       this.context.closePath();
@@ -159,9 +168,12 @@ export class CanvasConverse {
         rx,
         ry,
         fill,
+        centerRotation,
+        centerStartAngle,
+        centerEndAngle,
         rotation,
-        startAngle,
-        endAngle,
+        rotationX,
+        rotationY,
         counterclockwise,
         physics,
       });
