@@ -88,6 +88,8 @@ const rotatingEllipse = cc.ellipse({
   fill: "lightblue",
 });
 cc.group(rotatingEllipse, [rotatingTriangle]);
+
+// animate rotations:
 setInterval(() => {
   rotatingRectangle.options.rotation += 10;
   rotatingTriangle.options.rotation -= 10;
