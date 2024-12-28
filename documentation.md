@@ -1,6 +1,6 @@
 # CanvasConverse Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2024/12/20th.)
+(Generated from generateDocumentation.js to clipboard - 2024/12/27th.)
 
 ## Methods
 
@@ -13,11 +13,36 @@ init(canvas, options = {})
 ```
 
 ```js
-rectangle({ x, y, w, h, fill, stroke, physics, addObject = true })
+rectangle({
+    x,
+    y,
+    w,
+    h,
+    rotation = 0 /* degrees */,
+    rotationX,
+    rotationY,
+    fill,
+    stroke,
+    physics,
+    addObject = true,
+  })
 ```
 
 ```js
-triangle({ x1, y1, x2, y2, x3, y3, fill, physics, addObject = true })
+triangle({
+    x1,
+    y1,
+    x2,
+    y2,
+    x3,
+    y3,
+    rotation = 0 /* degrees */,
+    rotationX,
+    rotationY,
+    fill,
+    physics,
+    addObject = true,
+  })
 ```
 
 ```js
@@ -28,9 +53,12 @@ ellipse({
     rx,
     ry,
     fill,
-    rotation = 0,
-    startAngle = 0,
-    endAngle = 2 * Math.PI,
+    centerRotation = 0 /* degrees */,
+    centerStartAngle = 0 /* degrees */,
+    centerEndAngle = 360 /* degrees */,
+    rotation = 0 /* degrees */,
+    rotationX,
+    rotationY,
     counterclockwise = false,
     physics,
     addObject = true,
@@ -38,7 +66,15 @@ ellipse({
 ```
 
 ```js
-draw({ fill, physics, addObject = true }, callbackWithContext)
+draw({
+      rotation = 0 /* degrees */,
+      rotationX,
+      rotationY,
+      fill,
+      physics,
+      addObject = true,
+    },
+    callbackWithContext)
 ```
 
 ```js
@@ -55,7 +91,7 @@ clear()
 
 # NaivePhysics Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2024/12/20th.)
+(Generated from generateDocumentation.js to clipboard - 2024/12/27th.)
 
 ## Methods
 
