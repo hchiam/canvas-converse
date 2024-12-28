@@ -68,14 +68,14 @@ const child = cc.rectangle({
 cc.group(parent, [child]);
 
 const rotatingTriangle = cc.triangle({
-  x1: 250,
-  y1: 250,
-  x2: 300,
-  y2: 250,
-  x3: 300,
-  y3: 300,
-  rotationX: 275,
-  rotationY: 275,
+  x1: 250 / 2,
+  y1: 250 / 2,
+  x2: 300 / 2,
+  y2: 250 / 2,
+  x3: 300 / 2,
+  y3: 300 / 2,
+  rotationX: 270 / 2,
+  rotationY: 270 / 2,
   fill: "orange",
 });
 const rotatingEllipse = cc.ellipse({
