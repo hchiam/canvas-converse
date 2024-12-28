@@ -30,8 +30,23 @@ export class CanvasConverse {
     this.physicsEngine = new NaivePhysics(this);
   }
 
-  rectangle({ x, y, w, h, fill, stroke, physics, addObject = true }) {
+  rectangle({
+    x,
+    y,
+    w,
+    h,
+    rotation = 0 /* degrees */,
+    rotationX /* x position of rotation */,
+    rotationY /* y position of rotation */,
+    fill,
+    stroke,
+    physics,
+    addObject = true,
+  }) {
     this.#isolateStyles(() => {
+      if (typeof rotation !== 0) {
+        this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
+      }
       if (fill) {
         this.context.fillStyle = fill ?? "transparent";
         this.context.fillRect(x, y, w, h);
@@ -48,6 +63,9 @@ export class CanvasConverse {
         y,
         w,
         h,
+        rotation,
+        rotationX,
+        rotationY,
         fill,
         stroke,
         physics,
@@ -55,8 +73,24 @@ export class CanvasConverse {
     }
   }
 
-  triangle({ x1, y1, x2, y2, x3, y3, fill, physics, addObject = true }) {
+  triangle({
+    x1,
+    y1,
+    x2,
+    y2,
+    x3,
+    y3,
+    rotation = 0 /* degrees */,
+    rotationX /* x position of rotation */,
+    rotationY /* y position of rotation */,
+    fill,
+    physics,
+    addObject = true,
+  }) {
     this.#isolateStyles(() => {
+      if (typeof rotation !== 0) {
+        this.#rotate(rotationX ?? x1, rotationY ?? y1, rotation);
+      }
       this.context.fillStyle = fill ?? "transparent";
       this.context.beginPath();
       this.context.moveTo(x1, y1);
@@ -74,6 +108,9 @@ export class CanvasConverse {
         y2,
         x3,
         y3,
+        rotation,
+        rotationX,
+        rotationY,
         fill,
         physics,
       });
@@ -87,14 +124,20 @@ export class CanvasConverse {
     rx,
     ry,
     fill,
-    rotation = 0,
-    startAngle = 0,
-    endAngle = 2 * Math.PI,
+    centerRotation = 0 /* degrees */,
+    centerStartAngle = 0 /* degrees */,
+    centerEndAngle = 360 /* degrees */,
+    rotation = 0 /* degrees */,
+    rotationX /* x position of rotation */,
+    rotationY /* y position of rotation */,
     counterclockwise = false,
     physics,
     addObject = true,
   }) {
     this.#isolateStyles(() => {
+      if (typeof rotation !== 0) {
+        this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
+      }
       this.context.fillStyle = fill ?? "transparent";
       this.context.beginPath();
       rx = rx ?? r;
@@ -105,9 +148,12 @@ export class CanvasConverse {
         y,
         rx,
         ry,
+        (centerRotation * Math.PI) / 180,
+        (centerStartAngle * Math.PI) / 180,
+        (centerEndAngle * Math.PI) / 180,
         rotation,
-        startAngle,
-        endAngle,
+        rotationX,
+        rotationY,
         counterclockwise
       );
       this.context.closePath();
@@ -122,17 +168,33 @@ export class CanvasConverse {
         rx,
         ry,
         fill,
+        centerRotation,
+        centerStartAngle,
+        centerEndAngle,
         rotation,
-        startAngle,
-        endAngle,
+        rotationX,
+        rotationY,
         counterclockwise,
         physics,
       });
     }
   }
 
-  draw({ fill, physics, addObject = true }, callbackWithContext) {
+  draw(
+    {
+      rotation = 0 /* degrees */,
+      rotationX /* x position of rotation */,
+      rotationY /* y position of rotation */,
+      fill,
+      physics,
+      addObject = true,
+    },
+    callbackWithContext
+  ) {
     this.#isolateStyles(() => {
+      if (typeof rotation !== 0) {
+        this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
+      }
       this.context.fillStyle = fill ?? "transparent";
       this.context.beginPath();
       callbackWithContext(this.context);
@@ -141,7 +203,14 @@ export class CanvasConverse {
     });
 
     if (addObject) {
-      return this.#addObject("draw", { fill, physics, callbackWithContext });
+      return this.#addObject("draw", {
+        rotation,
+        rotationX,
+        rotationY,
+        fill,
+        physics,
+        callbackWithContext,
+      });
     }
   }
 
@@ -175,5 +244,11 @@ export class CanvasConverse {
     this.context.save();
     drawingCallback();
     this.context.restore();
+  }
+
+  #rotate(x, y, degrees) {
+    this.context.translate(x, y);
+    this.context.rotate((degrees * Math.PI) / 180);
+    this.context.translate(-x, -y);
   }
 }

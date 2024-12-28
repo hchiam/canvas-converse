@@ -29,7 +29,10 @@ export class NaivePhysics {
   #drawNextFrame() {
     if (!this.objects) return;
     Object.entries(this.objects)
-      .filter((object) => !object.isChild)
+      .filter((entry) => {
+        const [key, object] = entry;
+        return !object.isChild;
+      })
       .forEach((entry) => {
         const [key, object] = entry;
         if (object.options.physics) {
@@ -37,6 +40,7 @@ export class NaivePhysics {
           this.#handleCollisions(key);
         }
         this.#redrawObject(object);
+        this.#handleChildren(key, 0, 0, 0, 0);
       });
   }
 
@@ -233,11 +237,26 @@ export class NaivePhysics {
   #handleChildren(key, xBefore, xAfter, yBefore, yAfter) {
     const xDelta = xAfter - xBefore;
     const yDelta = yAfter - yBefore;
+    const options = this.objects[key].options;
     const children = this.objects[key].children;
     children.forEach((child) => {
-      child.options.x += xDelta;
-      child.options.y += yDelta;
-      this.#redrawObject(child);
+      if (xDelta) child.options.x += xDelta;
+      if (yDelta) child.options.y += yDelta;
+
+      const canRotate =
+        options.rotation &&
+        options.rotationX !== NaN &&
+        options.rotationY !== NaN;
+      if (canRotate) {
+        // rotate child with its (x,y) coordinates being relative to its parent's (x,y):
+        this.context.translate(options.rotationX, options.rotationY);
+        this.context.rotate((options.rotation * Math.PI) / 180);
+        this.#redrawObject(child);
+        this.context.rotate(-(options.rotation * Math.PI) / 180);
+        this.context.translate(-options.rotationX, -options.rotationY);
+      } else {
+        this.#redrawObject(child);
+      }
     });
   }
 }
