@@ -61,7 +61,7 @@ And much more in the [demo.js](https://github.com/hchiam/canvas-converse/blob/ma
 ```html
 <script
   src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.0.0/script.js"
-  integrity="sha384-wnXU8VvHGq+pi89AjLzRRNDSZR2d8O7s8DRayImZWDkkq5N68mfHmg55Aot7wfQV"
+  integrity="sha384-wHdeqOdq6GQDpqiJv1vDQe4a9gBf4d2dy4yQaGzGwtgKEgjkKam9xhUcuvmvrUS7"
   crossorigin="anonymous"
 ></script>
 ```
