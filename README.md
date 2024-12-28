@@ -4,7 +4,7 @@
 
 To more easily "converse" with the canvas API.
 
-Live demos:
+## Live demos
 
 - <https://codepen.io/hchiam/pen/jENmOeZ>
 - <https://canvas-converse.surge.sh>
@@ -17,7 +17,7 @@ https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@main/script.js
 https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.0.0/script.js
 ```
 
-Example usage:
+## Example usage
 
 ```js
 import { CanvasConverse } from "https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.0.0/script.js";
@@ -54,7 +54,9 @@ cc.ellipse({
 cc.draw({ fill: "lime" }, (ctx) => ctx.arc(400, 420, 50, 0, 1.5 * Math.PI));
 ```
 
-CDN usage:
+And much more in the [demo.js](https://github.com/hchiam/canvas-converse/blob/main/demo.js)!
+
+## CDN usage
 
 ```html
 <script
