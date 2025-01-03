@@ -180,6 +180,53 @@ export class CanvasConverse {
     }
   }
 
+  line({
+    x1,
+    y1,
+    x2,
+    y2,
+    lineWidth,
+    stroke,
+    rotation = 0 /* degrees */,
+    rotationX /* x position of rotation */,
+    rotationY /* y position of rotation */,
+    physics,
+    addObject = true,
+  }) {
+    this.#isolateStyles(() => {
+      if (typeof rotation !== 0) {
+        this.#rotate(
+          rotationX ?? (x1 + x2) / 2,
+          rotationY ?? (y1 + y2) / 2,
+          rotation
+        );
+      }
+      if (stroke) {
+        this.context.strokeStyle = stroke ?? "transparent";
+      }
+      this.context.beginPath();
+      this.context.moveTo(x1, y1);
+      this.context.lineTo(x2, y2);
+      this.context.lineWidth = lineWidth ?? 1;
+      this.context.stroke();
+    });
+
+    if (addObject) {
+      return this.#addObject("line", {
+        x1,
+        y1,
+        x2,
+        y2,
+        lineWidth,
+        stroke,
+        rotation,
+        rotationX,
+        rotationY,
+        physics,
+      });
+    }
+  }
+
   draw(
     {
       rotation = 0 /* degrees */,

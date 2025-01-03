@@ -1,6 +1,6 @@
 # CanvasConverse Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2024/12/27th.)
+(Generated from generateDocumentation.js to clipboard - 2025/01/03th.)
 
 ## Methods
 
@@ -66,6 +66,22 @@ ellipse({
 ```
 
 ```js
+line({
+    x1,
+    y1,
+    x2,
+    y2,
+    lineWidth,
+    stroke,
+    rotation = 0 /* degrees */,
+    rotationX /* x position of rotation */,
+    rotationY /* y position of rotation */,
+    physics,
+    addObject = true,
+  })
+```
+
+```js
 draw({
       rotation = 0 /* degrees */,
       rotationX /* x position of rotation */,
@@ -91,7 +107,7 @@ clear()
 
 # NaivePhysics Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2024/12/27th.)
+(Generated from generateDocumentation.js to clipboard - 2025/01/03th.)
 
 ## Methods
 

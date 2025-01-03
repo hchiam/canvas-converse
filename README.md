@@ -14,13 +14,13 @@ https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@main/script.js
 ```
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.0.0/script.js
+https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.1.0/script.js
 ```
 
 ## Example usage
 
 ```js
-import { CanvasConverse } from "https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.0.0/script.js";
+import { CanvasConverse } from "https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.1.0/script.js";
 
 const $ = (x) => document.querySelector(x);
 
@@ -51,6 +51,14 @@ cc.ellipse({
   fill: "black",
   physics: true,
 });
+cc.line({
+  x1: 0,
+  y1: 0,
+  x2: 100,
+  y2: 100,
+  lineWidth: 10,
+  stroke: "lightblue",
+});
 cc.draw({ fill: "lime" }, (ctx) => ctx.arc(400, 420, 50, 0, 1.5 * Math.PI));
 ```
 
@@ -60,8 +68,8 @@ And much more in the [demo.js](https://github.com/hchiam/canvas-converse/blob/ma
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.0.0/script.js"
-  integrity="sha384-wHdeqOdq6GQDpqiJv1vDQe4a9gBf4d2dy4yQaGzGwtgKEgjkKam9xhUcuvmvrUS7"
+  src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.1.0/script.js"
+  integrity="sha384-dFIbfiFWkMGn64LtO7bV7QHkOkFPa6IOfau+kwLz12XuBENAkLJSXd86Tzo6fBfB"
   crossorigin="anonymous"
 ></script>
 ```
