@@ -58,6 +58,9 @@ export class NaivePhysics {
       case "ellipse":
         this.canvasConverse.ellipse(object.options);
         break;
+      case "line":
+        this.canvasConverse.line(object.options);
+        break;
       case "draw":
         this.canvasConverse.draw(
           object.options,
@@ -148,6 +151,8 @@ export class NaivePhysics {
         const circleHeight = options.r; // TODO: ellipse, not circle
         options.y = Math.min(options.y, this.canvasConverse.h - circleHeight);
         yAfter = options.y;
+        break;
+      case "line":
         break;
       case "draw":
         break;

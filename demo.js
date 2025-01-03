@@ -52,6 +52,22 @@ cc.ellipse({
   fill: "blue",
   physics: true,
 });
+const rotatingLine = cc.line({
+  x1: 0,
+  y1: 0,
+  x2: 100,
+  y2: 100,
+  lineWidth: 10,
+  stroke: "lightblue",
+});
+cc.line({
+  x1: 0,
+  y1: 0,
+  x2: 100,
+  y2: 100,
+  // lineWidth: 10,
+  // stroke: "red",
+});
 const rotatingDraw = cc.draw(
   { fill: "lime", rotationX: 400, rotationY: 420 },
   (ctx) => ctx.arc(400, 420, 50, 0, 1.5 * Math.PI)
@@ -95,5 +111,6 @@ setInterval(() => {
   rotatingTriangle.options.rotation -= 10;
   rotatingEllipse.options.rotation -= 5;
   rotatingEllipse.options.centerRotation += 7;
+  rotatingLine.options.rotation += 10;
   rotatingDraw.options.rotation += 1;
 }, 100);
