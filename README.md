@@ -78,6 +78,10 @@ And much more in the [demo.js](https://github.com/hchiam/canvas-converse/blob/ma
 
 <https://github.com/hchiam/canvas-converse/blob/main/documentation.md>
 
+## automated types check
+
+<https://arethetypeswrong.github.io/?p=canvas-converse>
+
 ## to learn more about the canvas API
 
 <https://github.com/hchiam/learning-canvas>
