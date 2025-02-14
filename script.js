@@ -40,6 +40,7 @@ export class CanvasConverse {
     rotationY /* y position of rotation */,
     fill,
     stroke,
+    lineWidth,
     physics,
     outlineGroup = "",
     addObject = true,
@@ -66,7 +67,11 @@ export class CanvasConverse {
       }
       if (stroke && !usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.strokeStyle = stroke ?? "transparent";
-        this.context.strokeRect(x, y, w, h);
+        if (lineWidth) {
+          this.context.lineWidth = lineWidth ?? 0;
+          this.context.strokeRect(x, y, w, h);
+          // this.context.stroke();
+        }
       }
     });
 
@@ -80,7 +85,8 @@ export class CanvasConverse {
         rotationX,
         rotationY,
         fill,
-        // stroke,
+        stroke,
+        lineWidth,
         physics,
         outlineGroup,
       });

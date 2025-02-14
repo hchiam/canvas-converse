@@ -23,6 +23,7 @@ rectangle({
     rotationY /* y position of rotation */,
     fill,
     stroke,
+    lineWidth,
     physics,
     outlineGroup = "",
     addObject = true,

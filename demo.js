@@ -18,6 +18,7 @@ const rotatingRectangle = cc.rectangle({
   h: 150,
   fill: "cyan",
   stroke: "red",
+  lineWidth: 10,
   rotationX: 300 + 150 / 2,
   rotationY: 50 + 150 / 2,
 });
