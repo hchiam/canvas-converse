@@ -47,6 +47,7 @@ export class NaivePhysics {
               this.#handleEntry(entries[i]);
               i++;
             }
+            i--; // to counteract the i++ from last round of the fast-forward inner while loop
           },
           stroke: outlineGroupData.stroke,
           fill: outlineGroupData.fill,
