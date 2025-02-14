@@ -93,7 +93,7 @@ And much more in the [demo.js](https://github.com/hchiam/canvas-converse/blob/ma
 ```html
 <script
   src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.2.0/script.js"
-  integrity="sha384-dFIbfiFWkMGn64LtO7bV7QHkOkFPa6IOfau+kwLz12XuBENAkLJSXd86Tzo6fBfB"
+  integrity="sha384-nieEOjEo3fgpVHX3FzJ6lchtNjexI+uzMtH25G+yF222HtSyXHrUFeopiWA8CJgj"
   crossorigin="anonymous"
 ></script>
 ```
