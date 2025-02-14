@@ -74,7 +74,7 @@ export class NaivePhysics {
     object.options.addObject = false;
 
     if (object.options.outlineGroup) {
-      // this.canvasConverse.usingOutlineGroup = true;
+      this.canvasConverse.usingOutlineGroup = true;
     }
 
     switch (object.type) {

@@ -48,11 +48,6 @@ export class CanvasConverse {
     if (usingOutlineGroup) {
       outlineGroup = Object.keys(this.outlineGroups).length;
     }
-    if (usingOutlineGroup) {
-      // console.log(usingOutlineGroup, this.usingOutlineGroup);
-      // TODO: do we need usingOutlineGroup from call stack?
-      // i think i'm leaning towards deleting this.usingOutlineGroup instead
-    }
     this.#isolateStyles(() => {
       if (typeof rotation !== 0) {
         this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
