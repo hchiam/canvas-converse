@@ -28,43 +28,44 @@ export class NaivePhysics {
 
   #drawNextFrame() {
     if (!this.objects) return;
-    const outlineGroups = Object.entries(
-      Object.groupBy(
-        Object.entries(this.objects).filter(([key, object]) => !object.isChild),
-        ([key, object]) => {
-          return object.options.outlineGroup ?? "";
-        }
-      )
+    const entries = Object.entries(this.objects).filter(
+      ([key, object]) => !object.isChild
     );
-    for (let outlineGroupEntry of outlineGroups) {
-      const [outlineGroupName, entries] = outlineGroupEntry;
+    for (let i = 0; i < entries.length; i++) {
+      const [key, object] = entries[i];
+      const outlineGroupName = object.options.outlineGroup;
       if (outlineGroupName) {
-        const outlineGroup =
-          this.canvasConverse.outlineGroups[String(outlineGroupName)];
+        const outlineGroupData =
+          this.canvasConverse.outlineGroups[outlineGroupName];
+
         this.canvasConverse.makeOutlineGroup({
           drawShapesCallback: () => {
-            this.#handleEntries(entries);
+            while (
+              i < entries.length &&
+              entries[i][1].options.outlineGroup === outlineGroupName
+            ) {
+              this.#handleEntry(entries[i]);
+              i++;
+            }
           },
-          stroke: outlineGroup.stroke,
-          fill: outlineGroup.fill,
-          lineWidth: outlineGroup.lineWidth,
+          stroke: outlineGroupData.stroke,
+          fill: outlineGroupData.fill,
+          lineWidth: outlineGroupData.lineWidth,
           outlineGroupKey: outlineGroupName,
         });
       } else {
-        this.#handleEntries(entries);
+        this.#handleEntry(entries[i]);
       }
     }
   }
-  #handleEntries(entries) {
-    for (let entry of entries) {
-      const [key, object] = entry;
-      if (object.options.physics) {
-        this.#handleGravity(key);
-        this.#handleCollisions(key);
-      }
-      this.#redrawObject(object);
-      this.#handleChildren(key, 0, 0, 0, 0);
+  #handleEntry(entry) {
+    const [key, object] = entry;
+    if (object.options.physics) {
+      this.#handleGravity(key);
+      this.#handleCollisions(key);
     }
+    this.#redrawObject(object);
+    this.#handleChildren(key, 0, 0, 0, 0);
   }
 
   #redrawObject(object) {

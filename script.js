@@ -349,7 +349,7 @@ export class CanvasConverse {
 
     this.context.beginPath();
 
-    const nextKey = String(Object.keys(this.outlineGroups).length + 1); // start at 1
+    const nextKey = Object.keys(this.outlineGroups).length + 1; // start at 1
     outlineGroupKey = outlineGroupKey ?? nextKey;
     this.outlineGroups[outlineGroupKey] = {
       stroke: stroke,
