@@ -41,7 +41,7 @@ export class CanvasConverse {
     fill,
     stroke,
     physics,
-    outlineGroup,
+    outlineGroup = "",
     addObject = true,
   }) {
     const usingOutlineGroup = this.#isUsingOutlineGroup();
@@ -99,7 +99,7 @@ export class CanvasConverse {
     rotationY /* y position of rotation */,
     fill,
     physics,
-    outlineGroup,
+    outlineGroup = "",
     addObject = true,
   }) {
     const usingOutlineGroup = this.#isUsingOutlineGroup();
@@ -157,7 +157,7 @@ export class CanvasConverse {
     rotationY /* y position of rotation */,
     counterclockwise = false,
     physics,
-    outlineGroup,
+    outlineGroup = "",
     addObject = true,
   }) {
     const usingOutlineGroup = this.#isUsingOutlineGroup();
@@ -227,7 +227,7 @@ export class CanvasConverse {
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
     physics,
-    outlineGroup,
+    outlineGroup = "",
     addObject = true,
   }) {
     const usingOutlineGroup = this.#isUsingOutlineGroup();
@@ -282,7 +282,7 @@ export class CanvasConverse {
       rotationY /* y position of rotation */,
       fill,
       physics,
-      outlineGroup,
+      outlineGroup = "",
       addObject = true,
     },
     callbackWithContext
