@@ -122,14 +122,14 @@ cc.makeOutlineGroup({
       y: 50,
       w: 150,
       h: 150,
-      fill: "red",
+      fill: "orange",
     });
     cc.rectangle({
       x: 175,
       y: 20,
       w: 50,
       h: 50,
-      fill: "orange",
+      fill: "red",
     });
   },
   stroke: "#fff",
