@@ -27,7 +27,7 @@ export class CanvasConverse {
     }
     this.w ??= this.canvas.width || this.canvas.style.width;
     this.h ??= this.canvas.height || this.canvas.style.height;
-    // this.physicsEngine = new NaivePhysics(this);
+    this.physicsEngine = new NaivePhysics(this);
   }
 
   rectangle({
@@ -41,21 +41,35 @@ export class CanvasConverse {
     fill,
     stroke,
     physics,
+    outlineGroup,
     addObject = true,
   }) {
+    const usingOutlineGroup = this.#isUsingOutlineGroup();
+    if (usingOutlineGroup) {
+      outlineGroup = Object.keys(this.outlineGroups).length;
+    }
+    if (usingOutlineGroup) {
+      console.log(usingOutlineGroup, this.usingOutlineGroup);
+      // TODO: do we need usingOutlineGroup from call stack?
+      // i think i'm leaning towards deleting this.usingOutlineGroup instead
+    }
     this.#isolateStyles(() => {
       if (typeof rotation !== 0) {
         this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
       }
-      if (!this.usingOutlineGroup) this.context.beginPath();
+      if (!usingOutlineGroup && !this.usingOutlineGroup) {
+        this.context.beginPath();
+      }
       this.context.rect(x, y, w, h);
-      if (!this.usingOutlineGroup) this.context.closePath();
+      if (!usingOutlineGroup && !this.usingOutlineGroup) {
+        this.context.closePath();
+      }
       if (fill) {
         this.context.fillStyle = fill ?? "transparent";
         this.context.fillRect(x, y, w, h);
         // NOT this: this.context.fill();
       }
-      if (stroke && !this.usingOutlineGroup) {
+      if (stroke && !usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.strokeStyle = stroke ?? "transparent";
         this.context.strokeRect(x, y, w, h);
       }
@@ -73,6 +87,7 @@ export class CanvasConverse {
         fill,
         // stroke,
         physics,
+        outlineGroup,
       });
     }
   }
@@ -89,18 +104,28 @@ export class CanvasConverse {
     rotationY /* y position of rotation */,
     fill,
     physics,
+    outlineGroup,
     addObject = true,
   }) {
+    const usingOutlineGroup = this.#isUsingOutlineGroup();
+    if (usingOutlineGroup) {
+      outlineGroup = Object.keys(this.outlineGroups).length;
+    }
+
     this.#isolateStyles(() => {
       if (typeof rotation !== 0) {
         this.#rotate(rotationX ?? x1, rotationY ?? y1, rotation);
       }
       this.context.fillStyle = fill ?? "transparent";
-      if (!this.usingOutlineGroup) this.context.beginPath();
+      if (!usingOutlineGroup && !this.usingOutlineGroup) {
+        this.context.beginPath();
+      }
       this.context.moveTo(x1, y1);
       this.context.lineTo(x2, y2);
       this.context.lineTo(x3, y3);
-      if (!this.usingOutlineGroup) this.context.closePath();
+      if (!usingOutlineGroup && !this.usingOutlineGroup) {
+        this.context.closePath();
+      }
       this.context.fill();
     });
 
@@ -117,6 +142,7 @@ export class CanvasConverse {
         rotationY,
         fill,
         physics,
+        outlineGroup,
       });
     }
   }
@@ -136,14 +162,22 @@ export class CanvasConverse {
     rotationY /* y position of rotation */,
     counterclockwise = false,
     physics,
+    outlineGroup,
     addObject = true,
   }) {
+    const usingOutlineGroup = this.#isUsingOutlineGroup();
+    if (usingOutlineGroup) {
+      outlineGroup = Object.keys(this.outlineGroups).length;
+    }
+
     this.#isolateStyles(() => {
       if (typeof rotation !== 0) {
         this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
       }
       this.context.fillStyle = fill ?? "transparent";
-      if (!this.usingOutlineGroup) this.context.beginPath();
+      if (!usingOutlineGroup && !this.usingOutlineGroup) {
+        this.context.beginPath();
+      }
       rx = rx ?? r;
       ry = ry ?? r;
       if (typeof r === "undefined" && rx === ry) r = rx;
@@ -160,7 +194,9 @@ export class CanvasConverse {
         rotationY,
         counterclockwise
       );
-      if (!this.usingOutlineGroup) this.context.closePath();
+      if (!usingOutlineGroup && !this.usingOutlineGroup) {
+        this.context.closePath();
+      }
       this.context.fill();
     });
 
@@ -180,6 +216,7 @@ export class CanvasConverse {
         rotationY,
         counterclockwise,
         physics,
+        outlineGroup,
       });
     }
   }
@@ -195,8 +232,14 @@ export class CanvasConverse {
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
     physics,
+    outlineGroup,
     addObject = true,
   }) {
+    const usingOutlineGroup = this.#isUsingOutlineGroup();
+    if (usingOutlineGroup) {
+      outlineGroup = Object.keys(this.outlineGroups).length;
+    }
+
     this.#isolateStyles(() => {
       if (typeof rotation !== 0) {
         this.#rotate(
@@ -208,10 +251,14 @@ export class CanvasConverse {
       if (stroke) {
         this.context.strokeStyle = stroke ?? "transparent";
       }
-      if (!this.usingOutlineGroup) this.context.beginPath();
+      if (!usingOutlineGroup && !this.usingOutlineGroup) {
+        this.context.beginPath();
+      }
       this.context.moveTo(x1, y1);
       this.context.lineTo(x2, y2);
-      if (!this.usingOutlineGroup) this.context.closePath();
+      if (!usingOutlineGroup && !this.usingOutlineGroup) {
+        this.context.closePath();
+      }
       this.context.lineWidth = lineWidth ?? 1;
       this.context.stroke();
     });
@@ -228,6 +275,7 @@ export class CanvasConverse {
         rotationX,
         rotationY,
         physics,
+        outlineGroup,
       });
     }
   }
@@ -239,18 +287,28 @@ export class CanvasConverse {
       rotationY /* y position of rotation */,
       fill,
       physics,
+      outlineGroup,
       addObject = true,
     },
     callbackWithContext
   ) {
+    const usingOutlineGroup = this.#isUsingOutlineGroup();
+    if (usingOutlineGroup) {
+      outlineGroup = Object.keys(this.outlineGroups).length;
+    }
+
     this.#isolateStyles(() => {
       if (typeof rotation !== 0) {
         this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
       }
       this.context.fillStyle = fill ?? "transparent";
-      if (!this.usingOutlineGroup) this.context.beginPath();
+      if (!usingOutlineGroup && !this.usingOutlineGroup) {
+        this.context.beginPath();
+      }
       callbackWithContext(this.context);
-      if (!this.usingOutlineGroup) this.context.closePath();
+      if (!usingOutlineGroup && !this.usingOutlineGroup) {
+        this.context.closePath();
+      }
       this.context.fill();
     });
 
@@ -261,6 +319,7 @@ export class CanvasConverse {
         rotationY,
         fill,
         physics,
+        outlineGroup,
         callbackWithContext,
       });
     }
@@ -278,23 +337,27 @@ export class CanvasConverse {
   }
 
   usingOutlineGroup = false;
-  #outlineGroups = 0;
+  outlineGroups = {};
   outlineGroup({
     // members,
     drawShapesCallback,
     stroke,
-    lineWidth,
     fill,
+    lineWidth,
   }) {
     this.usingOutlineGroup = true;
 
     this.context.beginPath();
 
-    this.#outlineGroups += 1; // start with 1
+    this.outlineGroups[Object.keys(this.outlineGroups).length] = {
+      stroke: stroke,
+      fill: fill,
+      lineWidth: lineWidth,
+    };
 
-    drawShapesCallback(stroke);
+    drawShapesCallback(stroke, Object.keys(this.outlineGroups).length);
     // members.forEach((member) => {
-    //   member.options.outlineGroup = this.#outlineGroups;
+    //   member.options.outlineGroup = Object.keys(this.#outlineGroups).length;
     //   if (fill) member.options.fill = fill;
     // });
 
@@ -337,5 +400,13 @@ export class CanvasConverse {
     this.context.translate(x, y);
     this.context.rotate((degrees * Math.PI) / 180);
     this.context.translate(-x, -y);
+  }
+
+  #checkCallStackString() {
+    return new Error().stack;
+  }
+
+  #isUsingOutlineGroup() {
+    return /\boutlineGroup\b/.test(this.#checkCallStackString());
   }
 }

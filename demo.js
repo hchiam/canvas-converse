@@ -136,13 +136,14 @@ cc.outlineGroup({
       // stroke: stroke,
     }),
   ],
-  drawShapesCallback: (stroke) => {
+  drawShapesCallback: (stroke, outlineGroup) => {
     cc.rectangle({
       x: 50,
       y: 50,
       w: 150,
       h: 150,
       fill: "red",
+      // outlineGroup,
       // addObject: false,
       // stroke: stroke,
     });
@@ -152,6 +153,7 @@ cc.outlineGroup({
       w: 50,
       h: 50,
       fill: "orange",
+      // outlineGroup,
       // addObject: false,
       // stroke: stroke,
     });
@@ -183,12 +185,13 @@ cc.outlineGroup({
       // stroke,
     }),
   ],
-  drawShapesCallback: (stroke) => {
+  drawShapesCallback: (stroke, outlineGroup) => {
     cc.ellipse({
       x: 200,
       y: 200,
       r: 75,
       fill: "yellow",
+      // outlineGroup,
       // stroke,
       // addObject: false,
     });
@@ -200,6 +203,7 @@ cc.outlineGroup({
       x3: 300,
       y3: 310,
       fill: "green",
+      // outlineGroup,
       // addObject: false,
       // stroke,
     });

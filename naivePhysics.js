@@ -28,20 +28,42 @@ export class NaivePhysics {
 
   #drawNextFrame() {
     if (!this.objects) return;
-    Object.entries(this.objects)
-      .filter((entry) => {
-        const [key, object] = entry;
-        return !object.isChild;
-      })
-      .forEach((entry) => {
-        const [key, object] = entry;
-        if (object.options.physics) {
-          this.#handleGravity(key);
-          this.#handleCollisions(key);
+    const outlineGroups = Object.entries(
+      Object.groupBy(
+        Object.entries(this.objects).filter(([key, object]) => !object.isChild),
+        ([key, object]) => {
+          return object.options.outlineGroup ?? "";
         }
-        this.#redrawObject(object);
-        this.#handleChildren(key, 0, 0, 0, 0);
-      });
+      )
+    );
+    for (let outlineGroupEntry of outlineGroups) {
+      const [outlineGroupName, entries] = outlineGroupEntry;
+      if (outlineGroupName) {
+        const outlineGroup =
+          this.canvasConverse.outlineGroups[outlineGroupName];
+        this.canvasConverse.outlineGroup({
+          drawShapesCallback: () => {
+            this.#handleEntries(entries);
+          },
+          stroke: outlineGroup.stroke,
+          fill: outlineGroup.fill,
+          lineWidth: outlineGroup.lineWidth,
+        });
+      } else {
+        this.#handleEntries(entries);
+      }
+    }
+  }
+  #handleEntries(entries) {
+    for (let entry of entries) {
+      const [key, object] = entry;
+      if (object.options.physics) {
+        this.#handleGravity(key);
+        this.#handleCollisions(key);
+      }
+      this.#redrawObject(object);
+      this.#handleChildren(key, 0, 0, 0, 0);
+    }
   }
 
   #redrawObject(object) {
@@ -49,7 +71,7 @@ export class NaivePhysics {
     object.options.addObject = false;
 
     if (object.options.outlineGroup) {
-      this.canvasConverse.usingOutlineGroup = true;
+      // this.canvasConverse.usingOutlineGroup = true;
     }
 
     switch (object.type) {
