@@ -339,27 +339,25 @@ export class CanvasConverse {
   usingOutlineGroup = false;
   outlineGroups = {};
   makeOutlineGroup({
-    // members,
     drawShapesCallback,
     stroke,
     fill,
     lineWidth,
+    outlineGroupKey,
   }) {
     this.usingOutlineGroup = true;
 
     this.context.beginPath();
 
-    this.outlineGroups[Object.keys(this.outlineGroups).length] = {
+    const nextKey = String(Object.keys(this.outlineGroups).length + 1); // start at 1
+    outlineGroupKey = outlineGroupKey ?? nextKey;
+    this.outlineGroups[outlineGroupKey] = {
       stroke: stroke,
       fill: fill,
       lineWidth: lineWidth,
     };
 
-    drawShapesCallback(stroke, Object.keys(this.outlineGroups).length);
-    // members.forEach((member) => {
-    //   member.options.outlineGroup = Object.keys(this.#outlineGroups).length;
-    //   if (fill) member.options.fill = fill;
-    // });
+    drawShapesCallback(stroke, outlineGroupKey);
 
     this.context.closePath();
 
