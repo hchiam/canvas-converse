@@ -27,7 +27,7 @@ export class CanvasConverse {
     }
     this.w ??= this.canvas.width || this.canvas.style.width;
     this.h ??= this.canvas.height || this.canvas.style.height;
-    this.physicsEngine = new NaivePhysics(this);
+    // this.physicsEngine = new NaivePhysics(this);
   }
 
   rectangle({
@@ -47,11 +47,15 @@ export class CanvasConverse {
       if (typeof rotation !== 0) {
         this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
       }
+      if (!this.usingOutlineGroup) this.context.beginPath();
+      this.context.rect(x, y, w, h);
+      if (!this.usingOutlineGroup) this.context.closePath();
       if (fill) {
         this.context.fillStyle = fill ?? "transparent";
         this.context.fillRect(x, y, w, h);
+        // NOT this: this.context.fill();
       }
-      if (stroke) {
+      if (stroke && !this.usingOutlineGroup) {
         this.context.strokeStyle = stroke ?? "transparent";
         this.context.strokeRect(x, y, w, h);
       }
@@ -67,7 +71,7 @@ export class CanvasConverse {
         rotationX,
         rotationY,
         fill,
-        stroke,
+        // stroke,
         physics,
       });
     }
@@ -92,11 +96,11 @@ export class CanvasConverse {
         this.#rotate(rotationX ?? x1, rotationY ?? y1, rotation);
       }
       this.context.fillStyle = fill ?? "transparent";
-      this.context.beginPath();
+      if (!this.usingOutlineGroup) this.context.beginPath();
       this.context.moveTo(x1, y1);
       this.context.lineTo(x2, y2);
       this.context.lineTo(x3, y3);
-      this.context.closePath();
+      if (!this.usingOutlineGroup) this.context.closePath();
       this.context.fill();
     });
 
@@ -139,7 +143,7 @@ export class CanvasConverse {
         this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
       }
       this.context.fillStyle = fill ?? "transparent";
-      this.context.beginPath();
+      if (!this.usingOutlineGroup) this.context.beginPath();
       rx = rx ?? r;
       ry = ry ?? r;
       if (typeof r === "undefined" && rx === ry) r = rx;
@@ -156,7 +160,7 @@ export class CanvasConverse {
         rotationY,
         counterclockwise
       );
-      this.context.closePath();
+      if (!this.usingOutlineGroup) this.context.closePath();
       this.context.fill();
     });
 
@@ -204,9 +208,10 @@ export class CanvasConverse {
       if (stroke) {
         this.context.strokeStyle = stroke ?? "transparent";
       }
-      this.context.beginPath();
+      if (!this.usingOutlineGroup) this.context.beginPath();
       this.context.moveTo(x1, y1);
       this.context.lineTo(x2, y2);
+      if (!this.usingOutlineGroup) this.context.closePath();
       this.context.lineWidth = lineWidth ?? 1;
       this.context.stroke();
     });
@@ -243,9 +248,9 @@ export class CanvasConverse {
         this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
       }
       this.context.fillStyle = fill ?? "transparent";
-      this.context.beginPath();
+      if (!this.usingOutlineGroup) this.context.beginPath();
       callbackWithContext(this.context);
-      this.context.closePath();
+      if (!this.usingOutlineGroup) this.context.closePath();
       this.context.fill();
     });
 
@@ -272,6 +277,40 @@ export class CanvasConverse {
     });
   }
 
+  usingOutlineGroup = false;
+  #outlineGroups = 0;
+  outlineGroup({
+    // members,
+    drawShapesCallback,
+    stroke,
+    lineWidth,
+    fill,
+  }) {
+    this.usingOutlineGroup = true;
+
+    this.context.beginPath();
+
+    this.#outlineGroups += 1; // start with 1
+
+    drawShapesCallback(stroke);
+    // members.forEach((member) => {
+    //   member.options.outlineGroup = this.#outlineGroups;
+    //   if (fill) member.options.fill = fill;
+    // });
+
+    this.context.closePath();
+
+    this.context.strokeStyle = stroke;
+    this.context.lineWidth = lineWidth;
+    this.context.stroke();
+    if (fill) {
+      this.context.fillStyle = fill;
+      this.context.fill();
+    }
+
+    this.usingOutlineGroup = false;
+  }
+
   clear() {
     this.context.clearRect(0, 0, this.w, this.h);
   }
@@ -279,6 +318,7 @@ export class CanvasConverse {
   #addObject(type, options) {
     const newKey = Object.keys(this.objects).length;
     this.objects[newKey] = {
+      key: newKey,
       type: type,
       options: options,
       children: [],

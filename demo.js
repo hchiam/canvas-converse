@@ -114,3 +114,97 @@ setInterval(() => {
   rotatingLine.options.rotation += 10;
   rotatingDraw.options.rotation += 1;
 }, 100);
+
+cc.outlineGroup({
+  members: [
+    cc.rectangle({
+      x: 50,
+      y: 50,
+      w: 150,
+      h: 150,
+      fill: "red",
+      // addObject: false,
+      // stroke: stroke,
+    }),
+    cc.rectangle({
+      x: 175,
+      y: 20,
+      w: 50,
+      h: 50,
+      fill: "orange",
+      // addObject: false,
+      // stroke: stroke,
+    }),
+  ],
+  drawShapesCallback: (stroke) => {
+    cc.rectangle({
+      x: 50,
+      y: 50,
+      w: 150,
+      h: 150,
+      fill: "red",
+      // addObject: false,
+      // stroke: stroke,
+    });
+    cc.rectangle({
+      x: 175,
+      y: 20,
+      w: 50,
+      h: 50,
+      fill: "orange",
+      // addObject: false,
+      // stroke: stroke,
+    });
+  },
+  stroke: "#fff",
+  fill: "#FF5733",
+  lineWidth: 20,
+});
+
+cc.outlineGroup({
+  members: [
+    cc.ellipse({
+      x: 200,
+      y: 200,
+      r: 75,
+      fill: "yellow",
+      // stroke,
+      // addObject: false,
+    }),
+    cc.triangle({
+      x1: 100,
+      y1: 310,
+      x2: 200,
+      y2: 200,
+      x3: 300,
+      y3: 310,
+      fill: "green",
+      // addObject: false,
+      // stroke,
+    }),
+  ],
+  drawShapesCallback: (stroke) => {
+    cc.ellipse({
+      x: 200,
+      y: 200,
+      r: 75,
+      fill: "yellow",
+      // stroke,
+      // addObject: false,
+    });
+    cc.triangle({
+      x1: 100,
+      y1: 310,
+      x2: 200,
+      y2: 200,
+      x3: 300,
+      y3: 310,
+      fill: "green",
+      // addObject: false,
+      // stroke,
+    });
+  },
+  stroke: "#626",
+  fill: "#33A8FF",
+  lineWidth: 20,
+});

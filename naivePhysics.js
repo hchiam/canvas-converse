@@ -48,6 +48,10 @@ export class NaivePhysics {
     // don't duplicate objects!
     object.options.addObject = false;
 
+    if (object.options.outlineGroup) {
+      this.canvasConverse.usingOutlineGroup = true;
+    }
+
     switch (object.type) {
       case "rectangle":
         this.canvasConverse.rectangle(object.options);
@@ -70,6 +74,10 @@ export class NaivePhysics {
       default:
         throw new Error("Unrecognized object.");
         break;
+    }
+
+    if (object.options.outlineGroup) {
+      this.canvasConverse.usingOutlineGroup = false;
     }
   }
 
@@ -244,6 +252,7 @@ export class NaivePhysics {
     const yDelta = yAfter - yBefore;
     const options = this.objects[key].options;
     const children = this.objects[key].children;
+    this.canvasConverse.usingOutlineGroup = true;
     children.forEach((child) => {
       if (xDelta) child.options.x += xDelta;
       if (yDelta) child.options.y += yDelta;
@@ -263,5 +272,6 @@ export class NaivePhysics {
         this.#redrawObject(child);
       }
     });
+    this.canvasConverse.usingOutlineGroup = false;
   }
 }
