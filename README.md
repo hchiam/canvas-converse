@@ -59,7 +59,31 @@ cc.line({
   lineWidth: 10,
   stroke: "lightblue",
 });
-cc.draw({ fill: "lime" }, (ctx) => ctx.arc(400, 420, 50, 0, 1.5 * Math.PI));
+cc.draw({ fill: "lime", rotationX: 400, rotationY: 420 }, (ctx) =>
+  ctx.arc(400, 420, 50, 0, 1.5 * Math.PI)
+);
+cc.makeOutlineGroup({
+  drawShapesCallback: () => {
+    cc.ellipse({
+      x: 200,
+      y: 200,
+      r: 75,
+      fill: "yellow",
+    });
+    cc.triangle({
+      x1: 100,
+      y1: 310,
+      x2: 200,
+      y2: 200,
+      x3: 300,
+      y3: 310,
+      fill: "green",
+    });
+  },
+  stroke: "#626",
+  fill: "#33A8FF",
+  lineWidth: 20,
+});
 ```
 
 And much more in the [demo.js](https://github.com/hchiam/canvas-converse/blob/main/demo.js)!
