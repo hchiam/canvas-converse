@@ -115,7 +115,7 @@ setInterval(() => {
   rotatingDraw.options.rotation += 1;
 }, 100);
 
-cc.outlineGroup({
+cc.makeOutlineGroup({
   members: [
     cc.rectangle({
       x: 50,
@@ -163,7 +163,7 @@ cc.outlineGroup({
   lineWidth: 20,
 });
 
-cc.outlineGroup({
+cc.makeOutlineGroup({
   members: [
     cc.ellipse({
       x: 200,

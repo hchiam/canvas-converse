@@ -41,7 +41,7 @@ export class NaivePhysics {
       if (outlineGroupName) {
         const outlineGroup =
           this.canvasConverse.outlineGroups[outlineGroupName];
-        this.canvasConverse.outlineGroup({
+        this.canvasConverse.makeOutlineGroup({
           drawShapesCallback: () => {
             this.#handleEntries(entries);
           },

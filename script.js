@@ -49,7 +49,7 @@ export class CanvasConverse {
       outlineGroup = Object.keys(this.outlineGroups).length;
     }
     if (usingOutlineGroup) {
-      console.log(usingOutlineGroup, this.usingOutlineGroup);
+      // console.log(usingOutlineGroup, this.usingOutlineGroup);
       // TODO: do we need usingOutlineGroup from call stack?
       // i think i'm leaning towards deleting this.usingOutlineGroup instead
     }
@@ -338,7 +338,7 @@ export class CanvasConverse {
 
   usingOutlineGroup = false;
   outlineGroups = {};
-  outlineGroup({
+  makeOutlineGroup({
     // members,
     drawShapesCallback,
     stroke,
@@ -407,6 +407,12 @@ export class CanvasConverse {
   }
 
   #isUsingOutlineGroup() {
-    return /\boutlineGroup\b/.test(this.#checkCallStackString());
+    const outlineGroupMethodName = this.makeOutlineGroup
+      .toString()
+      .split("(")[0];
+
+    return new RegExp(`\\b${outlineGroupMethodName}\\b`).test(
+      this.#checkCallStackString()
+    );
   }
 }
