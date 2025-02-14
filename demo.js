@@ -114,3 +114,48 @@ setInterval(() => {
   rotatingLine.options.rotation += 10;
   rotatingDraw.options.rotation += 1;
 }, 100);
+
+cc.makeOutlineGroup({
+  drawShapesCallback: () => {
+    cc.rectangle({
+      x: 50,
+      y: 50,
+      w: 150,
+      h: 150,
+      fill: "orange",
+    });
+    cc.rectangle({
+      x: 175,
+      y: 20,
+      w: 50,
+      h: 50,
+      fill: "red",
+    });
+  },
+  stroke: "#fff",
+  fill: "#FF5733",
+  lineWidth: 20,
+});
+
+cc.makeOutlineGroup({
+  drawShapesCallback: () => {
+    cc.ellipse({
+      x: 200,
+      y: 200,
+      r: 75,
+      fill: "yellow",
+    });
+    cc.triangle({
+      x1: 100,
+      y1: 310,
+      x2: 200,
+      y2: 200,
+      x3: 300,
+      y3: 310,
+      fill: "green",
+    });
+  },
+  stroke: "#626",
+  fill: "#33A8FF",
+  lineWidth: 20,
+});

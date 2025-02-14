@@ -1,6 +1,6 @@
 # CanvasConverse Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2025/01/03th.)
+(Generated from generateDocumentation.js to clipboard - 2025/02/13th.)
 
 ## Methods
 
@@ -24,6 +24,7 @@ rectangle({
     fill,
     stroke,
     physics,
+    outlineGroup = "",
     addObject = true,
   })
 ```
@@ -41,6 +42,7 @@ triangle({
     rotationY /* y position of rotation */,
     fill,
     physics,
+    outlineGroup = "",
     addObject = true,
   })
 ```
@@ -61,6 +63,7 @@ ellipse({
     rotationY /* y position of rotation */,
     counterclockwise = false,
     physics,
+    outlineGroup = "",
     addObject = true,
   })
 ```
@@ -77,6 +80,7 @@ line({
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
     physics,
+    outlineGroup = "",
     addObject = true,
   })
 ```
@@ -88,6 +92,7 @@ draw({
       rotationY /* y position of rotation */,
       fill,
       physics,
+      outlineGroup = "",
       addObject = true,
     },
     callbackWithContext)
@@ -98,16 +103,30 @@ group(objectToAttachTo, arrayOfObjectsToAttach = [])
 ```
 
 ```js
+makeOutlineGroup({
+    drawShapesCallback,
+    stroke,
+    fill,
+    lineWidth,
+    outlineGroupKey,
+  })
+```
+
+```js
 clear()
 ```
 
 ## Properties
 
+`usingOutlineGroup`: boolean
+
+`outlineGroups`: object
+
 `objects`: object
 
 # NaivePhysics Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2025/01/03th.)
+(Generated from generateDocumentation.js to clipboard - 2025/02/13th.)
 
 ## Methods
 

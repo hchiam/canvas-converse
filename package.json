@@ -1,6 +1,6 @@
 {
   "name": "canvas-converse",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "main": "script.js",
   "author": "hchiam",
   "description": "To more easily converse with the canvas API.",
@@ -9,8 +9,8 @@
     "@hchiam:registry": "https://npm.pkg.github.com"
   },
   "scripts": {
-    "dev": "cd demo; vite # http://localhost:5173/",
-    "start": "cd demo; vite # http://localhost:5173/",
+    "dev": "cd demo; vite # http://localhost:5173/demo.html",
+    "start": "cd demo; vite # http://localhost:5173/demo.html",
     "pkg": "bash get-integrity.sh; git status -sb; echo; echo Make sure to update the version in package.json;",
     "pub": "yarn pkg; yarn publish; open https://www.npmjs.com/package/canvas-converse;",
     "surge": "vite build; mv dist/demo.html dist/index.html; surge dist https://canvas-converse.surge.sh/; open https://canvas-converse.surge.sh/;"

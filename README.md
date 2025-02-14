@@ -14,13 +14,13 @@ https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@main/script.js
 ```
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.1.0/script.js
+https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.2.0/script.js
 ```
 
 ## Example usage
 
 ```js
-import { CanvasConverse } from "https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.1.0/script.js";
+import { CanvasConverse } from "https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.2.0/script.js";
 
 const $ = (x) => document.querySelector(x);
 
@@ -59,7 +59,31 @@ cc.line({
   lineWidth: 10,
   stroke: "lightblue",
 });
-cc.draw({ fill: "lime" }, (ctx) => ctx.arc(400, 420, 50, 0, 1.5 * Math.PI));
+cc.draw({ fill: "lime", rotationX: 400, rotationY: 420 }, (ctx) =>
+  ctx.arc(400, 420, 50, 0, 1.5 * Math.PI)
+);
+cc.makeOutlineGroup({
+  drawShapesCallback: () => {
+    cc.ellipse({
+      x: 200,
+      y: 200,
+      r: 75,
+      fill: "yellow",
+    });
+    cc.triangle({
+      x1: 100,
+      y1: 310,
+      x2: 200,
+      y2: 200,
+      x3: 300,
+      y3: 310,
+      fill: "green",
+    });
+  },
+  stroke: "#626",
+  fill: "#33A8FF",
+  lineWidth: 20,
+});
 ```
 
 And much more in the [demo.js](https://github.com/hchiam/canvas-converse/blob/main/demo.js)!
@@ -68,8 +92,8 @@ And much more in the [demo.js](https://github.com/hchiam/canvas-converse/blob/ma
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.1.0/script.js"
-  integrity="sha384-dFIbfiFWkMGn64LtO7bV7QHkOkFPa6IOfau+kwLz12XuBENAkLJSXd86Tzo6fBfB"
+  src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.2.0/script.js"
+  integrity="sha384-nieEOjEo3fgpVHX3FzJ6lchtNjexI+uzMtH25G+yF222HtSyXHrUFeopiWA8CJgj"
   crossorigin="anonymous"
 ></script>
 ```
