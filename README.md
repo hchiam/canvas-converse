@@ -4,6 +4,8 @@
 
 To more easily "converse" with the canvas API.
 
+<img src="Demo_Screen_Recording.gif" alt="video of demo" height="100">
+
 ## Live demos
 
 - <https://codepen.io/hchiam/pen/jENmOeZ>
