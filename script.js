@@ -80,7 +80,7 @@ export class CanvasConverse {
         rotationX,
         rotationY,
         fill,
-        // stroke,
+        stroke,
         physics,
         outlineGroup,
       });
