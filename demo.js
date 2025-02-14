@@ -122,12 +122,14 @@ cc.makeOutlineGroup({
       y: 50,
       w: 150,
       h: 150,
+      fill: "red",
     });
     cc.rectangle({
       x: 175,
       y: 20,
       w: 50,
       h: 50,
+      fill: "orange",
     });
   },
   stroke: "#fff",
@@ -141,6 +143,7 @@ cc.makeOutlineGroup({
       x: 200,
       y: 200,
       r: 75,
+      fill: "yellow",
     });
     cc.triangle({
       x1: 100,
@@ -150,9 +153,6 @@ cc.makeOutlineGroup({
       x3: 300,
       y3: 310,
       fill: "green",
-      // outlineGroup,
-      // addObject: false,
-      // stroke,
     });
   },
   stroke: "#626",
