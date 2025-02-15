@@ -8,8 +8,8 @@ To more easily "converse" with the canvas API.
 
 ## Live demos
 
-- <https://codepen.io/hchiam/pen/jENmOeZ>
 - <https://canvas-converse.surge.sh>
+- <https://codepen.io/hchiam/pen/jENmOeZ>
 
 ```js
 https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@main/script.js
