@@ -103,6 +103,8 @@ const rotatingEllipse = cc.ellipse({
   rotationX: 410, // rotate slightly off of its center
   rotationY: 310,
   fill: "lightblue",
+  stroke: "white",
+  lineWidth: 10,
 });
 cc.group(rotatingEllipse, [rotatingTriangle]);
 
