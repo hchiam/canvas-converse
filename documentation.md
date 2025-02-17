@@ -1,6 +1,6 @@
 # CanvasConverse Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2025/02/13th.)
+(Generated from generateDocumentation.js to clipboard - 2025/02/16th.)
 
 ## Methods
 
@@ -56,6 +56,8 @@ ellipse({
     rx,
     ry,
     fill,
+    stroke,
+    lineWidth,
     centerRotation = 0 /* degrees */,
     centerStartAngle = 0 /* degrees */,
     centerEndAngle = 360 /* degrees */,
@@ -127,7 +129,7 @@ clear()
 
 # NaivePhysics Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2025/02/13th.)
+(Generated from generateDocumentation.js to clipboard - 2025/02/16th.)
 
 ## Methods
 

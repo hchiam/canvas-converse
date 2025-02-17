@@ -155,6 +155,8 @@ export class CanvasConverse {
     rx,
     ry,
     fill,
+    stroke,
+    lineWidth,
     centerRotation = 0 /* degrees */,
     centerStartAngle = 0 /* degrees */,
     centerEndAngle = 360 /* degrees */,
@@ -199,6 +201,13 @@ export class CanvasConverse {
         this.context.closePath();
       }
       this.context.fill();
+      if (stroke && !usingOutlineGroup && !this.usingOutlineGroup) {
+        this.context.strokeStyle = stroke ?? "transparent";
+        if (lineWidth) {
+          this.context.lineWidth = lineWidth ?? 0;
+          this.context.stroke();
+        }
+      }
     });
 
     if (addObject) {
@@ -209,6 +218,8 @@ export class CanvasConverse {
         rx,
         ry,
         fill,
+        stroke,
+        lineWidth,
         centerRotation,
         centerStartAngle,
         centerEndAngle,
