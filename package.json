@@ -1,6 +1,6 @@
 {
   "name": "canvas-converse",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "main": "script.js",
   "author": "hchiam",
   "description": "To more easily converse with the canvas API.",
