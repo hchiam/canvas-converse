@@ -91,6 +91,8 @@ line({
 
 ```js
 draw({
+      x,
+      y,
       rotation = 0 /* degrees */,
       rotationX /* x position of rotation */,
       rotationY /* y position of rotation */,

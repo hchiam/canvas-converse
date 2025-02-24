@@ -16,13 +16,13 @@ https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@main/script.js
 ```
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.4.0/script.js
+https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.4.1/script.js
 ```
 
 ## Example usage
 
 ```js
-import { CanvasConverse } from "https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.4.0/script.js";
+import { CanvasConverse } from "https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.4.1/script.js";
 
 const $ = (x) => document.querySelector(x);
 
@@ -94,8 +94,8 @@ And much more in the [demo.js](https://github.com/hchiam/canvas-converse/blob/ma
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.4.0/script.js"
-  integrity="sha384-hDoDe5bz0rmlkF52BdZ6+bnyoP9+RQ9K1Ez1mVl5mASmGBnd6O0rOtP7Uv1x94AP"
+  src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@3.4.1/script.js"
+  integrity="sha384-LGmjEpcYEwbKMB232XQvmRk+lKUrwtDo2e4oHC6Tz+QUojgPV8N8t+F+kfgai3Lb"
   crossorigin="anonymous"
 ></script>
 ```

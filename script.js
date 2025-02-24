@@ -306,6 +306,8 @@ export class CanvasConverse {
 
   draw(
     {
+      x,
+      y,
       rotation = 0 /* degrees */,
       rotationX /* x position of rotation */,
       rotationY /* y position of rotation */,
@@ -338,6 +340,8 @@ export class CanvasConverse {
 
     if (addObject) {
       return this.#addObject("draw", {
+        x,
+        y,
         rotation,
         rotationX,
         rotationY,
