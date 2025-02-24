@@ -21,7 +21,7 @@ rectangle({
     rotation = 0 /* degrees */,
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
-    cornerRadii,
+    cornerRadii /* https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/roundRect */,
     fill,
     stroke,
     lineWidth,
