@@ -38,6 +38,7 @@ export class CanvasConverse {
     rotation = 0 /* degrees */,
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
+    cornerRadii,
     fill,
     stroke,
     lineWidth,
@@ -56,21 +57,31 @@ export class CanvasConverse {
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.beginPath();
       }
-      this.context.rect(x, y, w, h);
+      if (cornerRadii) {
+        this.context.roundRect(x, y, w, h, cornerRadii);
+      } else {
+        this.context.rect(x, y, w, h);
+      }
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.closePath();
       }
       if (fill) {
         this.context.fillStyle = fill ?? "transparent";
-        this.context.fillRect(x, y, w, h);
-        // NOT this: this.context.fill();
+        if (cornerRadii) {
+          this.context.fill();
+        } else {
+          this.context.fillRect(x, y, w, h);
+        }
       }
       if (stroke && !usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.strokeStyle = stroke ?? "transparent";
         if (lineWidth) {
           this.context.lineWidth = lineWidth ?? 0;
-          this.context.strokeRect(x, y, w, h);
-          // this.context.stroke();
+          if (cornerRadii) {
+            this.context.stroke();
+          } else {
+            this.context.strokeRect(x, y, w, h);
+          }
         }
       }
     });
@@ -84,6 +95,7 @@ export class CanvasConverse {
         rotation,
         rotationX,
         rotationY,
+        cornerRadii,
         fill,
         stroke,
         lineWidth,

@@ -162,3 +162,44 @@ cc.makeOutlineGroup({
   fill: "#33A8FF",
   lineWidth: 20,
 });
+
+cc.makeOutlineGroup({
+  drawShapesCallback: () => {
+    cc.rectangle({
+      x: 410,
+      y: 10,
+      w: 50,
+      h: 20,
+      cornerRadii: [10],
+      fill: "grey",
+      stroke: "white",
+      lineWidth: 10,
+    });
+    cc.rectangle({
+      x: 440,
+      y: 10,
+      w: 20,
+      h: 50,
+      cornerRadii: [10],
+      fill: "grey",
+      stroke: "white",
+      lineWidth: 10,
+    });
+    cc.rectangle({
+      x: 440,
+      y: 40,
+      w: 20,
+      h: 50,
+      cornerRadii: [10],
+      fill: "grey",
+      stroke: "white",
+      lineWidth: 10,
+      rotation: 45,
+      rotationX: 450,
+      rotationY: 50,
+    });
+  },
+  stroke: "white",
+  fill: "grey",
+  lineWidth: 10,
+});
