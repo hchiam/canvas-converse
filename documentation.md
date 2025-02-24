@@ -1,6 +1,6 @@
 # CanvasConverse Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2025/02/16th.)
+(Generated from generateDocumentation.js to clipboard - 2025/02/23th.)
 
 ## Methods
 
@@ -21,6 +21,7 @@ rectangle({
     rotation = 0 /* degrees */,
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
+    cornerRadii,
     fill,
     stroke,
     lineWidth,
@@ -129,7 +130,7 @@ clear()
 
 # NaivePhysics Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2025/02/16th.)
+(Generated from generateDocumentation.js to clipboard - 2025/02/23th.)
 
 ## Methods
 
