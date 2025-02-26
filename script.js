@@ -255,6 +255,7 @@ export class CanvasConverse {
     rotation = 0 /* degrees */,
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
+    lineCap,
     physics,
     outlineGroup = "",
     addObject = true,
@@ -280,11 +281,12 @@ export class CanvasConverse {
       }
       this.context.moveTo(x1, y1);
       this.context.lineTo(x2, y2);
+      this.context.lineWidth = lineWidth ?? 1;
+      if (lineCap) this.context.lineCap = lineCap;
+      this.context.stroke();
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.closePath();
       }
-      this.context.lineWidth = lineWidth ?? 1;
-      this.context.stroke();
     });
 
     if (addObject) {
@@ -298,6 +300,7 @@ export class CanvasConverse {
         rotation,
         rotationX,
         rotationY,
+        lineCap,
         physics,
         outlineGroup,
       });
