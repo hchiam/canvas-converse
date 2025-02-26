@@ -1,6 +1,6 @@
 # CanvasConverse Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2025/02/23th.)
+(Generated from generateDocumentation.js to clipboard - 2025/02/25th.)
 
 ## Methods
 
@@ -83,6 +83,7 @@ line({
     rotation = 0 /* degrees */,
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
+    lineCap,
     physics,
     outlineGroup = "",
     addObject = true,
@@ -132,7 +133,7 @@ clear()
 
 # NaivePhysics Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2025/02/23th.)
+(Generated from generateDocumentation.js to clipboard - 2025/02/25th.)
 
 ## Methods
 
