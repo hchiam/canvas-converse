@@ -1,5 +1,5 @@
 import { CanvasConverseClassContract, CanvasConverseObject, CanvasConverseGeneralOptions, OutlineGroups } from "./types";
-import { NaivePhysics } from "./naivePhysics";
+import { NaivePhysics } from "./naivePhysics.js";
 export declare class CanvasConverse implements CanvasConverseClassContract {
     #private;
     objects: CanvasConverseObject;

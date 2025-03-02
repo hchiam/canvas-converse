@@ -5,7 +5,7 @@ import {
   OutlineGroups,
   CanvasConverseDrawingOptions,
 } from "./types";
-import { NaivePhysics } from "./naivePhysics";
+import { NaivePhysics } from "./naivePhysics.js";
 
 export class CanvasConverse implements CanvasConverseClassContract {
   objects: CanvasConverseObject;

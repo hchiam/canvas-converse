@@ -25,7 +25,7 @@ var _CanvasConverse_instances,
   _CanvasConverse_rotate,
   _CanvasConverse_checkCallStackString,
   _CanvasConverse_isUsingOutlineGroup;
-import { NaivePhysics } from "./naivePhysics";
+import { NaivePhysics } from "./naivePhysics.js";
 export class CanvasConverse {
   constructor(/** still need to call init */) {
     _CanvasConverse_instances.add(this);
