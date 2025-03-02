@@ -9,7 +9,7 @@ constructor(/** still need to call init */)
 ```
 
 ```js
-init(canvas, options = {})
+init(canvas, options = { h: 0, w: 0 })
 ```
 
 ```js
@@ -107,7 +107,7 @@ draw({
       outlineGroup = "",
       addObject = true,
     },
-    callbackWithContext)
+    callbackWithContext,)
 ```
 
 ```js
