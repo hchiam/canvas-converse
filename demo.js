@@ -10,7 +10,13 @@ cc.canvas.style.outline = "1px solid white";
 
 // fun part
 cc.rectangle({ x: 0, y: 0, w: 200, h: 200, fill: "white", physics: true });
-cc.rectangle({ x: 100, y: 100, w: 300, h: 200, fill: "red" });
+cc.rectangle({
+  x: 100,
+  y: 100,
+  w: 300,
+  h: 200,
+  fill: "red",
+});
 const rotatingRectangle = cc.rectangle({
   x: 300,
   y: 50,
@@ -126,6 +132,7 @@ cc.makeOutlineGroup({
       w: 150,
       h: 150,
       fill: "orange",
+      filter: "blur(10px)",
     });
     cc.rectangle({
       x: 175,
@@ -133,11 +140,13 @@ cc.makeOutlineGroup({
       w: 50,
       h: 50,
       fill: "red",
+      filter: "blur(10px)",
     });
   },
   stroke: "#fff",
   fill: "#FF5733",
   lineWidth: 20,
+  filter: "blur(10px)",
 });
 
 cc.makeOutlineGroup({
@@ -147,6 +156,7 @@ cc.makeOutlineGroup({
       y: 200,
       r: 75,
       fill: "yellow",
+      filter: "blur(10px)",
     });
     cc.triangle({
       x1: 100,
@@ -156,10 +166,12 @@ cc.makeOutlineGroup({
       x3: 300,
       y3: 310,
       fill: "green",
+      filter: "blur(10px)",
     });
   },
   stroke: "#626",
   fill: "#33A8FF",
+  filter: "blur(10px)",
   lineWidth: 20,
 });
 
@@ -174,6 +186,7 @@ cc.makeOutlineGroup({
       fill: "grey",
       stroke: "white",
       lineWidth: 10,
+      filter: "blur(10px)",
     });
     cc.rectangle({
       x: 440,
@@ -184,6 +197,7 @@ cc.makeOutlineGroup({
       fill: "grey",
       stroke: "white",
       lineWidth: 10,
+      filter: "blur(10px)",
     });
     cc.rectangle({
       x: 440,
@@ -197,11 +211,13 @@ cc.makeOutlineGroup({
       rotation: 45,
       rotationX: 450,
       rotationY: 50,
+      filter: "blur(10px)",
     });
   },
   stroke: "white",
   fill: "grey",
   lineWidth: 10,
+  filter: "blur(10px)",
 });
 
 cc.line({
