@@ -10,7 +10,13 @@ cc.canvas.style.outline = "1px solid white";
 
 // fun part
 cc.rectangle({ x: 0, y: 0, w: 200, h: 200, fill: "white", physics: true });
-cc.rectangle({ x: 100, y: 100, w: 300, h: 200, fill: "red" });
+cc.rectangle({
+  x: 100,
+  y: 100,
+  w: 300,
+  h: 200,
+  fill: "red",
+});
 const rotatingRectangle = cc.rectangle({
   x: 300,
   y: 50,
@@ -138,6 +144,7 @@ cc.makeOutlineGroup({
   stroke: "#fff",
   fill: "#FF5733",
   lineWidth: 20,
+  // filter: "blur(10px)",
 });
 
 cc.makeOutlineGroup({
@@ -161,6 +168,7 @@ cc.makeOutlineGroup({
   stroke: "#626",
   fill: "#33A8FF",
   lineWidth: 20,
+  // filter: "blur(10px)",
 });
 
 cc.makeOutlineGroup({
@@ -202,6 +210,7 @@ cc.makeOutlineGroup({
   stroke: "white",
   fill: "grey",
   lineWidth: 10,
+  // filter: "blur(10px)",
 });
 
 cc.line({

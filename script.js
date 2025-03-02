@@ -42,6 +42,7 @@ export class CanvasConverse {
     fill,
     stroke,
     lineWidth,
+    filter,
     physics,
     outlineGroup = "",
     addObject = true,
@@ -62,6 +63,7 @@ export class CanvasConverse {
       } else {
         this.context.rect(x, y, w, h);
       }
+      this.context.filter = filter ?? "none";
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.closePath();
       }
@@ -99,6 +101,7 @@ export class CanvasConverse {
         fill,
         stroke,
         lineWidth,
+        filter,
         physics,
         outlineGroup,
       });
@@ -116,6 +119,7 @@ export class CanvasConverse {
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
     fill,
+    filter,
     physics,
     outlineGroup = "",
     addObject = true,
@@ -136,6 +140,7 @@ export class CanvasConverse {
       this.context.moveTo(x1, y1);
       this.context.lineTo(x2, y2);
       this.context.lineTo(x3, y3);
+      this.context.filter = filter ?? "none";
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.closePath();
       }
@@ -154,6 +159,7 @@ export class CanvasConverse {
         rotationX,
         rotationY,
         fill,
+        filter,
         physics,
         outlineGroup,
       });
@@ -169,6 +175,7 @@ export class CanvasConverse {
     fill,
     stroke,
     lineWidth,
+    filter,
     centerRotation = 0 /* degrees */,
     centerStartAngle = 0 /* degrees */,
     centerEndAngle = 360 /* degrees */,
@@ -209,6 +216,7 @@ export class CanvasConverse {
         rotationY,
         counterclockwise
       );
+      this.context.filter = filter ?? "none";
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.closePath();
       }
@@ -232,6 +240,7 @@ export class CanvasConverse {
         fill,
         stroke,
         lineWidth,
+        filter,
         centerRotation,
         centerStartAngle,
         centerEndAngle,
@@ -252,6 +261,7 @@ export class CanvasConverse {
     y2,
     lineWidth,
     stroke,
+    filter,
     rotation = 0 /* degrees */,
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
@@ -283,6 +293,7 @@ export class CanvasConverse {
       this.context.lineTo(x2, y2);
       this.context.lineWidth = lineWidth ?? 1;
       if (lineCap) this.context.lineCap = lineCap;
+      this.context.filter = filter ?? "none";
       this.context.stroke();
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.closePath();
@@ -297,6 +308,7 @@ export class CanvasConverse {
         y2,
         lineWidth,
         stroke,
+        filter,
         rotation,
         rotationX,
         rotationY,
@@ -315,6 +327,7 @@ export class CanvasConverse {
       rotationX /* x position of rotation */,
       rotationY /* y position of rotation */,
       fill,
+      filter,
       physics,
       outlineGroup = "",
       addObject = true,
@@ -335,6 +348,7 @@ export class CanvasConverse {
         this.context.beginPath();
       }
       callbackWithContext(this.context);
+      this.context.filter = filter ?? "none";
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.closePath();
       }
@@ -349,6 +363,7 @@ export class CanvasConverse {
         rotationX,
         rotationY,
         fill,
+        filter,
         physics,
         outlineGroup,
         callbackWithContext,
@@ -374,6 +389,7 @@ export class CanvasConverse {
     stroke,
     fill,
     lineWidth,
+    filter,
     outlineGroupKey,
   }) {
     this.usingOutlineGroup = true;
@@ -386,9 +402,12 @@ export class CanvasConverse {
       stroke: stroke,
       fill: fill,
       lineWidth: lineWidth,
+      filter: filter,
     };
 
     drawShapesCallback(stroke, outlineGroupKey);
+
+    this.context.filter = filter ?? "none";
 
     this.context.closePath();
 

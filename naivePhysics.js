@@ -49,9 +49,7 @@ export class NaivePhysics {
             }
             i--; // to counteract the i++ from last round of the fast-forward inner while loop
           },
-          stroke: outlineGroupData.stroke,
-          fill: outlineGroupData.fill,
-          lineWidth: outlineGroupData.lineWidth,
+          ...outlineGroupData,
           outlineGroupKey: outlineGroupName,
         });
       } else {

@@ -1,6 +1,6 @@
 # CanvasConverse Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2025/02/25th.)
+(Generated from generateDocumentation.js to clipboard - 2025/03/02th.)
 
 ## Methods
 
@@ -25,6 +25,7 @@ rectangle({
     fill,
     stroke,
     lineWidth,
+    filter,
     physics,
     outlineGroup = "",
     addObject = true,
@@ -43,6 +44,7 @@ triangle({
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
     fill,
+    filter,
     physics,
     outlineGroup = "",
     addObject = true,
@@ -59,6 +61,7 @@ ellipse({
     fill,
     stroke,
     lineWidth,
+    filter,
     centerRotation = 0 /* degrees */,
     centerStartAngle = 0 /* degrees */,
     centerEndAngle = 360 /* degrees */,
@@ -80,6 +83,7 @@ line({
     y2,
     lineWidth,
     stroke,
+    filter,
     rotation = 0 /* degrees */,
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
@@ -98,6 +102,7 @@ draw({
       rotationX /* x position of rotation */,
       rotationY /* y position of rotation */,
       fill,
+      filter,
       physics,
       outlineGroup = "",
       addObject = true,
@@ -115,6 +120,7 @@ makeOutlineGroup({
     stroke,
     fill,
     lineWidth,
+    filter,
     outlineGroupKey,
   })
 ```
@@ -133,7 +139,7 @@ clear()
 
 # NaivePhysics Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2025/02/25th.)
+(Generated from generateDocumentation.js to clipboard - 2025/03/02th.)
 
 ## Methods
 
