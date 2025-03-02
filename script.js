@@ -396,8 +396,6 @@ export class CanvasConverse {
 
     this.context.beginPath();
 
-    this.context.filter = filter ?? "none";
-
     const nextKey = Object.keys(this.outlineGroups).length + 1; // start at 1
     outlineGroupKey = outlineGroupKey ?? nextKey;
     this.outlineGroups[outlineGroupKey] = {
@@ -410,8 +408,6 @@ export class CanvasConverse {
     drawShapesCallback(stroke, outlineGroupKey);
 
     this.context.filter = filter ?? "none";
-
-    console.log("this.context.filter", this.context.filter);
 
     this.context.closePath();
 

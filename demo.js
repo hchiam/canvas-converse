@@ -132,7 +132,6 @@ cc.makeOutlineGroup({
       w: 150,
       h: 150,
       fill: "orange",
-      filter: "blur(10px)",
     });
     cc.rectangle({
       x: 175,
@@ -140,13 +139,12 @@ cc.makeOutlineGroup({
       w: 50,
       h: 50,
       fill: "red",
-      filter: "blur(10px)",
     });
   },
   stroke: "#fff",
   fill: "#FF5733",
   lineWidth: 20,
-  filter: "blur(10px)",
+  // filter: "blur(10px)",
 });
 
 cc.makeOutlineGroup({
@@ -156,7 +154,6 @@ cc.makeOutlineGroup({
       y: 200,
       r: 75,
       fill: "yellow",
-      filter: "blur(10px)",
     });
     cc.triangle({
       x1: 100,
@@ -166,13 +163,12 @@ cc.makeOutlineGroup({
       x3: 300,
       y3: 310,
       fill: "green",
-      filter: "blur(10px)",
     });
   },
   stroke: "#626",
   fill: "#33A8FF",
-  filter: "blur(10px)",
   lineWidth: 20,
+  // filter: "blur(10px)",
 });
 
 cc.makeOutlineGroup({
@@ -186,7 +182,6 @@ cc.makeOutlineGroup({
       fill: "grey",
       stroke: "white",
       lineWidth: 10,
-      filter: "blur(10px)",
     });
     cc.rectangle({
       x: 440,
@@ -197,7 +192,6 @@ cc.makeOutlineGroup({
       fill: "grey",
       stroke: "white",
       lineWidth: 10,
-      filter: "blur(10px)",
     });
     cc.rectangle({
       x: 440,
@@ -211,13 +205,12 @@ cc.makeOutlineGroup({
       rotation: 45,
       rotationX: 450,
       rotationY: 50,
-      filter: "blur(10px)",
     });
   },
   stroke: "white",
   fill: "grey",
   lineWidth: 10,
-  filter: "blur(10px)",
+  // filter: "blur(10px)",
 });
 
 cc.line({
