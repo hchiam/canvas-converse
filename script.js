@@ -1,16 +1,45 @@
-import { NaivePhysics } from "./naivePhysics.js";
-
+var __classPrivateFieldGet =
+  (this && this.__classPrivateFieldGet) ||
+  function (receiver, state, kind, f) {
+    if (kind === "a" && !f)
+      throw new TypeError("Private accessor was defined without a getter");
+    if (
+      typeof state === "function"
+        ? receiver !== state || !f
+        : !state.has(receiver)
+    )
+      throw new TypeError(
+        "Cannot read private member from an object whose class did not declare it",
+      );
+    return kind === "m"
+      ? f
+      : kind === "a"
+        ? f.call(receiver)
+        : f
+          ? f.value
+          : state.get(receiver);
+  };
+var _CanvasConverse_instances,
+  _CanvasConverse_addObject,
+  _CanvasConverse_isolateStyles,
+  _CanvasConverse_rotate,
+  _CanvasConverse_checkCallStackString,
+  _CanvasConverse_isUsingOutlineGroup;
+import { NaivePhysics } from "./naivePhysics";
 export class CanvasConverse {
   constructor(/** still need to call init */) {
+    _CanvasConverse_instances.add(this);
+    this.usingOutlineGroup = false;
+    this.outlineGroups = {};
     this.objects = {};
   }
-
-  init(canvas, options = {}) {
+  init(canvas, options = { h: 0, w: 0 }) {
+    var _a, _b;
     this.canvas = canvas;
     this.context = canvas.getContext("2d");
     this.options = options;
-    this.h = options.h;
-    this.w = options.w;
+    this.h = Number(options.h);
+    this.w = Number(options.w);
     if (typeof this.h !== "undefined") {
       if (typeof this.h === "string") {
         this.canvas.style.height = this.h;
@@ -25,11 +54,14 @@ export class CanvasConverse {
         this.canvas.width = this.w;
       }
     }
-    this.w ??= this.canvas.width || this.canvas.style.width;
-    this.h ??= this.canvas.height || this.canvas.style.height;
+    (_a = this.w) !== null && _a !== void 0
+      ? _a
+      : (this.w = Number(this.canvas.width || this.canvas.style.width));
+    (_b = this.h) !== null && _b !== void 0
+      ? _b
+      : (this.h = Number(this.canvas.height || this.canvas.style.height));
     this.physicsEngine = new NaivePhysics(this);
   }
-
   rectangle({
     x,
     y,
@@ -47,13 +79,33 @@ export class CanvasConverse {
     outlineGroup = "",
     addObject = true,
   }) {
-    const usingOutlineGroup = this.#isUsingOutlineGroup();
+    const usingOutlineGroup = __classPrivateFieldGet(
+      this,
+      _CanvasConverse_instances,
+      "m",
+      _CanvasConverse_isUsingOutlineGroup,
+    ).call(this);
     if (usingOutlineGroup) {
-      outlineGroup = Object.keys(this.outlineGroups).length;
+      outlineGroup = String(Object.keys(this.outlineGroups).length);
     }
-    this.#isolateStyles(() => {
-      if (typeof rotation !== 0) {
-        this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
+    __classPrivateFieldGet(
+      this,
+      _CanvasConverse_instances,
+      "m",
+      _CanvasConverse_isolateStyles,
+    ).call(this, () => {
+      if (rotation !== 0) {
+        __classPrivateFieldGet(
+          this,
+          _CanvasConverse_instances,
+          "m",
+          _CanvasConverse_rotate,
+        ).call(
+          this,
+          rotationX !== null && rotationX !== void 0 ? rotationX : x,
+          rotationY !== null && rotationY !== void 0 ? rotationY : y,
+          rotation,
+        );
       }
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.beginPath();
@@ -63,12 +115,14 @@ export class CanvasConverse {
       } else {
         this.context.rect(x, y, w, h);
       }
-      this.context.filter = filter ?? "none";
+      this.context.filter =
+        filter !== null && filter !== void 0 ? filter : "none";
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.closePath();
       }
       if (fill) {
-        this.context.fillStyle = fill ?? "transparent";
+        this.context.fillStyle =
+          fill !== null && fill !== void 0 ? fill : "transparent";
         if (cornerRadii) {
           this.context.fill();
         } else {
@@ -76,9 +130,11 @@ export class CanvasConverse {
         }
       }
       if (stroke && !usingOutlineGroup && !this.usingOutlineGroup) {
-        this.context.strokeStyle = stroke ?? "transparent";
+        this.context.strokeStyle =
+          stroke !== null && stroke !== void 0 ? stroke : "transparent";
         if (lineWidth) {
-          this.context.lineWidth = lineWidth ?? 0;
+          this.context.lineWidth =
+            lineWidth !== null && lineWidth !== void 0 ? lineWidth : 0;
           if (cornerRadii) {
             this.context.stroke();
           } else {
@@ -87,9 +143,13 @@ export class CanvasConverse {
         }
       }
     });
-
     if (addObject) {
-      return this.#addObject("rectangle", {
+      return __classPrivateFieldGet(
+        this,
+        _CanvasConverse_instances,
+        "m",
+        _CanvasConverse_addObject,
+      ).call(this, "rectangle", {
         x,
         y,
         w,
@@ -107,7 +167,6 @@ export class CanvasConverse {
       });
     }
   }
-
   triangle({
     x1,
     y1,
@@ -124,31 +183,56 @@ export class CanvasConverse {
     outlineGroup = "",
     addObject = true,
   }) {
-    const usingOutlineGroup = this.#isUsingOutlineGroup();
+    const usingOutlineGroup = __classPrivateFieldGet(
+      this,
+      _CanvasConverse_instances,
+      "m",
+      _CanvasConverse_isUsingOutlineGroup,
+    ).call(this);
     if (usingOutlineGroup) {
-      outlineGroup = Object.keys(this.outlineGroups).length;
+      outlineGroup = String(Object.keys(this.outlineGroups).length);
     }
-
-    this.#isolateStyles(() => {
-      if (typeof rotation !== 0) {
-        this.#rotate(rotationX ?? x1, rotationY ?? y1, rotation);
+    __classPrivateFieldGet(
+      this,
+      _CanvasConverse_instances,
+      "m",
+      _CanvasConverse_isolateStyles,
+    ).call(this, () => {
+      if (rotation !== 0) {
+        __classPrivateFieldGet(
+          this,
+          _CanvasConverse_instances,
+          "m",
+          _CanvasConverse_rotate,
+        ).call(
+          this,
+          rotationX !== null && rotationX !== void 0 ? rotationX : x1,
+          rotationY !== null && rotationY !== void 0 ? rotationY : y1,
+          rotation,
+        );
       }
-      this.context.fillStyle = fill ?? "transparent";
+      this.context.fillStyle =
+        fill !== null && fill !== void 0 ? fill : "transparent";
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.beginPath();
       }
       this.context.moveTo(x1, y1);
       this.context.lineTo(x2, y2);
       this.context.lineTo(x3, y3);
-      this.context.filter = filter ?? "none";
+      this.context.filter =
+        filter !== null && filter !== void 0 ? filter : "none";
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.closePath();
       }
       this.context.fill();
     });
-
     if (addObject) {
-      return this.#addObject("triangle", {
+      return __classPrivateFieldGet(
+        this,
+        _CanvasConverse_instances,
+        "m",
+        _CanvasConverse_addObject,
+      ).call(this, "triangle", {
         x1,
         y1,
         x2,
@@ -165,7 +249,6 @@ export class CanvasConverse {
       });
     }
   }
-
   ellipse({
     x,
     y,
@@ -187,21 +270,41 @@ export class CanvasConverse {
     outlineGroup = "",
     addObject = true,
   }) {
-    const usingOutlineGroup = this.#isUsingOutlineGroup();
+    const usingOutlineGroup = __classPrivateFieldGet(
+      this,
+      _CanvasConverse_instances,
+      "m",
+      _CanvasConverse_isUsingOutlineGroup,
+    ).call(this);
     if (usingOutlineGroup) {
-      outlineGroup = Object.keys(this.outlineGroups).length;
+      outlineGroup = String(Object.keys(this.outlineGroups).length);
     }
-
-    this.#isolateStyles(() => {
-      if (typeof rotation !== 0) {
-        this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
+    __classPrivateFieldGet(
+      this,
+      _CanvasConverse_instances,
+      "m",
+      _CanvasConverse_isolateStyles,
+    ).call(this, () => {
+      if (rotation !== 0) {
+        __classPrivateFieldGet(
+          this,
+          _CanvasConverse_instances,
+          "m",
+          _CanvasConverse_rotate,
+        ).call(
+          this,
+          rotationX !== null && rotationX !== void 0 ? rotationX : x,
+          rotationY !== null && rotationY !== void 0 ? rotationY : y,
+          rotation,
+        );
       }
-      this.context.fillStyle = fill ?? "transparent";
+      this.context.fillStyle =
+        fill !== null && fill !== void 0 ? fill : "transparent";
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.beginPath();
       }
-      rx = rx ?? r;
-      ry = ry ?? r;
+      rx = rx !== null && rx !== void 0 ? rx : r;
+      ry = ry !== null && ry !== void 0 ? ry : r;
       if (typeof r === "undefined" && rx === ry) r = rx;
       this.context.ellipse(
         x,
@@ -212,26 +315,34 @@ export class CanvasConverse {
         (centerStartAngle * Math.PI) / 180,
         (centerEndAngle * Math.PI) / 180,
         rotation,
+        // @ts-ignore (ellipse is supposed to have 11 arguments)
         rotationX,
         rotationY,
-        counterclockwise
+        counterclockwise,
       );
-      this.context.filter = filter ?? "none";
+      this.context.filter =
+        filter !== null && filter !== void 0 ? filter : "none";
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.closePath();
       }
       this.context.fill();
       if (stroke && !usingOutlineGroup && !this.usingOutlineGroup) {
-        this.context.strokeStyle = stroke ?? "transparent";
+        this.context.strokeStyle =
+          stroke !== null && stroke !== void 0 ? stroke : "transparent";
         if (lineWidth) {
-          this.context.lineWidth = lineWidth ?? 0;
+          this.context.lineWidth =
+            lineWidth !== null && lineWidth !== void 0 ? lineWidth : 0;
           this.context.stroke();
         }
       }
     });
-
     if (addObject) {
-      return this.#addObject("ellipse", {
+      return __classPrivateFieldGet(
+        this,
+        _CanvasConverse_instances,
+        "m",
+        _CanvasConverse_addObject,
+      ).call(this, "ellipse", {
         x,
         y,
         r,
@@ -253,7 +364,6 @@ export class CanvasConverse {
       });
     }
   }
-
   line({
     x1,
     y1,
@@ -270,38 +380,64 @@ export class CanvasConverse {
     outlineGroup = "",
     addObject = true,
   }) {
-    const usingOutlineGroup = this.#isUsingOutlineGroup();
+    const usingOutlineGroup = __classPrivateFieldGet(
+      this,
+      _CanvasConverse_instances,
+      "m",
+      _CanvasConverse_isUsingOutlineGroup,
+    ).call(this);
     if (usingOutlineGroup) {
-      outlineGroup = Object.keys(this.outlineGroups).length;
+      outlineGroup = String(Object.keys(this.outlineGroups).length);
     }
-
-    this.#isolateStyles(() => {
-      if (typeof rotation !== 0) {
-        this.#rotate(
-          rotationX ?? (x1 + x2) / 2,
-          rotationY ?? (y1 + y2) / 2,
-          rotation
+    __classPrivateFieldGet(
+      this,
+      _CanvasConverse_instances,
+      "m",
+      _CanvasConverse_isolateStyles,
+    ).call(this, () => {
+      if (rotation !== 0) {
+        __classPrivateFieldGet(
+          this,
+          _CanvasConverse_instances,
+          "m",
+          _CanvasConverse_rotate,
+        ).call(
+          this,
+          rotationX !== null && rotationX !== void 0
+            ? rotationX
+            : (x1 + x2) / 2,
+          rotationY !== null && rotationY !== void 0
+            ? rotationY
+            : (y1 + y2) / 2,
+          rotation,
         );
       }
       if (stroke) {
-        this.context.strokeStyle = stroke ?? "transparent";
+        this.context.strokeStyle =
+          stroke !== null && stroke !== void 0 ? stroke : "transparent";
       }
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.beginPath();
       }
       this.context.moveTo(x1, y1);
       this.context.lineTo(x2, y2);
-      this.context.lineWidth = lineWidth ?? 1;
+      this.context.lineWidth =
+        lineWidth !== null && lineWidth !== void 0 ? lineWidth : 1;
       if (lineCap) this.context.lineCap = lineCap;
-      this.context.filter = filter ?? "none";
+      this.context.filter =
+        filter !== null && filter !== void 0 ? filter : "none";
       this.context.stroke();
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.closePath();
       }
     });
-
     if (addObject) {
-      return this.#addObject("line", {
+      return __classPrivateFieldGet(
+        this,
+        _CanvasConverse_instances,
+        "m",
+        _CanvasConverse_addObject,
+      ).call(this, "line", {
         x1,
         y1,
         x2,
@@ -318,7 +454,6 @@ export class CanvasConverse {
       });
     }
   }
-
   draw(
     {
       x,
@@ -332,31 +467,56 @@ export class CanvasConverse {
       outlineGroup = "",
       addObject = true,
     },
-    callbackWithContext
+    callbackWithContext,
   ) {
-    const usingOutlineGroup = this.#isUsingOutlineGroup();
+    const usingOutlineGroup = __classPrivateFieldGet(
+      this,
+      _CanvasConverse_instances,
+      "m",
+      _CanvasConverse_isUsingOutlineGroup,
+    ).call(this);
     if (usingOutlineGroup) {
-      outlineGroup = Object.keys(this.outlineGroups).length;
+      outlineGroup = String(Object.keys(this.outlineGroups).length);
     }
-
-    this.#isolateStyles(() => {
-      if (typeof rotation !== 0) {
-        this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
+    __classPrivateFieldGet(
+      this,
+      _CanvasConverse_instances,
+      "m",
+      _CanvasConverse_isolateStyles,
+    ).call(this, () => {
+      if (rotation !== 0) {
+        __classPrivateFieldGet(
+          this,
+          _CanvasConverse_instances,
+          "m",
+          _CanvasConverse_rotate,
+        ).call(
+          this,
+          rotationX !== null && rotationX !== void 0 ? rotationX : x,
+          rotationY !== null && rotationY !== void 0 ? rotationY : y,
+          rotation,
+        );
       }
-      this.context.fillStyle = fill ?? "transparent";
+      this.context.fillStyle =
+        fill !== null && fill !== void 0 ? fill : "transparent";
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.beginPath();
       }
       callbackWithContext(this.context);
-      this.context.filter = filter ?? "none";
+      this.context.filter =
+        filter !== null && filter !== void 0 ? filter : "none";
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.closePath();
       }
       this.context.fill();
     });
-
     if (addObject) {
-      return this.#addObject("draw", {
+      return __classPrivateFieldGet(
+        this,
+        _CanvasConverse_instances,
+        "m",
+        _CanvasConverse_addObject,
+      ).call(this, "draw", {
         x,
         y,
         rotation,
@@ -370,10 +530,16 @@ export class CanvasConverse {
       });
     }
   }
-
   group(objectToAttachTo, arrayOfObjectsToAttach = []) {
     objectToAttachTo.children = arrayOfObjectsToAttach.filter(
-      (obj) => !obj?.options.physics
+      (obj) => {
+        var _a;
+        return !((_a =
+          obj === null || obj === void 0 ? void 0 : obj.options) === null ||
+        _a === void 0
+          ? void 0
+          : _a.physics);
+      },
       // to keep things simple for now,
       // don't attach objects that have their own physics.
     );
@@ -381,9 +547,6 @@ export class CanvasConverse {
       if (child) child.isChild = true;
     });
   }
-
-  usingOutlineGroup = false;
-  outlineGroups = {};
   makeOutlineGroup({
     drawShapesCallback,
     stroke,
@@ -393,24 +556,22 @@ export class CanvasConverse {
     outlineGroupKey,
   }) {
     this.usingOutlineGroup = true;
-
     this.context.beginPath();
-
     const nextKey = Object.keys(this.outlineGroups).length + 1; // start at 1
-    outlineGroupKey = outlineGroupKey ?? nextKey;
+    outlineGroupKey =
+      outlineGroupKey !== null && outlineGroupKey !== void 0
+        ? outlineGroupKey
+        : nextKey;
     this.outlineGroups[outlineGroupKey] = {
       stroke: stroke,
       fill: fill,
       lineWidth: lineWidth,
       filter: filter,
     };
-
     drawShapesCallback(stroke, outlineGroupKey);
-
-    this.context.filter = filter ?? "none";
-
+    this.context.filter =
+      filter !== null && filter !== void 0 ? filter : "none";
     this.context.closePath();
-
     this.context.strokeStyle = stroke;
     this.context.lineWidth = lineWidth;
     this.context.stroke();
@@ -418,15 +579,17 @@ export class CanvasConverse {
       this.context.fillStyle = fill;
       this.context.fill();
     }
-
     this.usingOutlineGroup = false;
   }
-
   clear() {
     this.context.clearRect(0, 0, this.w, this.h);
   }
-
-  #addObject(type, options) {
+}
+(_CanvasConverse_instances = new WeakSet()),
+  (_CanvasConverse_addObject = function _CanvasConverse_addObject(
+    type,
+    options,
+  ) {
     const newKey = Object.keys(this.objects).length;
     this.objects[newKey] = {
       key: newKey,
@@ -435,32 +598,38 @@ export class CanvasConverse {
       children: [],
     };
     return this.objects[newKey];
-  }
-
-  #isolateStyles(drawingCallback) {
+  }),
+  (_CanvasConverse_isolateStyles = function _CanvasConverse_isolateStyles(
+    drawingCallback,
+  ) {
     // prevent style leak e.g. fill
     this.context.save();
     drawingCallback();
     this.context.restore();
-  }
-
-  #rotate(x, y, degrees) {
+  }),
+  (_CanvasConverse_rotate = function _CanvasConverse_rotate(x, y, degrees) {
     this.context.translate(x, y);
     this.context.rotate((degrees * Math.PI) / 180);
     this.context.translate(-x, -y);
-  }
-
-  #checkCallStackString() {
-    return new Error().stack;
-  }
-
-  #isUsingOutlineGroup() {
-    const outlineGroupMethodName = this.makeOutlineGroup
-      .toString()
-      .split("(")[0];
-
-    return new RegExp(`\\b${outlineGroupMethodName}\\b`).test(
-      this.#checkCallStackString()
-    );
-  }
-}
+  }),
+  (_CanvasConverse_checkCallStackString =
+    function _CanvasConverse_checkCallStackString() {
+      return new Error().stack;
+    }),
+  (_CanvasConverse_isUsingOutlineGroup =
+    function _CanvasConverse_isUsingOutlineGroup() {
+      var _a;
+      const outlineGroupMethodName = this.makeOutlineGroup
+        .toString()
+        .split("(")[0];
+      return new RegExp(`\\b${outlineGroupMethodName}\\b`).test(
+        (_a = __classPrivateFieldGet(
+          this,
+          _CanvasConverse_instances,
+          "m",
+          _CanvasConverse_checkCallStackString,
+        ).call(this)) !== null && _a !== void 0
+          ? _a
+          : "",
+      );
+    });

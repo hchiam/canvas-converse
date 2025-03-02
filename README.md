@@ -114,6 +114,11 @@ And much more in the [demo.js](https://github.com/hchiam/canvas-converse/blob/ma
 
 ## reminder to self for development and deployment
 
+While developing, only edit .ts files! The other file types are now automatically generated from them:
+
+- .d.ts
+- .js
+
 ```bash
 vite # http://localhost:5173/demo.html
 # and NOT: http://localhost:5173

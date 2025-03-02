@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "es2017",
+        "lib": ["es2017", "dom"],
+        "declaration": true
+    },
+    "declarationMap": true,
+    "include": [
+        "script.ts",
+        "naivePhysics.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
