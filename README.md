@@ -16,13 +16,13 @@ https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@main/script.js
 ```
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@4.0.1/script.js
+https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@4.1.0/script.js
 ```
 
 ## Example usage
 
 ```js
-import { CanvasConverse } from "https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@4.0.1/script.js";
+import { CanvasConverse } from "https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@4.1.0/script.js";
 
 const $ = (x) => document.querySelector(x);
 
@@ -86,6 +86,16 @@ cc.makeOutlineGroup({
   fill: "#33A8FF",
   lineWidth: 20,
 });
+cc.text({
+  text: "Hi!",
+  x: 0,
+  y: 0,
+  rotation: -45,
+  rotationX: 28,
+  rotationY: 18,
+  font: '50px serif',
+  style: "red",
+});
 ```
 
 And much more in the [demo.js](https://github.com/hchiam/canvas-converse/blob/main/demo.js)!
@@ -94,8 +104,8 @@ And much more in the [demo.js](https://github.com/hchiam/canvas-converse/blob/ma
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@4.0.1/script.js"
-  integrity="sha384-a5mqu8Jw3A/Duj1+L+J+1kBuSRPGaU1fsubVBvj2nC0WPeRbTlVv3Q9b9FAUT6fM"
+  src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@4.1.0/script.js"
+  integrity="sha384-2EuqPs8+KJYuxfAVpgT5kHYoX/UydYjejKjabNQxxPf22iyBIYwWJdNMeRZKZeRZ"
   crossorigin="anonymous"
 ></script>
 ```

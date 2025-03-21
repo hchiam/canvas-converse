@@ -230,7 +230,7 @@ const rotatingText = cc.text({
   rotation: -45,
   rotationX: 28,
   rotationY: 18,
-  font: '50px "Comic Sans"',
+  font: "50px serif",
   style: "red",
 });
 setInterval(() => {
