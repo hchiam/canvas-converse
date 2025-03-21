@@ -581,6 +581,68 @@ export class CanvasConverse {
     }
     this.usingOutlineGroup = false;
   }
+  text({
+    text,
+    x = 0,
+    y = 0,
+    font,
+    type,
+    style,
+    baseline = "top",
+    rotation = 0 /* degrees */,
+    rotationX /* x position of rotation */,
+    rotationY /* y position of rotation */,
+    addObject = true,
+  }) {
+    __classPrivateFieldGet(
+      this,
+      _CanvasConverse_instances,
+      "m",
+      _CanvasConverse_isolateStyles,
+    ).call(this, () => {
+      this.context.textBaseline = baseline;
+      if (rotation !== 0) {
+        __classPrivateFieldGet(
+          this,
+          _CanvasConverse_instances,
+          "m",
+          _CanvasConverse_rotate,
+        ).call(
+          this,
+          rotationX !== null && rotationX !== void 0 ? rotationX : x,
+          rotationY !== null && rotationY !== void 0 ? rotationY : y,
+          rotation,
+        );
+      }
+      if (font) this.context.font = font;
+      if (type === "stroke") {
+        if (style) this.context.strokeStyle = style;
+        this.context.strokeText(text, x, y);
+      } else {
+        if (style) this.context.fillStyle = style;
+        this.context.fillText(text, x, y);
+      }
+    });
+    if (addObject) {
+      return __classPrivateFieldGet(
+        this,
+        _CanvasConverse_instances,
+        "m",
+        _CanvasConverse_addObject,
+      ).call(this, "text", {
+        text,
+        x,
+        y,
+        font,
+        type,
+        style,
+        baseline,
+        rotation,
+        rotationX,
+        rotationY,
+      });
+    }
+  }
   clear() {
     this.context.clearRect(0, 0, this.w, this.h);
   }

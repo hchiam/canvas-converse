@@ -441,6 +441,50 @@ export class CanvasConverse implements CanvasConverseClassContract {
     this.usingOutlineGroup = false;
   }
 
+  text({
+    text,
+    x = 0,
+    y = 0,
+    font,
+    type,
+    style,
+    baseline = "top",
+    rotation = 0 /* degrees */,
+    rotationX /* x position of rotation */,
+    rotationY /* y position of rotation */,
+    addObject = true,
+  }) {
+    this.#isolateStyles(() => {
+      (this.context.textBaseline as any) = baseline;
+      if (rotation !== 0) {
+        this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
+      }
+      if (font) this.context.font = font;
+      if (type === "stroke") {
+        if (style) this.context.strokeStyle = style;
+        this.context.strokeText(text, x, y);
+      } else {
+        if (style) this.context.fillStyle = style;
+        this.context.fillText(text, x, y);
+      }
+    });
+
+    if (addObject) {
+      return this.#addObject("text", {
+        text,
+        x,
+        y,
+        font,
+        type,
+        style,
+        baseline,
+        rotation,
+        rotationX,
+        rotationY,
+      });
+    }
+  }
+
   clear() {
     this.context.clearRect(0, 0, this.w, this.h);
   }

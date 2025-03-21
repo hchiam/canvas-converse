@@ -105,8 +105,11 @@ export class NaivePhysics {
           object.options.callbackWithContext
         );
         break;
+      case "text":
+        this.canvasConverse.text(object.options);
+        break;
       default:
-        throw new Error("Unrecognized object.");
+        throw new Error("Unrecognized object. See naivePhysics.ts");
         break;
     }
 

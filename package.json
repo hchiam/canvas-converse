@@ -1,6 +1,6 @@
 {
   "name": "canvas-converse",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "main": "script.js",
   "types": "script.d.ts",
   "author": "hchiam",
@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "yarn tsc; cd demo; vite # http://localhost:5173/demo.html",
     "start": "yarn tsc; cd demo; vite # http://localhost:5173/demo.html",
-    "tsc": "tsc -p tsconfig.json; yarn prt; # use -p to preserve documentation, as opposed to: tsc script.ts; tsc naivePhysics.ts",
+    "tsc": "tsc -p tsconfig.json; yarn prt; # Will auto-generate .d.ts files. BTW, use -p to preserve documentation, as opposed to: tsc script.ts; tsc naivePhysics.ts",
     "prt": "prettier --write script.js naivePhysics.js",
     "pkg": "yarn tsc; bash get-integrity.sh; git status -sb; echo; echo Make sure to update the version in package.json;",
     "pub": "yarn pkg; yarn publish; open https://www.npmjs.com/package/canvas-converse;",
