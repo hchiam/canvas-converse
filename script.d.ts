@@ -104,5 +104,18 @@ export declare class CanvasConverse implements CanvasConverseClassContract {
         filter: any;
         outlineGroupKey: any;
     }): void;
+    text({ text, x, y, font, type, style, baseline, rotation, rotationX, rotationY, addObject, }: {
+        text: any;
+        x?: number;
+        y?: number;
+        font: any;
+        type: any;
+        style: any;
+        baseline?: string;
+        rotation?: number;
+        rotationX: any;
+        rotationY: any;
+        addObject?: boolean;
+    }): any;
     clear(): void;
 }

@@ -222,3 +222,17 @@ cc.line({
   lineWidth: 10,
   lineCap: "round",
 });
+
+const rotatingText = cc.text({
+  text: "Hi!",
+  // x: 0,
+  // y: 0,
+  rotation: -45,
+  rotationX: 28,
+  rotationY: 18,
+  font: '50px "Comic Sans"',
+  style: "red",
+});
+setInterval(() => {
+  rotatingText.options.rotation += 10;
+}, 100);

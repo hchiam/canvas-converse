@@ -1,6 +1,6 @@
 # CanvasConverse Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2025/03/02th.)
+(Generated from generateDocumentation.js to clipboard - 2025/03/20th.)
 
 ## Methods
 
@@ -126,6 +126,22 @@ makeOutlineGroup({
 ```
 
 ```js
+text({
+    text,
+    x = 0,
+    y = 0,
+    font,
+    type,
+    style,
+    baseline = "top",
+    rotation = 0 /* degrees */,
+    rotationX /* x position of rotation */,
+    rotationY /* y position of rotation */,
+    addObject = true,
+  })
+```
+
+```js
 clear()
 ```
 
@@ -139,7 +155,7 @@ clear()
 
 # NaivePhysics Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2025/03/02th.)
+(Generated from generateDocumentation.js to clipboard - 2025/03/20th.)
 
 ## Methods
 
