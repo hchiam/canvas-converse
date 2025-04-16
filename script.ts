@@ -45,6 +45,7 @@ export class CanvasConverse implements CanvasConverseClassContract {
     }
     this.w ??= Number(this.canvas.width || this.canvas.style.width);
     this.h ??= Number(this.canvas.height || this.canvas.style.height);
+    // TODO: NaivePhysics was breaking outline groups:
     this.physicsEngine = new NaivePhysics(this);
   }
 
@@ -413,6 +414,7 @@ export class CanvasConverse implements CanvasConverseClassContract {
   }) {
     this.usingOutlineGroup = true;
 
+    // TODO:
     this.context.beginPath();
 
     const nextKey = Object.keys(this.outlineGroups).length + 1; // start at 1
@@ -424,21 +426,82 @@ export class CanvasConverse implements CanvasConverseClassContract {
       filter: filter,
     };
 
-    drawShapesCallback(stroke, outlineGroupKey);
+    this.#drawMergedOutline(this.context, drawShapesCallback, {
+      color: stroke,
+      lineWidth,
+    });
+    // drawShapesCallback(stroke, outlineGroupKey);
 
-    this.context.filter = filter ?? "none";
+    // TODO:
+    // this.context.filter = filter ?? "none";
 
     this.context.closePath();
 
-    this.context.strokeStyle = stroke;
-    this.context.lineWidth = lineWidth;
-    this.context.stroke();
-    if (fill) {
-      this.context.fillStyle = fill;
-      this.context.fill();
-    }
+    // // TODO: this seems to have no effect?
+    // this.context.strokeStyle = stroke;
+    // this.context.lineWidth = lineWidth;
+    // this.context.stroke();
+    // if (fill) {
+    //   this.context.fillStyle = fill;
+    //   this.context.fill();
+    // }
+    // alert("stroke " + stroke + " lineWidth " + lineWidth + " fill " + fill);
 
     this.usingOutlineGroup = false;
+  }
+
+  #drawMergedOutline(
+    originalContext,
+    drawChildrenCallback,
+    { color = "black", lineWidth = 2 } = {}
+  ) {
+    const { width, height } = originalContext.canvas;
+
+    const offScreenCC = new CanvasConverse();
+    offScreenCC.init(document.createElement("canvas"), {
+      w: this.w,
+      h: this.h,
+      physics: false,
+    });
+    drawChildrenCallback(offScreenCC);
+
+    const pixelData = offScreenCC.context.getImageData(
+      0,
+      0,
+      width,
+      height
+    ).data;
+
+    const getAlphaIndex = (x, y) => (y * width + x) * 4 + 3; // width = row size
+
+    originalContext.save();
+    originalContext.beginPath();
+
+    for (let y = 1; y < height - 1; y++) {
+      for (let x = 1; x < width - 1; x++) {
+        const alpha = pixelData[getAlphaIndex(x, y)];
+        if (alpha === 0) continue;
+
+        const neighbouringAlphas = [
+          pixelData[getAlphaIndex(x, y - 1)],
+          pixelData[getAlphaIndex(x, y + 1)],
+          pixelData[getAlphaIndex(x - 1, y)],
+          pixelData[getAlphaIndex(x + 1, y)],
+        ];
+
+        if (neighbouringAlphas.some((a) => a === 0)) {
+          originalContext.rect(x, y, 1, 1);
+        }
+      }
+    }
+
+    // TODO: figure out how to fill the merged shape(s)?
+
+    originalContext.strokeStyle = color;
+    originalContext.lineWidth = lineWidth;
+    originalContext.stroke();
+    originalContext.drawImage(offScreenCC.canvas, 0, 0);
+    originalContext.restore();
   }
 
   text({

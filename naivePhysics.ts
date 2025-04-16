@@ -50,12 +50,12 @@ export class NaivePhysics {
           this.canvasConverse.outlineGroups[outlineGroupName];
 
         this.canvasConverse.makeOutlineGroup({
-          drawShapesCallback: () => {
+          drawShapesCallback: (cc) => {
             while (
               i < entries.length &&
               entries[i][1].options.outlineGroup === outlineGroupName
             ) {
-              this.#handleEntry(entries[i]);
+              this.#handleEntry(entries[i], cc);
               i++;
             }
             i--; // to counteract the i++ from last round of the fast-forward inner while loop
@@ -68,45 +68,42 @@ export class NaivePhysics {
       }
     }
   }
-  #handleEntry(entry) {
+  #handleEntry(entry, cc = this.canvasConverse) {
     const [key, object] = entry;
     if (object.options.physics) {
-      this.#handleGravity(key);
-      this.#handleCollisions(key);
+      this.#handleGravity(key, cc);
+      this.#handleCollisions(key, cc);
     }
-    this.#redrawObject(object);
-    this.#handleChildren(key, 0, 0, 0, 0);
+    this.#redrawObject(object, cc);
+    this.#handleChildren(key, 0, 0, 0, 0, cc);
   }
 
-  #redrawObject(object) {
+  #redrawObject(object, cc = this.canvasConverse) {
     // don't duplicate objects!
     object.options.addObject = false;
 
     if (object.options.outlineGroup) {
-      this.canvasConverse.usingOutlineGroup = true;
+      cc.usingOutlineGroup = true;
     }
 
     switch (object.type) {
       case "rectangle":
-        this.canvasConverse.rectangle(object.options);
+        cc.rectangle(object.options);
         break;
       case "triangle":
-        this.canvasConverse.triangle(object.options);
+        cc.triangle(object.options);
         break;
       case "ellipse":
-        this.canvasConverse.ellipse(object.options);
+        cc.ellipse(object.options);
         break;
       case "line":
-        this.canvasConverse.line(object.options);
+        cc.line(object.options);
         break;
       case "draw":
-        this.canvasConverse.draw(
-          object.options,
-          object.options.callbackWithContext
-        );
+        cc.draw(object.options, object.options.callbackWithContext);
         break;
       case "text":
-        this.canvasConverse.text(object.options);
+        cc.text(object.options);
         break;
       default:
         throw new Error("Unrecognized object. See naivePhysics.ts");
@@ -114,11 +111,11 @@ export class NaivePhysics {
     }
 
     if (object.options.outlineGroup) {
-      this.canvasConverse.usingOutlineGroup = false;
+      cc.usingOutlineGroup = false;
     }
   }
 
-  #handleGravity(key) {
+  #handleGravity(key, cc = this.canvasConverse) {
     const object = this.objects[key];
     const options = object.options;
 
@@ -131,7 +128,7 @@ export class NaivePhysics {
     switch (object.type) {
       case "rectangle":
         bottom = options.y + options.h;
-        hitFloor = bottom >= this.canvasConverse.h;
+        hitFloor = bottom >= cc.h;
 
         if (hitFloor) {
           options.bounceRemaining = Math.round(
@@ -144,12 +141,12 @@ export class NaivePhysics {
         }
         yBefore = options.y;
         options.y += options.gravityDeltaY;
-        options.y = Math.min(options.y, this.canvasConverse.h - options.h);
+        options.y = Math.min(options.y, cc.h - options.h);
         yAfter = options.y;
         break;
       case "triangle":
         bottom = Math.max(options.y1, options.y2, options.y3);
-        hitFloor = bottom >= this.canvasConverse.h;
+        hitFloor = bottom >= cc.h;
 
         if (hitFloor) {
           options.bounceRemaining = Math.round(
@@ -164,23 +161,14 @@ export class NaivePhysics {
         options.y1 += options.gravityDeltaY;
         options.y2 += options.gravityDeltaY;
         options.y3 += options.gravityDeltaY;
-        options.y1 = Math.min(
-          options.y1,
-          this.canvasConverse.h - (bottom - options.y1)
-        );
-        options.y2 = Math.min(
-          options.y2,
-          this.canvasConverse.h - (bottom - options.y2)
-        );
-        options.y3 = Math.min(
-          options.y3,
-          this.canvasConverse.h - (bottom - options.y3)
-        );
+        options.y1 = Math.min(options.y1, cc.h - (bottom - options.y1));
+        options.y2 = Math.min(options.y2, cc.h - (bottom - options.y2));
+        options.y3 = Math.min(options.y3, cc.h - (bottom - options.y3));
         yAfter = options.y1;
         break;
       case "ellipse":
         bottom = options.y + options.ry;
-        hitFloor = bottom >= this.canvasConverse.h;
+        hitFloor = bottom >= cc.h;
 
         if (hitFloor) {
           options.bounceRemaining = Math.round(
@@ -194,7 +182,7 @@ export class NaivePhysics {
         yBefore = options.y;
         options.y += options.gravityDeltaY;
         const circleHeight = options.r; // TODO: ellipse, not circle
-        options.y = Math.min(options.y, this.canvasConverse.h - circleHeight);
+        options.y = Math.min(options.y, cc.h - circleHeight);
         yAfter = options.y;
         break;
       case "line":
@@ -205,10 +193,10 @@ export class NaivePhysics {
         throw new Error("Unrecognized object.");
         break;
     }
-    this.#handleChildren(key, 0, 0, yBefore, yAfter);
+    this.#handleChildren(key, 0, 0, yBefore, yAfter, cc);
   }
 
-  #handleCollisions(key) {
+  #handleCollisions(key, cc = this.canvasConverse) {
     const object = this.objects[key];
     const options1 = object.options;
 
@@ -245,16 +233,13 @@ export class NaivePhysics {
               options1.x += options1.dx * this.collisionCoefficient;
               options1.y += options1.dy * this.collisionCoefficient;
               const circleHeight = options1.r; // TODO: ellipse, not circle
-              options1.y = Math.min(
-                options1.y,
-                this.canvasConverse.h - circleHeight
-              );
+              options1.y = Math.min(options1.y, cc.h - circleHeight);
             }
           });
 
         xAfter = options1.x;
         yAfter = options1.y;
-        this.#handleChildren(key, xBefore, xAfter, yBefore, yAfter);
+        this.#handleChildren(key, xBefore, xAfter, yBefore, yAfter, cc);
 
         break;
 
@@ -284,12 +269,19 @@ export class NaivePhysics {
     return Math.random() * 2 - 1;
   }
 
-  #handleChildren(key, xBefore, xAfter, yBefore, yAfter) {
+  #handleChildren(
+    key,
+    xBefore,
+    xAfter,
+    yBefore,
+    yAfter,
+    cc = this.canvasConverse
+  ) {
     const xDelta = xAfter - xBefore;
     const yDelta = yAfter - yBefore;
     const options = this.objects[key].options;
     const children = this.objects[key].children;
-    this.canvasConverse.usingOutlineGroup = true;
+    cc.usingOutlineGroup = true;
     children.forEach((child) => {
       if (xDelta) child.options.x += xDelta;
       if (yDelta) child.options.y += yDelta;
@@ -302,13 +294,13 @@ export class NaivePhysics {
         // rotate child with its (x,y) coordinates being relative to its parent's (x,y):
         this.context.translate(options.rotationX, options.rotationY);
         this.context.rotate((options.rotation * Math.PI) / 180);
-        this.#redrawObject(child);
+        this.#redrawObject(child, cc);
         this.context.rotate(-(options.rotation * Math.PI) / 180);
         this.context.translate(-options.rotationX, -options.rotationY);
       } else {
-        this.#redrawObject(child);
+        this.#redrawObject(child, cc);
       }
     });
-    this.canvasConverse.usingOutlineGroup = false;
+    cc.usingOutlineGroup = false;
   }
 }

@@ -173,14 +173,16 @@ cc.makeOutlineGroup({
 
 cc.makeOutlineGroup({
   drawShapesCallback: () => {
+    const internalFill = "#ff000080";
+    const internalStroke = "red";
     cc.rectangle({
       x: 410,
       y: 10,
       w: 50,
       h: 20,
       cornerRadii: [10],
-      fill: "grey",
-      stroke: "white",
+      fill: internalFill,
+      stroke: internalStroke,
       lineWidth: 10,
     });
     cc.rectangle({
@@ -189,8 +191,8 @@ cc.makeOutlineGroup({
       w: 20,
       h: 50,
       cornerRadii: [10],
-      fill: "grey",
-      stroke: "white",
+      fill: internalFill,
+      stroke: internalStroke,
       lineWidth: 10,
     });
     cc.rectangle({
@@ -199,8 +201,8 @@ cc.makeOutlineGroup({
       w: 20,
       h: 50,
       cornerRadii: [10],
-      fill: "grey",
-      stroke: "white",
+      fill: internalFill,
+      stroke: internalStroke,
       lineWidth: 10,
       rotation: 45,
       rotationX: 450,
@@ -208,7 +210,7 @@ cc.makeOutlineGroup({
     });
   },
   stroke: "white",
-  fill: "grey",
+  fill: "#80808080",
   lineWidth: 10,
   // filter: "blur(10px)",
 });

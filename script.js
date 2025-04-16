@@ -20,6 +20,8 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _CanvasConverse_instances,
+  _a,
+  _CanvasConverse_drawMergedOutline,
   _CanvasConverse_addObject,
   _CanvasConverse_isolateStyles,
   _CanvasConverse_rotate,
@@ -34,7 +36,7 @@ export class CanvasConverse {
     this.objects = {};
   }
   init(canvas, options = { h: 0, w: 0 }) {
-    var _a, _b;
+    var _b, _c;
     this.canvas = canvas;
     this.context = canvas.getContext("2d");
     this.options = options;
@@ -54,12 +56,13 @@ export class CanvasConverse {
         this.canvas.width = this.w;
       }
     }
-    (_a = this.w) !== null && _a !== void 0
-      ? _a
-      : (this.w = Number(this.canvas.width || this.canvas.style.width));
-    (_b = this.h) !== null && _b !== void 0
+    (_b = this.w) !== null && _b !== void 0
       ? _b
+      : (this.w = Number(this.canvas.width || this.canvas.style.width));
+    (_c = this.h) !== null && _c !== void 0
+      ? _c
       : (this.h = Number(this.canvas.height || this.canvas.style.height));
+    // TODO: NaivePhysics was breaking outline groups:
     this.physicsEngine = new NaivePhysics(this);
   }
   rectangle({
@@ -533,12 +536,12 @@ export class CanvasConverse {
   group(objectToAttachTo, arrayOfObjectsToAttach = []) {
     objectToAttachTo.children = arrayOfObjectsToAttach.filter(
       (obj) => {
-        var _a;
-        return !((_a =
+        var _b;
+        return !((_b =
           obj === null || obj === void 0 ? void 0 : obj.options) === null ||
-        _a === void 0
+        _b === void 0
           ? void 0
-          : _a.physics);
+          : _b.physics);
       },
       // to keep things simple for now,
       // don't attach objects that have their own physics.
@@ -556,6 +559,7 @@ export class CanvasConverse {
     outlineGroupKey,
   }) {
     this.usingOutlineGroup = true;
+    // TODO:
     this.context.beginPath();
     const nextKey = Object.keys(this.outlineGroups).length + 1; // start at 1
     outlineGroupKey =
@@ -568,17 +572,28 @@ export class CanvasConverse {
       lineWidth: lineWidth,
       filter: filter,
     };
-    drawShapesCallback(stroke, outlineGroupKey);
-    this.context.filter =
-      filter !== null && filter !== void 0 ? filter : "none";
+    __classPrivateFieldGet(
+      this,
+      _CanvasConverse_instances,
+      "m",
+      _CanvasConverse_drawMergedOutline,
+    ).call(this, this.context, drawShapesCallback, {
+      color: stroke,
+      lineWidth,
+    });
+    // drawShapesCallback(stroke, outlineGroupKey);
+    // TODO:
+    // this.context.filter = filter ?? "none";
     this.context.closePath();
-    this.context.strokeStyle = stroke;
-    this.context.lineWidth = lineWidth;
-    this.context.stroke();
-    if (fill) {
-      this.context.fillStyle = fill;
-      this.context.fill();
-    }
+    // // TODO: this seems to have no effect?
+    // this.context.strokeStyle = stroke;
+    // this.context.lineWidth = lineWidth;
+    // this.context.stroke();
+    // if (fill) {
+    //   this.context.fillStyle = fill;
+    //   this.context.fill();
+    // }
+    // alert("stroke " + stroke + " lineWidth " + lineWidth + " fill " + fill);
     this.usingOutlineGroup = false;
   }
   text({
@@ -647,7 +662,53 @@ export class CanvasConverse {
     this.context.clearRect(0, 0, this.w, this.h);
   }
 }
-(_CanvasConverse_instances = new WeakSet()),
+(_a = CanvasConverse),
+  (_CanvasConverse_instances = new WeakSet()),
+  (_CanvasConverse_drawMergedOutline =
+    function _CanvasConverse_drawMergedOutline(
+      originalContext,
+      drawChildrenCallback,
+      { color = "black", lineWidth = 2 } = {},
+    ) {
+      const { width, height } = originalContext.canvas;
+      const offScreenCC = new _a();
+      offScreenCC.init(document.createElement("canvas"), {
+        w: this.w,
+        h: this.h,
+        physics: false,
+      });
+      drawChildrenCallback(offScreenCC);
+      const pixelData = offScreenCC.context.getImageData(
+        0,
+        0,
+        width,
+        height,
+      ).data;
+      const getAlphaIndex = (x, y) => (y * width + x) * 4 + 3; // width = row size
+      originalContext.save();
+      originalContext.beginPath();
+      for (let y = 1; y < height - 1; y++) {
+        for (let x = 1; x < width - 1; x++) {
+          const alpha = pixelData[getAlphaIndex(x, y)];
+          if (alpha === 0) continue;
+          const neighbouringAlphas = [
+            pixelData[getAlphaIndex(x, y - 1)],
+            pixelData[getAlphaIndex(x, y + 1)],
+            pixelData[getAlphaIndex(x - 1, y)],
+            pixelData[getAlphaIndex(x + 1, y)],
+          ];
+          if (neighbouringAlphas.some((a) => a === 0)) {
+            originalContext.rect(x, y, 1, 1);
+          }
+        }
+      }
+      // TODO: figure out how to fill the merged shape(s)?
+      originalContext.strokeStyle = color;
+      originalContext.lineWidth = lineWidth;
+      originalContext.stroke();
+      originalContext.drawImage(offScreenCC.canvas, 0, 0);
+      originalContext.restore();
+    }),
   (_CanvasConverse_addObject = function _CanvasConverse_addObject(
     type,
     options,
@@ -680,18 +741,18 @@ export class CanvasConverse {
     }),
   (_CanvasConverse_isUsingOutlineGroup =
     function _CanvasConverse_isUsingOutlineGroup() {
-      var _a;
+      var _b;
       const outlineGroupMethodName = this.makeOutlineGroup
         .toString()
         .split("(")[0];
       return new RegExp(`\\b${outlineGroupMethodName}\\b`).test(
-        (_a = __classPrivateFieldGet(
+        (_b = __classPrivateFieldGet(
           this,
           _CanvasConverse_instances,
           "m",
           _CanvasConverse_checkCallStackString,
-        ).call(this)) !== null && _a !== void 0
-          ? _a
+        ).call(this)) !== null && _b !== void 0
+          ? _b
           : "",
       );
     });
