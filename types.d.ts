@@ -110,6 +110,7 @@ export declare class OutlineGroups {
     [key: number]: OutlineGroup;
 }
 export declare class OutlineGroup {
+    drawShapesCallback: Function;
     stroke: string;
     fill: string;
     lineWidth: number;

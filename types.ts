@@ -129,6 +129,7 @@ export class OutlineGroups {
 }
 
 export class OutlineGroup {
+  drawShapesCallback: Function;
   stroke: string;
   fill: string;
   lineWidth: number;

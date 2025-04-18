@@ -1,6 +1,6 @@
 # CanvasConverse Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2025/03/20th.)
+(Generated from generateDocumentation.js to clipboard - 2025/04/17th.)
 
 ## Methods
 
@@ -122,6 +122,7 @@ makeOutlineGroup({
     lineWidth,
     filter,
     outlineGroupKey,
+    addObject = true,
   })
 ```
 
@@ -155,7 +156,7 @@ clear()
 
 # NaivePhysics Documentation
 
-(Generated from generateDocumentation.js to clipboard - 2025/03/20th.)
+(Generated from generateDocumentation.js to clipboard - 2025/04/17th.)
 
 ## Methods
 
@@ -168,6 +169,8 @@ constructor(canvasConverse)
 `canvasConverse`: object
 
 `objects`: undefined
+
+`outlineGroups`: undefined
 
 `canvas`: undefined
 

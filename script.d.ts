@@ -96,13 +96,14 @@ export declare class CanvasConverse implements CanvasConverseClassContract {
     group(objectToAttachTo: any, arrayOfObjectsToAttach?: CanvasConverseObject[]): void;
     usingOutlineGroup: boolean;
     outlineGroups: OutlineGroups;
-    makeOutlineGroup({ drawShapesCallback, stroke, fill, lineWidth, filter, outlineGroupKey, }: {
+    makeOutlineGroup({ drawShapesCallback, stroke, fill, lineWidth, filter, outlineGroupKey, addObject, }: {
         drawShapesCallback: any;
         stroke: any;
         fill: any;
         lineWidth: any;
         filter: any;
         outlineGroupKey: any;
+        addObject?: boolean;
     }): void;
     text({ text, x, y, font, type, style, baseline, rotation, rotationX, rotationY, addObject, }: {
         text: any;
