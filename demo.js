@@ -144,7 +144,7 @@ cc.makeOutlineGroup({
   stroke: "#ffffff80",
   fill: "#FF573380",
   lineWidth: 20,
-  // filter: "blur(10px)",
+  filter: "blur(2px)",
 });
 
 cc.makeOutlineGroup({

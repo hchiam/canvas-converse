@@ -595,14 +595,21 @@ export class CanvasConverse {
     strokeContext.globalCompositeOperation = "destination-out";
     strokeContext.drawImage(fillCanvas, 0, 0);
     strokeContext.globalCompositeOperation = "source-over";
-    // draw the stroke version that has its insides masked out:
-    this.context.drawImage(strokeCanvas, 0, 0);
-    // draw the fill version in with fillStyle now:
-    this.context.fillStyle = fill;
-    drawShapesCallback(this);
-    this.context.fill();
-    this.context.filter =
-      filter !== null && filter !== void 0 ? filter : "none";
+    __classPrivateFieldGet(
+      this,
+      _CanvasConverse_instances,
+      "m",
+      _CanvasConverse_isolateStyles,
+    ).call(this, () => {
+      this.context.filter =
+        filter !== null && filter !== void 0 ? filter : "none";
+      // draw the stroke version that has its insides masked out:
+      this.context.drawImage(strokeCanvas, 0, 0);
+      // draw the fill version in with fillStyle now:
+      this.context.fillStyle = fill;
+      drawShapesCallback(this);
+      this.context.fill();
+    });
     this.context.closePath();
     this.usingOutlineGroup = false;
   }
