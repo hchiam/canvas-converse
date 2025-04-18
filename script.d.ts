@@ -28,7 +28,7 @@ export declare class CanvasConverse implements CanvasConverseClassContract {
         outlineGroup?: string;
         addObject?: boolean;
     }): any;
-    triangle({ x1, y1, x2, y2, x3, y3, rotation, rotationX, rotationY, fill, filter, physics, outlineGroup, addObject, }: {
+    triangle({ x1, y1, x2, y2, x3, y3, rotation, rotationX, rotationY, fill, stroke, lineWidth, filter, physics, outlineGroup, addObject, }: {
         x1: any;
         y1: any;
         x2: any;
@@ -39,6 +39,8 @@ export declare class CanvasConverse implements CanvasConverseClassContract {
         rotationX: any;
         rotationY: any;
         fill: any;
+        stroke: any;
+        lineWidth: any;
         filter: any;
         physics: any;
         outlineGroup?: string;
@@ -96,13 +98,14 @@ export declare class CanvasConverse implements CanvasConverseClassContract {
     group(objectToAttachTo: any, arrayOfObjectsToAttach?: CanvasConverseObject[]): void;
     usingOutlineGroup: boolean;
     outlineGroups: OutlineGroups;
-    makeOutlineGroup({ drawShapesCallback, stroke, fill, lineWidth, filter, outlineGroupKey, }: {
+    makeOutlineGroup({ drawShapesCallback, stroke, fill, lineWidth, filter, outlineGroupKey, addObject, }: {
         drawShapesCallback: any;
         stroke: any;
         fill: any;
         lineWidth: any;
         filter: any;
         outlineGroupKey: any;
+        addObject?: boolean;
     }): void;
     text({ text, x, y, font, type, style, baseline, rotation, rotationX, rotationY, addObject, }: {
         text: any;
