@@ -1,6 +1,6 @@
 {
   "name": "canvas-converse",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "main": "script.js",
   "types": "script.d.ts",
   "author": "hchiam",
