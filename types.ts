@@ -55,6 +55,8 @@ export abstract class CanvasConverseClassContract {
     rotationX: number;
     rotationY: number;
     fill: string;
+    stroke: string;
+    lineWidth: number;
     filter: string;
     physics: boolean;
     outlineGroup: string;

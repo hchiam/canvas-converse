@@ -163,6 +163,8 @@ cc.makeOutlineGroup({
       x3: 300,
       y3: 310,
       // fill: "green",
+      // stroke: "#626",
+      // lineWidth: 20,
     });
   },
   stroke: "#626",

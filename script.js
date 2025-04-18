@@ -178,6 +178,8 @@ export class CanvasConverse {
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
     fill,
+    stroke,
+    lineWidth,
     filter,
     physics,
     outlineGroup = "",
@@ -219,12 +221,22 @@ export class CanvasConverse {
       this.context.moveTo(x1, y1);
       this.context.lineTo(x2, y2);
       this.context.lineTo(x3, y3);
+      this.context.lineTo(x1, y1);
       this.context.filter =
         filter !== null && filter !== void 0 ? filter : "none";
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.closePath();
       }
       this.context.fill();
+      if (stroke && !usingOutlineGroup && !this.usingOutlineGroup) {
+        this.context.strokeStyle =
+          stroke !== null && stroke !== void 0 ? stroke : "transparent";
+        if (lineWidth) {
+          this.context.lineWidth =
+            lineWidth !== null && lineWidth !== void 0 ? lineWidth : 0;
+          this.context.stroke();
+        }
+      }
     });
     if (addObject && !usingOutlineGroup) {
       return __classPrivateFieldGet(
@@ -243,6 +255,8 @@ export class CanvasConverse {
         rotationX,
         rotationY,
         fill,
+        stroke,
+        lineWidth,
         filter,
         physics,
         outlineGroup,
@@ -578,9 +592,11 @@ export class CanvasConverse {
     strokeCC.init(strokeCanvas, { w: this.w, h: this.h, physics: false });
     strokeCC.usingOutlineGroup = true;
     const strokeContext = strokeCC.context;
+    strokeContext.beginPath(); // Add explicit path beginning
     strokeContext.strokeStyle = stroke;
     strokeContext.lineWidth = lineWidth;
     drawShapesCallback(strokeCC);
+    strokeContext.closePath(); // Add explicit path closing
     strokeContext.stroke();
     // draw fill version: (don't need fillStyle yet)
     const fillCC = new CanvasConverse();

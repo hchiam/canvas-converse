@@ -44,6 +44,8 @@ triangle({
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
     fill,
+    stroke,
+    lineWidth,
     filter,
     physics,
     outlineGroup = "",

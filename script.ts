@@ -137,6 +137,8 @@ export class CanvasConverse implements CanvasConverseClassContract {
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
     fill,
+    stroke,
+    lineWidth,
     filter,
     physics,
     outlineGroup = "",
@@ -158,11 +160,20 @@ export class CanvasConverse implements CanvasConverseClassContract {
       this.context.moveTo(x1, y1);
       this.context.lineTo(x2, y2);
       this.context.lineTo(x3, y3);
+      this.context.lineTo(x1, y1);
       this.context.filter = filter ?? "none";
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.closePath();
       }
       this.context.fill();
+
+      if (stroke && !usingOutlineGroup && !this.usingOutlineGroup) {
+        this.context.strokeStyle = stroke ?? "transparent";
+        if (lineWidth) {
+          this.context.lineWidth = lineWidth ?? 0;
+          this.context.stroke();
+        }
+      }
     });
 
     if (addObject && !usingOutlineGroup) {
@@ -177,6 +188,8 @@ export class CanvasConverse implements CanvasConverseClassContract {
         rotationX,
         rotationY,
         fill,
+        stroke,
+        lineWidth,
         filter,
         physics,
         outlineGroup,
@@ -434,9 +447,11 @@ export class CanvasConverse implements CanvasConverseClassContract {
     strokeCC.init(strokeCanvas, { w: this.w, h: this.h, physics: false });
     strokeCC.usingOutlineGroup = true;
     const strokeContext = strokeCC.context;
+    strokeContext.beginPath();
     strokeContext.strokeStyle = stroke;
     strokeContext.lineWidth = lineWidth;
     drawShapesCallback(strokeCC);
+    strokeContext.closePath();
     strokeContext.stroke();
 
     // draw fill version: (don't need fillStyle yet)
