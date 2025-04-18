@@ -592,11 +592,11 @@ export class CanvasConverse {
     strokeCC.init(strokeCanvas, { w: this.w, h: this.h, physics: false });
     strokeCC.usingOutlineGroup = true;
     const strokeContext = strokeCC.context;
-    strokeContext.beginPath(); // Add explicit path beginning
+    strokeContext.beginPath();
     strokeContext.strokeStyle = stroke;
     strokeContext.lineWidth = lineWidth;
     drawShapesCallback(strokeCC);
-    strokeContext.closePath(); // Add explicit path closing
+    strokeContext.closePath();
     strokeContext.stroke();
     // draw fill version: (don't need fillStyle yet)
     const fillCC = new CanvasConverse();
