@@ -182,7 +182,7 @@ cc.makeOutlineGroup({
       h: 20,
       cornerRadii: [10],
       // fill: "grey",
-      stroke: "white",
+      // stroke: "white",
       lineWidth: 10,
     });
     cc.rectangle({
@@ -192,7 +192,7 @@ cc.makeOutlineGroup({
       h: 50,
       cornerRadii: [10],
       // fill: "grey",
-      stroke: "white",
+      // stroke: "white",
       lineWidth: 10,
     });
     cc.rectangle({
@@ -202,7 +202,7 @@ cc.makeOutlineGroup({
       h: 50,
       cornerRadii: [10],
       // fill: "grey",
-      stroke: "white",
+      // stroke: "white",
       lineWidth: 10,
       rotation: 45,
       rotationX: 450,

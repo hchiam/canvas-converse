@@ -106,7 +106,7 @@ export class CanvasConverse implements CanvasConverseClassContract {
       }
     });
 
-    if (addObject && !usingOutlineGroup) {
+    if (addObject) {
       return this.#addObject("rectangle", {
         x,
         y,
@@ -176,7 +176,7 @@ export class CanvasConverse implements CanvasConverseClassContract {
       }
     });
 
-    if (addObject && !usingOutlineGroup) {
+    if (addObject) {
       return this.#addObject("triangle", {
         x1,
         y1,
@@ -262,7 +262,7 @@ export class CanvasConverse implements CanvasConverseClassContract {
       }
     });
 
-    if (addObject && !usingOutlineGroup) {
+    if (addObject) {
       return this.#addObject("ellipse", {
         x,
         y,
@@ -332,7 +332,7 @@ export class CanvasConverse implements CanvasConverseClassContract {
       }
     });
 
-    if (addObject && !usingOutlineGroup) {
+    if (addObject) {
       return this.#addObject("line", {
         x1,
         y1,
@@ -387,7 +387,7 @@ export class CanvasConverse implements CanvasConverseClassContract {
       this.context.fill();
     });
 
-    if (addObject && !usingOutlineGroup) {
+    if (addObject) {
       return this.#addObject("draw", {
         x,
         y,
@@ -515,7 +515,7 @@ export class CanvasConverse implements CanvasConverseClassContract {
       }
     });
 
-    if (addObject && !usingOutlineGroup) {
+    if (addObject) {
       return this.#addObject("text", {
         text,
         x,

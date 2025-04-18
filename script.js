@@ -143,7 +143,7 @@ export class CanvasConverse {
         }
       }
     });
-    if (addObject && !usingOutlineGroup) {
+    if (addObject) {
       return __classPrivateFieldGet(
         this,
         _CanvasConverse_instances,
@@ -238,7 +238,7 @@ export class CanvasConverse {
         }
       }
     });
-    if (addObject && !usingOutlineGroup) {
+    if (addObject) {
       return __classPrivateFieldGet(
         this,
         _CanvasConverse_instances,
@@ -350,7 +350,7 @@ export class CanvasConverse {
         }
       }
     });
-    if (addObject && !usingOutlineGroup) {
+    if (addObject) {
       return __classPrivateFieldGet(
         this,
         _CanvasConverse_instances,
@@ -445,7 +445,7 @@ export class CanvasConverse {
         this.context.closePath();
       }
     });
-    if (addObject && !usingOutlineGroup) {
+    if (addObject) {
       return __classPrivateFieldGet(
         this,
         _CanvasConverse_instances,
@@ -524,7 +524,7 @@ export class CanvasConverse {
       }
       this.context.fill();
     });
-    if (addObject && !usingOutlineGroup) {
+    if (addObject) {
       return __classPrivateFieldGet(
         this,
         _CanvasConverse_instances,
@@ -677,7 +677,7 @@ export class CanvasConverse {
         this.context.fillText(text, x, y);
       }
     });
-    if (addObject && !usingOutlineGroup) {
+    if (addObject) {
       return __classPrivateFieldGet(
         this,
         _CanvasConverse_instances,
