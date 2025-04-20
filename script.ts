@@ -465,12 +465,16 @@ export class CanvasConverse implements CanvasConverseClassContract {
     rotation = 0 /* degrees */,
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
+    scale /* e.g.: [-1, 1] to flip horizontally */,
     addObject = true,
   }) {
     this.#isolateStyles(() => {
       (this.context.textBaseline as any) = baseline;
       if (rotation !== 0) {
         this.#rotate(rotationX ?? x, rotationY ?? y, rotation);
+      }
+      if (scale) {
+        this.context.scale(scale[0], scale[1]);
       }
       if (font) this.context.font = font;
       if (type === "stroke") {
@@ -494,6 +498,7 @@ export class CanvasConverse implements CanvasConverseClassContract {
         rotation,
         rotationX,
         rotationY,
+        scale,
       });
     }
   }
