@@ -105,7 +105,7 @@ And much more in the [demo.js](https://github.com/hchiam/canvas-converse/blob/ma
 ```html
 <script
   src="https://cdn.jsdelivr.net/gh/hchiam/canvas-converse@4.1.5/script.js"
-  integrity="sha384-2EuqPs8+KJYuxfAVpgT5kHYoX/UydYjejKjabNQxxPf22iyBIYwWJdNMeRZKZeRZ"
+  integrity="sha384-6XkuC4VxDGCA1E31NxnAZKxLGkMNF1BFZRFi/WNvA3AstM1tNRywPKZAKTLLaGqY"
   crossorigin="anonymous"
 ></script>
 ```
