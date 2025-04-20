@@ -606,7 +606,7 @@ export class CanvasConverse {
     rotation = 0 /* degrees */,
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
-    scale,
+    scale /* e.g.: [-1, 1] to flip horizontally */,
     addObject = true,
   }) {
     __classPrivateFieldGet(
