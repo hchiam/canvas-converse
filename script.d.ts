@@ -106,7 +106,7 @@ export declare class CanvasConverse implements CanvasConverseClassContract {
         filter: any;
         outlineGroupKey: any;
     }): void;
-    text({ text, x, y, font, type, style, baseline, rotation, rotationX, rotationY, addObject, }: {
+    text({ text, x, y, font, type, style, baseline, rotation, rotationX, rotationY, scale, addObject, }: {
         text: any;
         x?: number;
         y?: number;
@@ -117,6 +117,7 @@ export declare class CanvasConverse implements CanvasConverseClassContract {
         rotation?: number;
         rotationX: any;
         rotationY: any;
+        scale: any;
         addObject?: boolean;
     }): any;
     clear(): void;

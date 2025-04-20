@@ -244,13 +244,14 @@ cc.line({
 
 const rotatingText = cc.text({
   text: "Hi!",
-  // x: 0,
-  // y: 0,
+  x: -100,
+  y: 100,
   rotation: -45,
-  rotationX: 28,
-  rotationY: 18,
+  rotationX: 100 - 16,
+  rotationY: 100 + 16,
   font: "50px serif",
   style: "red",
+  scale: [-1, 1],
 });
 setInterval(() => {
   rotatingText.options.rotation += 10;

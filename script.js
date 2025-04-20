@@ -606,6 +606,7 @@ export class CanvasConverse {
     rotation = 0 /* degrees */,
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
+    scale,
     addObject = true,
   }) {
     __classPrivateFieldGet(
@@ -627,6 +628,9 @@ export class CanvasConverse {
           rotationY !== null && rotationY !== void 0 ? rotationY : y,
           rotation,
         );
+      }
+      if (scale) {
+        this.context.scale(scale[0], scale[1]);
       }
       if (font) this.context.font = font;
       if (type === "stroke") {
@@ -654,6 +658,7 @@ export class CanvasConverse {
         rotation,
         rotationX,
         rotationY,
+        scale,
       });
     }
   }
