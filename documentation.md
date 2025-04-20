@@ -124,7 +124,6 @@ makeOutlineGroup({
     lineWidth,
     filter,
     outlineGroupKey,
-    addObject = true,
   })
 ```
 
@@ -171,8 +170,6 @@ constructor(canvasConverse)
 `canvasConverse`: object
 
 `objects`: undefined
-
-`outlineGroups`: undefined
 
 `canvas`: undefined
 

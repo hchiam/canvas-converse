@@ -35,7 +35,6 @@ export class NaivePhysics {
     _NaivePhysics_instances.add(this);
     this.canvasConverse = canvasConverse;
     this.objects = canvasConverse.objects;
-    this.outlineGroups = canvasConverse.outlineGroups;
     this.canvas = canvasConverse.canvas;
     this.context = canvasConverse.context;
     this.bounceCoefficient = 5;
@@ -65,51 +64,62 @@ export class NaivePhysics {
         _NaivePhysics_drawNextFrame,
       ).call(this);
       // repeat as soon as possible:
-      requestAnimationFrame(() =>
+      requestAnimationFrame(
         __classPrivateFieldGet(
           this,
           _NaivePhysics_instances,
           "m",
           _NaivePhysics_run,
-        ).call(this),
+        ).bind(this),
       );
     } catch (error) {
       console.error("Error while getting next frame:", error);
     }
   }),
   (_NaivePhysics_drawNextFrame = function _NaivePhysics_drawNextFrame() {
-    if (this.objects) {
-      // delete objects created by outline groups (will recreate later):
-      Object.entries(this.objects).forEach(([key, object]) => {
-        if (object.options.outlineGroup) {
-          delete this.objects[key];
-        }
-      });
-      Object.entries(this.objects)
-        .filter(([key, object]) => !object.isChild)
-        .forEach((entry) => {
-          __classPrivateFieldGet(
-            this,
-            _NaivePhysics_instances,
-            "m",
-            _NaivePhysics_handleEntry,
-          ).call(this, entry);
-        });
-    }
-    if (this.outlineGroups) {
-      Object.entries(this.outlineGroups).forEach(([key, value]) => {
-        const outlineGroupName = Number(key);
-        const outlineGroup = value;
-        this.canvasConverse.makeOutlineGroup({
-          drawShapesCallback: outlineGroup.drawShapesCallback,
-          stroke: outlineGroup.stroke,
-          fill: outlineGroup.fill,
-          lineWidth: outlineGroup.lineWidth,
-          filter: outlineGroup.filter,
-          outlineGroupKey: outlineGroupName,
-          addObject: false,
-        });
-      });
+    if (!this.objects) return;
+    const entries = Object.entries(this.objects).filter(
+      ([key, object]) => !object.isChild,
+    );
+    for (let i = 0; i < entries.length; i++) {
+      const [key, object] = entries[i];
+      const outlineGroupName = object.options.outlineGroup;
+      if (outlineGroupName) {
+        const outlineGroupData =
+          this.canvasConverse.outlineGroups[outlineGroupName];
+        this.canvasConverse.makeOutlineGroup(
+          Object.assign(
+            Object.assign(
+              {
+                drawShapesCallback: () => {
+                  while (
+                    i < entries.length &&
+                    entries[i][1].options.outlineGroup === outlineGroupName
+                  ) {
+                    __classPrivateFieldGet(
+                      this,
+                      _NaivePhysics_instances,
+                      "m",
+                      _NaivePhysics_handleEntry,
+                    ).call(this, entries[i]);
+                    i++;
+                  }
+                  i--; // to counteract the i++ from last round of the fast-forward inner while loop
+                },
+              },
+              outlineGroupData,
+            ),
+            { outlineGroupKey: outlineGroupName },
+          ),
+        );
+      } else {
+        __classPrivateFieldGet(
+          this,
+          _NaivePhysics_instances,
+          "m",
+          _NaivePhysics_handleEntry,
+        ).call(this, entries[i]);
+      }
     }
   }),
   (_NaivePhysics_handleEntry = function _NaivePhysics_handleEntry(entry) {
@@ -144,6 +154,9 @@ export class NaivePhysics {
   (_NaivePhysics_redrawObject = function _NaivePhysics_redrawObject(object) {
     // don't duplicate objects!
     object.options.addObject = false;
+    if (object.options.outlineGroup) {
+      this.canvasConverse.usingOutlineGroup = true;
+    }
     switch (object.type) {
       case "rectangle":
         this.canvasConverse.rectangle(object.options);
@@ -169,6 +182,9 @@ export class NaivePhysics {
       default:
         throw new Error("Unrecognized object. See naivePhysics.ts");
         break;
+    }
+    if (object.options.outlineGroup) {
+      this.canvasConverse.usingOutlineGroup = false;
     }
   }),
   (_NaivePhysics_handleGravity = function _NaivePhysics_handleGravity(key) {

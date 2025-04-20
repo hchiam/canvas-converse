@@ -568,65 +568,31 @@ export class CanvasConverse {
     lineWidth,
     filter,
     outlineGroupKey,
-    addObject = true,
   }) {
     this.usingOutlineGroup = true;
     this.context.beginPath();
-    if (addObject) {
-      const nextKey = Object.keys(this.outlineGroups).length + 1; // start at 1
-      outlineGroupKey =
-        outlineGroupKey !== null && outlineGroupKey !== void 0
-          ? outlineGroupKey
-          : nextKey;
-      this.outlineGroups[outlineGroupKey] = {
-        drawShapesCallback: drawShapesCallback,
-        stroke: stroke,
-        fill: fill,
-        lineWidth: lineWidth,
-        filter: filter,
-      };
-    }
-    // draw stroke version:
-    const strokeCC = new CanvasConverse();
-    const strokeCanvas = document.createElement("canvas");
-    strokeCC.init(strokeCanvas, { w: this.w, h: this.h, physics: false });
-    strokeCC.usingOutlineGroup = true;
-    const strokeContext = strokeCC.context;
-    strokeContext.beginPath();
-    strokeContext.strokeStyle = stroke;
-    strokeContext.lineWidth = lineWidth;
-    drawShapesCallback(strokeCC);
-    strokeContext.closePath();
-    strokeContext.stroke();
-    // draw fill version: (don't need fillStyle yet)
-    const fillCC = new CanvasConverse();
-    const fillCanvas = document.createElement("canvas");
-    fillCC.init(fillCanvas, { w: this.w, h: this.h, physics: false });
-    fillCC.usingOutlineGroup = true;
-    const fillContext = fillCC.context;
-    // fillContext.fillStyle = 'black';
-    drawShapesCallback(fillCC);
-    fillContext.fill();
-    // mask out the insides of the stroke version with the fill version:
-    strokeContext.globalCompositeOperation = "destination-out";
-    strokeContext.drawImage(fillCanvas, 0, 0);
-    strokeContext.globalCompositeOperation = "source-over";
-    __classPrivateFieldGet(
-      this,
-      _CanvasConverse_instances,
-      "m",
-      _CanvasConverse_isolateStyles,
-    ).call(this, () => {
-      this.context.filter =
-        filter !== null && filter !== void 0 ? filter : "none";
-      // draw the stroke version that has its insides masked out:
-      this.context.drawImage(strokeCanvas, 0, 0);
-      // draw the fill version in with fillStyle now:
-      this.context.fillStyle = fill;
-      drawShapesCallback(this);
-      this.context.fill();
-    });
+    const nextKey = Object.keys(this.outlineGroups).length + 1; // start at 1
+    outlineGroupKey =
+      outlineGroupKey !== null && outlineGroupKey !== void 0
+        ? outlineGroupKey
+        : nextKey;
+    this.outlineGroups[outlineGroupKey] = {
+      stroke: stroke,
+      fill: fill,
+      lineWidth: lineWidth,
+      filter: filter,
+    };
+    drawShapesCallback(stroke, outlineGroupKey);
+    this.context.filter =
+      filter !== null && filter !== void 0 ? filter : "none";
     this.context.closePath();
+    this.context.strokeStyle = stroke;
+    this.context.lineWidth = lineWidth;
+    this.context.stroke();
+    if (fill) {
+      this.context.fillStyle = fill;
+      this.context.fill();
+    }
     this.usingOutlineGroup = false;
   }
   text({
@@ -642,12 +608,6 @@ export class CanvasConverse {
     rotationY /* y position of rotation */,
     addObject = true,
   }) {
-    const usingOutlineGroup = __classPrivateFieldGet(
-      this,
-      _CanvasConverse_instances,
-      "m",
-      _CanvasConverse_isUsingOutlineGroup,
-    ).call(this);
     __classPrivateFieldGet(
       this,
       _CanvasConverse_instances,
