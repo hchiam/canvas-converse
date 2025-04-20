@@ -137,6 +137,8 @@ export class CanvasConverse implements CanvasConverseClassContract {
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
     fill,
+    stroke,
+    lineWidth,
     filter,
     physics,
     outlineGroup = "",
@@ -158,11 +160,20 @@ export class CanvasConverse implements CanvasConverseClassContract {
       this.context.moveTo(x1, y1);
       this.context.lineTo(x2, y2);
       this.context.lineTo(x3, y3);
+      this.context.lineTo(x1, y1);
       this.context.filter = filter ?? "none";
       if (!usingOutlineGroup && !this.usingOutlineGroup) {
         this.context.closePath();
       }
       this.context.fill();
+
+      if (stroke && !usingOutlineGroup && !this.usingOutlineGroup) {
+        this.context.strokeStyle = stroke ?? "transparent";
+        if (lineWidth) {
+          this.context.lineWidth = lineWidth ?? 0;
+          this.context.stroke();
+        }
+      }
     });
 
     if (addObject) {
@@ -177,6 +188,8 @@ export class CanvasConverse implements CanvasConverseClassContract {
         rotationX,
         rotationY,
         fill,
+        stroke,
+        lineWidth,
         filter,
         physics,
         outlineGroup,
@@ -410,33 +423,64 @@ export class CanvasConverse implements CanvasConverseClassContract {
     lineWidth,
     filter,
     outlineGroupKey,
+    addObject = true,
   }) {
     this.usingOutlineGroup = true;
 
     this.context.beginPath();
 
-    const nextKey = Object.keys(this.outlineGroups).length + 1; // start at 1
-    outlineGroupKey = outlineGroupKey ?? nextKey;
-    this.outlineGroups[outlineGroupKey] = {
-      stroke: stroke,
-      fill: fill,
-      lineWidth: lineWidth,
-      filter: filter,
-    };
+    if (addObject) {
+      const nextKey = Object.keys(this.outlineGroups).length + 1; // start at 1
+      outlineGroupKey = outlineGroupKey ?? nextKey;
+      this.outlineGroups[outlineGroupKey] = {
+        drawShapesCallback: drawShapesCallback,
+        stroke: stroke,
+        fill: fill,
+        lineWidth: lineWidth,
+        filter: filter,
+      };
+    }
 
-    drawShapesCallback(stroke, outlineGroupKey);
+    // draw stroke version:
+    const strokeCC = new CanvasConverse();
+    const strokeCanvas = document.createElement("canvas");
+    strokeCC.init(strokeCanvas, { w: this.w, h: this.h, physics: false });
+    strokeCC.usingOutlineGroup = true;
+    const strokeContext = strokeCC.context;
+    strokeContext.beginPath();
+    strokeContext.strokeStyle = stroke;
+    strokeContext.lineWidth = lineWidth;
+    drawShapesCallback(strokeCC);
+    strokeContext.closePath();
+    strokeContext.stroke();
 
-    this.context.filter = filter ?? "none";
+    // draw fill version: (don't need fillStyle yet)
+    const fillCC = new CanvasConverse();
+    const fillCanvas = document.createElement("canvas");
+    fillCC.init(fillCanvas, { w: this.w, h: this.h, physics: false });
+    fillCC.usingOutlineGroup = true;
+    const fillContext = fillCC.context;
+    // fillContext.fillStyle = 'black';
+    drawShapesCallback(fillCC);
+    fillContext.fill();
+
+    // mask out the insides of the stroke version with the fill version:
+    strokeContext.globalCompositeOperation = "destination-out";
+    strokeContext.drawImage(fillCanvas, 0, 0);
+    strokeContext.globalCompositeOperation = "source-over";
+
+    this.#isolateStyles(() => {
+      this.context.filter = filter ?? "none";
+      // draw the stroke version that has its insides masked out:
+      this.context.drawImage(strokeCanvas, 0, 0);
+
+      // draw the fill version in with fillStyle now:
+      this.context.fillStyle = fill;
+      drawShapesCallback(this);
+      this.context.fill();
+    });
 
     this.context.closePath();
-
-    this.context.strokeStyle = stroke;
-    this.context.lineWidth = lineWidth;
-    this.context.stroke();
-    if (fill) {
-      this.context.fillStyle = fill;
-      this.context.fill();
-    }
 
     this.usingOutlineGroup = false;
   }
@@ -454,6 +498,8 @@ export class CanvasConverse implements CanvasConverseClassContract {
     rotationY /* y position of rotation */,
     addObject = true,
   }) {
+    const usingOutlineGroup = this.#isUsingOutlineGroup();
+
     this.#isolateStyles(() => {
       (this.context.textBaseline as any) = baseline;
       if (rotation !== 0) {

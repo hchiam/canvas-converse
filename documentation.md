@@ -44,6 +44,8 @@ triangle({
     rotationX /* x position of rotation */,
     rotationY /* y position of rotation */,
     fill,
+    stroke,
+    lineWidth,
     filter,
     physics,
     outlineGroup = "",
@@ -122,6 +124,7 @@ makeOutlineGroup({
     lineWidth,
     filter,
     outlineGroupKey,
+    addObject = true,
   })
 ```
 
@@ -168,6 +171,8 @@ constructor(canvasConverse)
 `canvasConverse`: object
 
 `objects`: undefined
+
+`outlineGroups`: undefined
 
 `canvas`: undefined
 

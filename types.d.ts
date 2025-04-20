@@ -49,6 +49,8 @@ export declare abstract class CanvasConverseClassContract {
         rotationX: number;
         rotationY: number;
         fill: string;
+        stroke: string;
+        lineWidth: number;
         filter: string;
         physics: boolean;
         outlineGroup: string;
@@ -110,6 +112,7 @@ export declare class OutlineGroups {
     [key: number]: OutlineGroup;
 }
 export declare class OutlineGroup {
+    drawShapesCallback: Function;
     stroke: string;
     fill: string;
     lineWidth: number;

@@ -8,6 +8,16 @@ window.cc = cc;
 cc.init($("canvas"), { w: 500, h: 500 });
 cc.canvas.style.outline = "1px solid white";
 
+// for debug:
+setInterval(() => {
+  console.log(
+    "cc objects: " +
+      Object.keys(cc.objects).length +
+      " + outline groups: " +
+      Object.keys(cc.outlineGroups).length
+  );
+}, 5000);
+
 // fun part
 cc.rectangle({ x: 0, y: 0, w: 200, h: 200, fill: "white", physics: true });
 cc.rectangle({
@@ -124,36 +134,43 @@ setInterval(() => {
   rotatingDraw.options.rotation += 1;
 }, 100);
 
+let outlineGroupRotation = 0;
+setInterval(() => {
+  outlineGroupRotation += 10;
+}, 100);
 cc.makeOutlineGroup({
-  drawShapesCallback: () => {
+  drawShapesCallback: (cc) => {
     cc.rectangle({
       x: 50,
       y: 50,
       w: 150,
       h: 150,
-      fill: "orange",
+      // fill: "orange",
+      rotation: outlineGroupRotation,
+      rotationX: 50 + 150 / 2,
+      rotationY: 50 + 150 / 2,
     });
     cc.rectangle({
       x: 175,
       y: 20,
       w: 50,
       h: 50,
-      fill: "red",
+      // fill: "red",
     });
   },
-  stroke: "#fff",
-  fill: "#FF5733",
+  stroke: "#ffffff80",
+  fill: "#FF573380",
   lineWidth: 20,
-  // filter: "blur(10px)",
+  filter: "blur(2px)",
 });
 
 cc.makeOutlineGroup({
-  drawShapesCallback: () => {
+  drawShapesCallback: (cc) => {
     cc.ellipse({
       x: 200,
       y: 200,
       r: 75,
-      fill: "yellow",
+      // fill: "yellow",
     });
     cc.triangle({
       x1: 100,
@@ -162,25 +179,27 @@ cc.makeOutlineGroup({
       y2: 200,
       x3: 300,
       y3: 310,
-      fill: "green",
+      // fill: "green",
+      // stroke: "#626",
+      // lineWidth: 20,
     });
   },
   stroke: "#626",
-  fill: "#33A8FF",
+  fill: "#33A8FF80",
   lineWidth: 20,
   // filter: "blur(10px)",
 });
 
 cc.makeOutlineGroup({
-  drawShapesCallback: () => {
+  drawShapesCallback: (cc) => {
     cc.rectangle({
       x: 410,
       y: 10,
       w: 50,
       h: 20,
       cornerRadii: [10],
-      fill: "grey",
-      stroke: "white",
+      // fill: "grey",
+      // stroke: "white",
       lineWidth: 10,
     });
     cc.rectangle({
@@ -189,8 +208,8 @@ cc.makeOutlineGroup({
       w: 20,
       h: 50,
       cornerRadii: [10],
-      fill: "grey",
-      stroke: "white",
+      // fill: "grey",
+      // stroke: "white",
       lineWidth: 10,
     });
     cc.rectangle({
@@ -199,8 +218,8 @@ cc.makeOutlineGroup({
       w: 20,
       h: 50,
       cornerRadii: [10],
-      fill: "grey",
-      stroke: "white",
+      // fill: "grey",
+      // stroke: "white",
       lineWidth: 10,
       rotation: 45,
       rotationX: 450,
@@ -208,7 +227,7 @@ cc.makeOutlineGroup({
     });
   },
   stroke: "white",
-  fill: "grey",
+  fill: "#80808080",
   lineWidth: 10,
   // filter: "blur(10px)",
 });
