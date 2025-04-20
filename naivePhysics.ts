@@ -40,6 +40,13 @@ export class NaivePhysics {
   }
   #drawNextFrame() {
     if (this.objects) {
+      // delete objects created by outline groups (will recreate later):
+      Object.entries(this.objects).forEach(([key, object]) => {
+        if (object.options.outlineGroup) {
+          delete this.objects[key];
+        }
+      });
+
       Object.entries(this.objects)
         .filter(([key, object]) => !object.isChild)
         .forEach((entry) => {
